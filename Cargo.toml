@@ -12,6 +12,8 @@ atty = { version = "0.2",  optional = true }
 termcolor   = { version = "1.1", optional = true }
 yaml-rust   = { version = "0.4.1",  optional = true }
 orbtk = { git = "https://github.com/redox-os/orbtk.git", branch = "develop" }
+rustbox = "*"
+libc = "0.2"
 
 [features]
 default     = []

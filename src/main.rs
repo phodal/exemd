@@ -1,13 +1,19 @@
 mod commands;
 
-use orbtk::prelude::*;
-use commands::calc;
+extern crate libc;
+extern crate rustbox;
+
+use std::error::Error;
+use std::default::Default;
 
 // (Full example with detailed comments in examples/01d_quick_example.rs)
 //
 // This example demonstrates clap's full 'custom derive' style of creating arguments which is the
 // simplest method of use, but sacrifices some flexibility.
+use orbtk::prelude::*;
 use clap::Clap;
+use rustbox::{InitOptions, Color, RustBox, InputMode, OutputMode};
+use rustbox::Key;
 
 /// This doc string acts as a help message when the user runs '--help'
 /// as do all doc strings on fields
@@ -74,15 +80,51 @@ fn main() {
     }
 }
 
+fn is_atty(fileno: libc::c_int) -> bool {
+    // FIXME: find a way to do this without unsafe
+    //        std::io doesn't allow for this, currently
+    unsafe { libc::isatty(fileno) != 0 }
+}
+
 fn startUI() {
-    Application::new()
-        .window(|ctx| {
-            Window::new()
-                .title("OrbTk - minimal example")
-                .position((100.0, 100.0))
-                .size(420.0, 730.0)
-                .child(TextBlock::new().text("OrbTk")
-                    .build(ctx))
-                .build(ctx)
-        }).run();
+    let stderr_is_atty = is_atty(libc::STDERR_FILENO);
+
+    // initialise rustbox
+    let rustbox = match RustBox::init(InitOptions{
+        buffer_stderr: stderr_is_atty,
+        input_mode: InputMode::Esc,
+        output_mode: OutputMode::EightBit,
+    }) {
+        Result::Ok(v) => v,
+        Result::Err(e) => panic!("{}", e),
+    };
+
+    rustbox.print(1, 1, rustbox::RB_BOLD, Color::White, Color::Black, "Hello, world!");
+    rustbox.print(1, 3, rustbox::RB_BOLD, Color::White, Color::Black,
+                  "Press 'q' to quit.");
+    rustbox.present();
+    loop {
+        match rustbox.poll_event(false) {
+            Ok(rustbox::Event::KeyEvent(key)) => {
+                match key {
+                    Key::Char('q') => { break; }
+                    _ => { }
+                }
+            },
+            Err(e) => panic!("{}", e.description()),
+            _ => { }
+        }
+    }
+
+    //
+    // Application::new()
+    //     .window(|ctx| {
+    //         Window::new()
+    //             .title("OrbTk - minimal example")
+    //             .position((100.0, 100.0))
+    //             .size(420.0, 730.0)
+    //             .child(TextBlock::new().text("OrbTk")
+    //                 .build(ctx))
+    //             .build(ctx)
+    //     }).run();
 }
