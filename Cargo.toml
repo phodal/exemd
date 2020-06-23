@@ -23,3 +23,13 @@ cargo       = [] # Disable if you're not using Cargo, enables Cargo-env-var-depe
 unstable    = [] # for building with unstable clap features (doesn't require nightly Rust) (currently none)
 debug       = [] # Enables debug messages
 doc         = ["yaml"] # All the features which add to documentation
+
+[lib]
+name = "rinput"
+path = "src/rinput/lib.rs"
+
+
+[[bin]]
+path = "src/main.rs"
+name = "rinput"
+doc = false

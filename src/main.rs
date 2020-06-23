@@ -2,9 +2,15 @@ mod commands;
 
 extern crate libc;
 extern crate rustbox;
+extern crate rinput;
 
+use std::io::stdin;
 use std::error::Error;
 use std::default::Default;
+
+use rinput::{
+    Input
+};
 
 // (Full example with detailed comments in examples/01d_quick_example.rs)
 //
@@ -46,8 +52,7 @@ fn main() {
             start_ui();
         }
         SubCommand::Box(t) => {
-            println!("{}", t.path);
-            start_box();
+            start_box(t);
         }
     }
 }
@@ -58,8 +63,16 @@ fn is_atty(fileno: libc::c_int) -> bool {
     unsafe { libc::isatty(fileno) != 0 }
 }
 
-fn start_box() {
+fn start_box(args: EditorCmd) {
+    let stdin_is_atty = is_atty(libc::STDIN_FILENO);
     let stderr_is_atty = is_atty(libc::STDERR_FILENO);
+
+    // editor source - either a filename or stdin
+    let source = if stdin_is_atty {
+        Input::Filename(Some(args.path))
+    } else {
+        Input::Stdin(stdin())
+    };
 
     // initialise rustbox
     let rustbox = match RustBox::init(InitOptions {
@@ -75,18 +88,18 @@ fn start_box() {
     rustbox.print(1, 3, rustbox::RB_BOLD, Color::White, Color::Black,
                   "Press 'q' to quit.");
     rustbox.present();
-    loop {
-        match rustbox.poll_event(false) {
-            Ok(rustbox::Event::KeyEvent(key)) => {
-                match key {
-                    Key::Char('q') => { break; }
-                    _ => {}
-                }
-            }
-            Err(e) => panic!("{}", e.description()),
-            _ => {}
-        }
-    }
+    // loop {
+    //     match rustbox.poll_event(false) {
+    //         Ok(rustbox::Event::KeyEvent(key)) => {
+    //             match key {
+    //                 Key::Char('q') => { break; }
+    //                 _ => {}
+    //             }
+    //         }
+    //         Err(e) => panic!("{}", e.description()),
+    //         _ => {}
+    //     }
+    // }
 }
 
 fn start_ui() {
