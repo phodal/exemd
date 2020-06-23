@@ -8,17 +8,11 @@ use std::default::Default;
 
 use rinput::{Input, Editor};
 
-// (Full example with detailed comments in examples/01d_quick_example.rs)
-//
-// This example demonstrates clap's full 'custom derive' style of creating arguments which is the
-// simplest method of use, but sacrifices some flexibility.
 use orbtk::prelude::*;
 use clap::Clap;
 use rustbox::{InitOptions, Color, RustBox, InputMode, OutputMode};
 use rustbox::Key;
 
-/// This doc string acts as a help message when the user runs '--help'
-/// as do all doc strings on fields
 #[derive(Clap)]
 struct Opts {
     input: String,
