@@ -1234,8 +1234,7 @@ dependencies = [
 [[package]]
 name = "rustbox"
 version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8efd06a5d2faf705b3257e8ce1a039b82d777f84ea203e93dfbcc9c86cf750b1"
+source = "git+https://github.com/gchp/rustbox#7d82dac093b2d4381d226ea2bb4f1e6ada006658"
 dependencies = [
  "bitflags 0.2.1",
  "gag",

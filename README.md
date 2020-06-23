@@ -4,6 +4,8 @@
 
 ## Development
 
+Set to Nightly: `rustup install nightly`
+
 1. install `just`
 
 ```

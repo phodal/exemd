@@ -1,5 +1,3 @@
-mod commands;
-
 extern crate libc;
 extern crate rustbox;
 extern crate rinput;
@@ -8,9 +6,7 @@ use std::io::stdin;
 use std::error::Error;
 use std::default::Default;
 
-use rinput::{
-    Input
-};
+use rinput::{Input, Editor};
 
 // (Full example with detailed comments in examples/01d_quick_example.rs)
 //
@@ -84,22 +80,8 @@ fn start_box(args: EditorCmd) {
         Result::Err(e) => panic!("{}", e),
     };
 
-    rustbox.print(1, 1, rustbox::RB_BOLD, Color::White, Color::Black, "Hello, world!");
-    rustbox.print(1, 3, rustbox::RB_BOLD, Color::White, Color::Black,
-                  "Press 'q' to quit.");
-    rustbox.present();
-    // loop {
-    //     match rustbox.poll_event(false) {
-    //         Ok(rustbox::Event::KeyEvent(key)) => {
-    //             match key {
-    //                 Key::Char('q') => { break; }
-    //                 _ => {}
-    //             }
-    //         }
-    //         Err(e) => panic!("{}", e.description()),
-    //         _ => {}
-    //     }
-    // }
+    let mut editor = Editor::new(source, rustbox);
+    editor.start();
 }
 
 fn start_ui() {
