@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/phodal/rinput.svg?branch=master)](https://travis-ci.org/phodal/rinput)
 
+learn Rust with building editor from: [iota](https://github.com/gchp/iota)
+
 ## Development
 
 Set to Nightly: `rustup install nightly`
