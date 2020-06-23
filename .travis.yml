@@ -1,0 +1,13 @@
+language: rust
+rust:
+  - stable
+  - 1.33.0
+
+branches:
+  only:
+  - master
+
+addons:
+  apt:
+    packages:
+    - libxmu-dev
