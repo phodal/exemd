@@ -393,6 +393,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "gapbuffer"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3e929b3ff01e4accdce7f5596a044890b5052ab7418ba8ce9ce5865d26ae4417"
+
+[[package]]
 name = "getrandom"
 version = "0.1.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1191,6 +1197,7 @@ version = "0.1.0"
 dependencies = [
  "atty",
  "clap",
+ "gapbuffer",
  "libc",
  "orbtk",
  "rustbox",

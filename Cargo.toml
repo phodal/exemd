@@ -11,6 +11,7 @@ termcolor   = { version = "1.1", optional = true }
 yaml-rust   = { version = "0.4.1",  optional = true }
 orbtk = { git = "https://github.com/redox-os/orbtk.git", branch = "develop" }
 libc = "0.2"
+gapbuffer = "0.1.1"
 
 [dependencies.rustbox]
 git = "https://github.com/gchp/rustbox"
