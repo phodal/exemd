@@ -1,5 +1,6 @@
 mod commands;
 
+use orbtk::prelude::*;
 use commands::calc;
 
 // (Full example with detailed comments in examples/01d_quick_example.rs)
@@ -21,6 +22,7 @@ struct Opts {
     /// A level of verbosity, and can be used multiple times
     #[clap(short, long, parse(from_occurrences))]
     verbose: i32,
+
     #[clap(subcommand)]
     subcmd: SubCommand,
 }
@@ -29,6 +31,7 @@ struct Opts {
 enum SubCommand {
     #[clap(version = "1.3", author = "Someone E. <someone_else@other.com>")]
     Test(Test),
+    UI(Test),
 }
 
 /// A subcommand for controlling testing
@@ -65,7 +68,21 @@ fn main() {
                 println!("Printing normally...");
             }
         }
+        SubCommand::UI(t) => {
+            startUI();
+        }
     }
+}
 
-    // more program logic goes here...
+fn startUI() {
+    Application::new()
+        .window(|ctx| {
+            Window::new()
+                .title("OrbTk - minimal example")
+                .position((100.0, 100.0))
+                .size(420.0, 730.0)
+                .child(TextBlock::new().text("OrbTk")
+                    .build(ctx))
+                .build(ctx)
+        }).run();
 }
