@@ -1,4 +1,4 @@
-use super::{calc};
+use super::{calc::DesktopCalc, calc::Calc, calc::add};
 
 #[cfg(test)]
 mod tests {
@@ -7,6 +7,11 @@ mod tests {
 
     #[test]
     fn test_add() {
-        assert_eq!(calc::add(1, 2), 3);
+        assert_eq!(add(1, 2), 3);
+    }
+
+    #[test]
+    fn test_by_calculator() {
+        assert_eq!(DesktopCalc::add(1, 2), 3);
     }
 }
