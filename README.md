@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/phodal/rinput.svg?branch=master)](https://travis-ci.org/phodal/rinput)
 
+![build](https://github.com/phodal/rinput/workflows/build/badge.svg)
+
 learn Rust with building editor from: [iota](https://github.com/gchp/iota)
 
 ## Development
