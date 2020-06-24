@@ -1202,6 +1202,7 @@ dependencies = [
  "orbtk",
  "rustbox",
  "termcolor",
+ "unicode-width",
  "yaml-rust",
 ]
 
