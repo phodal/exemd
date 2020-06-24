@@ -38,7 +38,7 @@ struct EditorCmd {
 fn main() {
     let opts: Opts = Opts::parse();
     match opts.subcmd {
-        SubCommand::UI(t) => {
+        SubCommand::UI(_t) => {
             start_ui();
         }
         SubCommand::Box(t) => {
