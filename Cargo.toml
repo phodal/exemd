@@ -13,6 +13,7 @@ orbtk = { git = "https://github.com/redox-os/orbtk.git", branch = "develop" }
 libc = "0.2"
 gapbuffer = "0.1.1"
 unicode-width = "0.1.1"
+lazy_static = "0.2"
 
 [dependencies.rustbox]
 git = "https://github.com/gchp/rustbox"

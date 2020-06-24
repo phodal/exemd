@@ -146,7 +146,7 @@ dependencies = [
  "bitflags 1.2.1",
  "clap_derive",
  "indexmap",
- "lazy_static",
+ "lazy_static 1.4.0",
  "os_str_bytes",
  "strsim",
  "termcolor",
@@ -228,7 +228,7 @@ dependencies = [
  "autocfg 1.0.0",
  "cfg-if",
  "crossbeam-utils",
- "lazy_static",
+ "lazy_static 1.4.0",
  "maybe-uninit",
  "memoffset",
  "scopeguard",
@@ -253,7 +253,7 @@ checksum = "c3c7c73a2d1e9fc0886a08b93e98eb643461230d5f1925e4036204d5f2e261a8"
 dependencies = [
  "autocfg 1.0.0",
  "cfg-if",
- "lazy_static",
+ "lazy_static 1.4.0",
 ]
 
 [[package]]
@@ -488,6 +488,12 @@ dependencies = [
  "byteorder",
  "rayon",
 ]
+
+[[package]]
+name = "lazy_static"
+version = "0.2.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "76f033c7ad61445c5b347c7382dd1237847eb1bce590fe50365dcb33d546be73"
 
 [[package]]
 name = "lazy_static"
@@ -770,7 +776,7 @@ dependencies = [
  "console_error_panic_hook",
  "derive_more",
  "image",
- "lazy_static",
+ "lazy_static 1.4.0",
  "minifb",
  "orbtk-render",
  "orbtk-utils",
@@ -784,7 +790,7 @@ name = "orbtk-theme"
 version = "0.3.1-alpha3"
 source = "git+https://github.com/redox-os/orbtk.git?branch=develop#05ea703c735ceb364b7dd8e074570ab27a94f922"
 dependencies = [
- "lazy_static",
+ "lazy_static 1.4.0",
  "orbtk-css-engine",
 ]
 
@@ -807,7 +813,7 @@ version = "0.3.1-alpha3"
 source = "git+https://github.com/redox-os/orbtk.git?branch=develop#05ea703c735ceb364b7dd8e074570ab27a94f922"
 dependencies = [
  "dces",
- "lazy_static",
+ "lazy_static 1.4.0",
  "orbtk-api",
  "orbtk-proc-macros",
  "orbtk-render",
@@ -1152,7 +1158,7 @@ dependencies = [
  "crossbeam-deque",
  "crossbeam-queue",
  "crossbeam-utils",
- "lazy_static",
+ "lazy_static 1.4.0",
  "num_cpus",
 ]
 
@@ -1198,6 +1204,7 @@ dependencies = [
  "atty",
  "clap",
  "gapbuffer",
+ "lazy_static 0.2.11",
  "libc",
  "orbtk",
  "rustbox",
@@ -1300,7 +1307,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d051a07231e303f5f719da78cb6f7394f6d5b54f733aef5b0b447804a83edd7b"
 dependencies = [
  "bitflags 1.2.1",
- "lazy_static",
+ "lazy_static 1.4.0",
  "libc",
  "num",
  "rand 0.6.5",
@@ -1622,7 +1629,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ded84f06e0ed21499f6184df0e0cb3494727b0c5da89534e0fcc55c51d812101"
 dependencies = [
  "bumpalo",
- "lazy_static",
+ "lazy_static 1.4.0",
  "log",
  "proc-macro2",
  "quote 1.0.7",
@@ -1766,7 +1773,7 @@ version = "2.18.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2bf981e3a5b3301209754218f962052d4d9ee97e478f4d26d4a6eced34c1fef8"
 dependencies = [
- "lazy_static",
+ "lazy_static 1.4.0",
  "libc",
  "maybe-uninit",
  "pkg-config",
