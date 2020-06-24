@@ -9,7 +9,7 @@ clap = "3.0.0-beta.1"
 atty = { version = "0.2",  optional = true }
 termcolor   = { version = "1.1", optional = true }
 yaml-rust   = { version = "0.4.1",  optional = true }
-orbtk = { git = "https://github.com/redox-os/orbtk.git", branch = "develop" }
+#orbtk = { git = "https://github.com/redox-os/orbtk.git", branch = "develop" }
 libc = "0.2"
 gapbuffer = "0.1.1"
 unicode-width = "0.1.1"
