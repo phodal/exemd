@@ -1,13 +1,11 @@
 extern crate libc;
 extern crate rinput;
-extern crate rustbox;
 
 use std::io::stdin;
-
 use clap::Clap;
-use rustbox::{InitOptions, InputMode, OutputMode, RustBox};
 
 use rinput::{Editor, Input};
+use rinput::rustbox::rustbox::{RustBox, InitOptions, InputMode, OutputMode};
 
 #[derive(Clap)]
 struct Opts {
@@ -25,7 +23,7 @@ enum SubCommand {
 
 #[derive(Clap)]
 struct EditorCmd {
-        path: String,
+    path: String,
 }
 
 fn main() {

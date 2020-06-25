@@ -370,27 +370,19 @@ name = "rinput"
 version = "0.1.0"
 dependencies = [
  "atty",
+ "bitflags 0.2.1",
  "clap",
+ "gag",
  "gapbuffer",
  "lazy_static 0.2.11",
  "libc",
+ "num-traits 0.1.43",
  "regex",
- "rustbox",
  "tempdir",
+ "termbox-sys",
  "termcolor",
  "unicode-width",
  "yaml-rust",
-]
-
-[[package]]
-name = "rustbox"
-version = "0.11.0"
-source = "git+https://github.com/gchp/rustbox#7d82dac093b2d4381d226ea2bb4f1e6ada006658"
-dependencies = [
- "bitflags 0.2.1",
- "gag",
- "num-traits 0.1.43",
- "termbox-sys",
 ]
 
 [[package]]
