@@ -21,6 +21,14 @@ brew install just
 
 .clog.toml -> [clog-cli](https://github.com/clog-tool/clog-cli) A conventional changelog for the rest of us.  
 
+## Todo
+
+ - [ ] Basic Editor
+ - [ ] Command Line Tools
+ - [ ] Markdown Run
+ - [ ] Shell Parser for DSL
+   - [ ] Regex DSL for AWK Query
+
 ## LICENSE
 
 [rinput](src/rinput) based on [iota](https://github.com/gchp/iota) with MIT LICENSE
