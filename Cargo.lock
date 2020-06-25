@@ -181,15 +181,6 @@ dependencies = [
 
 [[package]]
 name = "num-traits"
-version = "0.1.43"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "92e5113e9fd4cc14ded8e499429f396a20f98c772a47cc8622a736e1ec843c31"
-dependencies = [
- "num-traits 0.2.12",
-]
-
-[[package]]
-name = "num-traits"
 version = "0.2.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ac267bcc07f48ee5f8935ab0d24f316fb722d7a1292e2913f0cc196b29ffd611"
@@ -376,7 +367,7 @@ dependencies = [
  "gapbuffer",
  "lazy_static 0.2.11",
  "libc",
- "num-traits 0.1.43",
+ "num-traits",
  "regex",
  "tempdir",
  "termbox-sys",
