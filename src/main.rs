@@ -11,24 +11,21 @@ use rinput::{Editor, Input};
 
 #[derive(Clap)]
 struct Opts {
-    input: String,
+    config: String,
     #[clap(subcommand)]
     subcmd: SubCommand,
 }
 
 #[derive(Clap)]
 enum SubCommand {
-    #[clap(version = "0.0.1")]
     UI(EditorCmd),
+
     Box(EditorCmd),
 }
 
-/// A subcommand for controlling testing
 #[derive(Clap)]
 struct EditorCmd {
-    /// Some input. Because this isn't an Option<T> it's required to be used
-    #[clap(short, long)]
-    path: String,
+        path: String,
 }
 
 fn main() {
@@ -74,6 +71,4 @@ fn start_box(args: EditorCmd) {
     editor.start();
 }
 
-fn start_ui() {
-
-}
+fn start_ui() {}
