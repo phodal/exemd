@@ -1,16 +1,13 @@
 extern crate libc;
-extern crate rustbox;
 extern crate rinput;
+extern crate rustbox;
 
 use std::io::stdin;
-use std::error::Error;
-use std::default::Default;
-
-use rinput::{Input, Editor};
 
 use clap::Clap;
-use rustbox::{InitOptions, Color, RustBox, InputMode, OutputMode};
-use rustbox::Key;
+use rustbox::{InitOptions, InputMode, OutputMode, RustBox};
+
+use rinput::{Editor, Input};
 
 #[derive(Clap)]
 struct Opts {
