@@ -8,7 +8,6 @@ use std::default::Default;
 
 use rinput::{Input, Editor};
 
-// use orbtk::prelude::*;
 use clap::Clap;
 use rustbox::{InitOptions, Color, RustBox, InputMode, OutputMode};
 use rustbox::Key;
@@ -79,14 +78,5 @@ fn start_box(args: EditorCmd) {
 }
 
 fn start_ui() {
-    // Application::new()
-    //     .window(|ctx| {
-    //         Window::new()
-    //             .title("OrbTk - minimal example")
-    //             .position((100.0, 100.0))
-    //             .size(420.0, 730.0)
-    //             .child(TextBlock::new().text("OrbTk")
-    //                 .build(ctx))
-    //             .build(ctx)
-    //     }).run();
+
 }
