@@ -51,6 +51,3 @@ count-warnings:
 
 find-warnings:
 	@cargo check 2>&1 | grep -A1 -e 'warning' | grep --only-matching -e '-->[^:]*' | sort | uniq -c | sort -nr
-
-@count-failures:
-	./count-tests.sh
