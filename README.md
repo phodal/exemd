@@ -24,6 +24,8 @@ brew install just
 ## Todo
 
  - [ ] Basic Editor
+   - [ ] Code Highlight Plugins
+      - [ ] Markdown
  - [ ] Command Line Tools
  - [ ] Markdown Run
  - [ ] Shell Parser for DSL
