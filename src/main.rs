@@ -1,14 +1,18 @@
-mod rmd;
-
 extern crate libc;
 extern crate rinput;
 
+use std::fs;
 use std::io::stdin;
+
 use clap::Clap;
+use colored::*;
 
 use rinput::{Editor, Input};
-use rinput::rustbox::rustbox::{RustBox, InitOptions, InputMode, OutputMode};
-use std::fs;
+use rinput::rustbox::rustbox::{InitOptions, InputMode, OutputMode, RustBox};
+
+use crate::rmd::executor::execute_command;
+
+mod rmd;
 
 #[derive(Clap)]
 struct Opts {
@@ -59,7 +63,19 @@ fn run_markdown(args: EditorCmd) {
 
     let mut parser = rmd::Rmd::new(contents);
     let vec = parser.parse();
-    println!("{}", vec.len());
+
+    for cmd in vec.into_iter() {
+        match execute_command(cmd) {
+            Ok(status) => match status.code() {
+                Some(code) => std::process::exit(code),
+                None => return,
+            },
+            Err(err) => {
+                eprintln!("{} {}", "ERROR:".red(), err);
+                std::process::exit(1)
+            }
+        }
+    }
 }
 
 fn start_box(args: EditorCmd) {

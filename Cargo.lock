@@ -77,6 +77,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "colored"
+version = "1.9.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f4ffc801dacf156c5854b9df4f425a626539c3a6ef7893cc0c5084a23f0b6c59"
+dependencies = [
+ "atty",
+ "lazy_static 1.4.0",
+ "winapi 0.3.8",
+]
+
+[[package]]
 name = "fuchsia-cprng"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -380,6 +391,7 @@ dependencies = [
  "atty",
  "bitflags 0.2.1",
  "clap",
+ "colored",
  "gag",
  "gapbuffer",
  "lazy_static 0.2.11",
