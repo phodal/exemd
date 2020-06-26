@@ -400,6 +400,7 @@ dependencies = [
  "pulldown-cmark",
  "regex",
  "tempdir",
+ "tempfile",
  "termbox-sys",
  "termcolor",
  "unicode-width",

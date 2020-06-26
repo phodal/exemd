@@ -1,13 +1,16 @@
-use std::fs::canonicalize;
+use std::fs::{canonicalize, Metadata};
+use std::io::{Error, ErrorKind, Write, SeekFrom, Seek, Read};
 use std::io::Result;
-use std::io::{Error, ErrorKind};
 use std::path::{Path, PathBuf};
-use std::process;
+use std::{process, fs};
 use std::process::ExitStatus;
 
-use clap::crate_name;
+use tempfile::NamedTempFile;
 
 use crate::rmd::command::Command;
+use crate::main;
+use std::fmt::Debug;
+use std::ffi::OsStr;
 
 pub fn execute_command(cmd: Command) -> Result<ExitStatus> {
     if cmd.script.source == String::from("") {
@@ -52,8 +55,16 @@ fn prepare_command(cmd: &Command) -> process::Command {
         }
         "rust" => {
             // todo: support execute file
+            // Write
+            let tmpdir = tempfile::tempdir().unwrap();
+            println!("{:?}", tmpdir.path().as_os_str());
+            let mut tmpfile = tempfile::tempfile_in(&tmpdir).unwrap();
+            write!(tmpfile, "{}", String::from(source)).unwrap();
+            tmpfile.seek(SeekFrom::Start(0)).unwrap();
+
             let mut child = process::Command::new("rustc");
-            child.arg("-l").arg(source);
+            // child.arg("-l").arg();
+
             child
         }
         #[cfg(windows)]
