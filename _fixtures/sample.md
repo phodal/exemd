@@ -1,3 +1,6 @@
+```python
+print("hello, world")
+```
 
 ```rust
 fn main() {

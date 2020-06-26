@@ -50,6 +50,12 @@ fn prepare_command(cmd: &Command) -> process::Command {
             child.arg("-r").arg(source);
             child
         }
+        "rust" => {
+            // todo: support execute file
+            let mut child = process::Command::new("rustc");
+            child.arg("-l").arg(source);
+            child
+        }
         #[cfg(windows)]
         "cmd" | "batch" => {
             let mut child = process::Command::new("cmd.exe");
