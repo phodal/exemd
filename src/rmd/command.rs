@@ -57,7 +57,7 @@ impl Script {
     }
 
     pub fn has_script(&self) -> bool {
-        self.source != "" && self.executor != ""
+        self.source != "".parse().unwrap() && self.executor != "".parse().unwrap()
     }
 }
 
