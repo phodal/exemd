@@ -1,8 +1,8 @@
-use std::fs::{canonicalize, Metadata};
+use std::fs::{canonicalize, Metadata, File};
 use std::io::{Error, ErrorKind, Write, SeekFrom, Seek, Read};
 use std::io::Result;
 use std::path::{Path, PathBuf};
-use std::{process, fs};
+use std::{process, fs, env};
 use std::process::ExitStatus;
 
 use tempfile::NamedTempFile;
@@ -55,15 +55,25 @@ fn prepare_command(cmd: &Command) -> process::Command {
         }
         "rust" => {
             // todo: support execute file
-            // Write
-            let tmpdir = tempfile::tempdir().unwrap();
-            println!("{:?}", tmpdir.path().as_os_str());
-            let mut tmpfile = tempfile::tempfile_in(&tmpdir).unwrap();
-            write!(tmpfile, "{}", String::from(source)).unwrap();
-            tmpfile.seek(SeekFrom::Start(0)).unwrap();
+            let mut dir = env::temp_dir();
+            let mut origin = dir.clone();
+
+            dir.push("hello.rs");
+            origin.push("hello");
+
+            let mut f = File::create(dir.clone()).unwrap();
+            f.write_all(source.as_ref()).unwrap();
+
+            let code_path = dir.into_os_string().into_string().unwrap();
+            let mut output_path = origin.into_os_string().into_string().unwrap();
 
             let mut child = process::Command::new("rustc");
-            child.arg("-l").arg(tmpdir.path().as_os_str());
+            println!("rustc {}", code_path);
+            child.arg(code_path).arg("-o").arg(output_path.clone());
+            child.spawn().unwrap().wait();
+
+            let mut child = process::Command::new(".");
+            child.arg(output_path.clone());
 
             child
         }
