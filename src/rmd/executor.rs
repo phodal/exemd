@@ -63,7 +63,7 @@ fn prepare_command(cmd: &Command) -> process::Command {
             tmpfile.seek(SeekFrom::Start(0)).unwrap();
 
             let mut child = process::Command::new("rustc");
-            // child.arg("-l").arg();
+            child.arg("-l").arg(tmpdir.path().as_os_str());
 
             child
         }
