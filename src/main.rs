@@ -19,6 +19,8 @@ enum SubCommand {
     UI(EditorCmd),
 
     Box(EditorCmd),
+
+    Run(EditorCmd),
 }
 
 #[derive(Clap)]
@@ -35,6 +37,9 @@ fn main() {
         SubCommand::Box(t) => {
             start_box(t);
         }
+        SubCommand::Run(t) => {
+            run_markdown(t);
+        }
     }
 }
 
@@ -42,6 +47,10 @@ fn is_atty(fileno: libc::c_int) -> bool {
     // FIXME: find a way to do this without unsafe
     //        std::io doesn't allow for this, currently
     unsafe { libc::isatty(fileno) != 0 }
+}
+
+fn run_markdown(args: EditorCmd) {
+    println!("{}", args.path)
 }
 
 fn start_box(args: EditorCmd) {
