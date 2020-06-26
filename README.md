@@ -31,6 +31,9 @@ brew install just
  - [ ] Diff Manage
    - [ ] git-like coca analysis tools
  - [ ] Command Line Tools
+   - [ ] search tool, such as [ripgrep](https://github.com/BurntSushi/ripgrep)
+   - [ ] `cut` and `awk` [Choose](https://github.com/theryangeary/choose)
+   - [ ] find todo, [todo_r](https://github.com/lavifb/todo_r)
  - [ ] Markdown Run
  - [ ] Shell Parser for DSL
    - [ ] Regex DSL for AWK Query
