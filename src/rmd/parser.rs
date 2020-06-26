@@ -8,4 +8,8 @@ impl Rmd {
             text
         }
     }
+
+    pub fn parse(&mut self) {
+        println!("start parse")
+    }
 }

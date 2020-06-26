@@ -1,3 +1,5 @@
+mod rmd;
+
 extern crate libc;
 extern crate rinput;
 
@@ -6,6 +8,7 @@ use clap::Clap;
 
 use rinput::{Editor, Input};
 use rinput::rustbox::rustbox::{RustBox, InitOptions, InputMode, OutputMode};
+use std::fs;
 
 #[derive(Clap)]
 struct Opts {
@@ -50,7 +53,13 @@ fn is_atty(fileno: libc::c_int) -> bool {
 }
 
 fn run_markdown(args: EditorCmd) {
-    println!("{}", args.path)
+    let filename = args.path;
+    let contents = fs::read_to_string(filename)
+        .expect("Something went wrong reading the file");
+
+    let mut parser = rmd::Rmd::new(contents);
+    parser.parse();
+    // println!("{}", contents);
 }
 
 fn start_box(args: EditorCmd) {
