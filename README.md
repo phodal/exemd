@@ -21,11 +21,15 @@ brew install just
 
 .clog.toml -> [clog-cli](https://github.com/clog-tool/clog-cli) A conventional changelog for the rest of us.  
 
-## Todo
+## Ideas
 
  - [ ] Basic Editor
    - [ ] Code Highlight Plugins
       - [ ] Markdown
+ - [ ] Mock Server
+   - [ ] DSL
+ - [ ] Diff Manage
+   - [ ] git-like coca analysis tools
  - [ ] Command Line Tools
  - [ ] Markdown Run
  - [ ] Shell Parser for DSL
