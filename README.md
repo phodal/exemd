@@ -24,6 +24,9 @@ brew install just
 ## Ideas
 
  - [ ] Basic Editor
+   - [ ] Language Server Protocol?
+   - [ ] Syntax Highlighting
+      - [ ] [syntect](https://github.com/trishume/syntect) is a syntax highlighting library for Rust
    - [ ] Code Highlight Plugins
       - [ ] Markdown
  - [ ] Mock Server
