@@ -58,8 +58,8 @@ fn run_markdown(args: EditorCmd) {
         .expect("Something went wrong reading the file");
 
     let mut parser = rmd::Rmd::new(contents);
-    parser.parse();
-    // println!("{}", contents);
+    let vec = parser.parse();
+    println!("{}", vec.len());
 }
 
 fn start_box(args: EditorCmd) {
