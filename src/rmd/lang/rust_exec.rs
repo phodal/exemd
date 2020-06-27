@@ -29,6 +29,7 @@ impl LangExecutor for RustExec {
     fn parse_project_info(&mut self) -> ProjectInfo {
         let map = build_key_value_from_comment(self.source_code.clone());
         let mut project_info = ProjectInfo::new();
+        project_info.name = String::from("hello");
 
         for (key, value) in map {
             match &key[..] {
@@ -48,13 +49,15 @@ impl LangExecutor for RustExec {
         let mut dir = create_lang_dir(String::from("rust"));
         let mut output = dir.clone();
 
-        dir.push("hello.rs");
-        output.push("hello");
+        dir.push(self.project.name.clone() + &".rs");
+        output.push(self.project.name.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);
         self.output_dir = output.into_os_string().into_string().unwrap();
     }
-    fn install_dependency(&self) {}
+    fn install_dependency(&self) {
+
+    }
     fn try_run(&self) {}
     fn execute(&mut self) -> Command {
         self.project = self.parse_project_info();
