@@ -23,6 +23,22 @@ impl RustExec {
             project: ProjectInfo::new(),
         }
     }
+
+    fn create_cargo_project(&self) -> String {
+        let mut default_package = "[package]
+name = \"hello_world\"
+version = \"0.1.0\"
+
+[dependencies]
+".to_owned();
+
+        for dep in self.project.deps.clone() {
+            let result = format!("{} = \"{}\"\n", dep.name, dep.version);
+            let pkg = default_package.push_str(&result);
+        }
+
+        default_package
+    }
 }
 
 impl LangExecutor for RustExec {
@@ -54,10 +70,10 @@ impl LangExecutor for RustExec {
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);
         self.output_dir = output.into_os_string().into_string().unwrap();
-    }
-    fn install_dependency(&self) {
 
+        self.create_cargo_project();
     }
+    fn install_dependency(&self) {}
     fn try_run(&self) {}
     fn execute(&mut self) -> Command {
         self.project = self.parse_project_info();
@@ -118,5 +134,20 @@ fn main() {println!(\"Hello World!\");}
         let result = child.spawn().unwrap().wait().unwrap();
 
         assert_eq!(0, result.code().unwrap())
+    }
+
+    #[test]
+    fn should_create_cargo_tomal() {
+        let mut exec = RustExec::new(String::from(get_hello_world_code()));
+        exec.execute();
+        let dep = exec.create_cargo_project();
+
+        assert_eq!("[package]
+name = \"hello_world\"
+version = \"0.1.0\"
+
+[dependencies]
+colored = \"1.8.0\"
+", String::from(dep))
     }
 }

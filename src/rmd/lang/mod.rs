@@ -14,7 +14,7 @@ pub use self::rust_exec::RustExec;
 mod python_exec;
 mod rust_exec;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Dependency {
     pub name: String,
     pub version: String,
@@ -22,7 +22,7 @@ pub struct Dependency {
     pub group_id: String,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct ProjectInfo {
     pub deps: Vec<Dependency>,
     pub name: String,
