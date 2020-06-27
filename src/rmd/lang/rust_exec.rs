@@ -31,11 +31,14 @@ impl LangExecutor for RustExec {
         let mut project_info = ProjectInfo::new();
 
         for (key, value) in map {
-            if key == String::from("deps") {
-                project_info.deps = parse_deps(value.clone());
-            }
-            if key == String::from("name") {
-                project_info.name = String::from(value.clone());
+            match &key[..] {
+                "deps" => {
+                    project_info.deps = parse_deps(value.clone());
+                }
+                "name" => {
+                    project_info.name = String::from(value.clone());
+                }
+                _ => {}
             }
         }
 
