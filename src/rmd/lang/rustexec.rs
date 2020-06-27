@@ -1,4 +1,4 @@
-use super::{LangExecutor, ProjectInfo};
+use super::{LangExecutor, CompiledLangExecutor, ProjectInfo};
 
 pub struct RustExec {}
 
@@ -19,4 +19,10 @@ impl LangExecutor for RustExec {
     fn install_dependency(&self) {}
     fn try_run(&self) {}
     fn execute(&self) {}
+}
+
+impl CompiledLangExecutor for RustExec {
+    fn compile(&self) {
+        unimplemented!()
+    }
 }
