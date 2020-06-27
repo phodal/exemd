@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 use std::{process, fs, env};
 use std::process::ExitStatus;
 
-use tempfile::NamedTempFile;
+use tempfile::{NamedTempFile, TempDir, tempdir_in};
 
 use crate::rmd::command::Command;
 use crate::main;
@@ -55,8 +55,11 @@ fn prepare_command(cmd: &Command) -> process::Command {
         }
         "rust" => {
             // todo: support execute file
-            let mut dir = env::temp_dir();
+
+            let mut dir = create_lang_dir(String::from("rust"));
+
             let mut origin = dir.clone();
+            println!("{}", dir.clone().into_os_string().into_string().unwrap());
 
             dir.push("hello.rs");
             let mut f = File::create(dir.clone()).unwrap();
@@ -93,4 +96,11 @@ fn prepare_command(cmd: &Command) -> process::Command {
             child
         }
     }
+}
+
+fn create_lang_dir(lang: String) -> PathBuf {
+    let mut dir = env::temp_dir().join("com.phodal.rinput").join(lang);
+    fs::create_dir_all(dir.clone()).unwrap();
+
+    dir
 }
