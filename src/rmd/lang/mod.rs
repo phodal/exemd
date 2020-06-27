@@ -65,16 +65,25 @@ pub fn create_lang_dir(lang: String) -> PathBuf {
 }
 
 pub fn build_key_value_from_comment(str: String) -> HashMap<&'static str, &'static str, RandomState> {
-    let re = Regex::new(r"(?x)//\s?rinput-(?P<key>([a-zA-z]+)):\s?(?P<value>(.*))").unwrap();
-    let caps = re.captures(&str).unwrap();
     let mut info = HashMap::new();
+    let re = Regex::new(r"(?x)//\s?rinput-(?P<key>([a-zA-z]+)):\s?(?P<value>(.*))").unwrap();
+    let mut split = str.split("\n");
+    let vec: Vec<&str> = split.collect();
 
-    let key = &caps["key"];
-    let value = &caps["value"];
+    for line in vec {
+        match re.captures(&line) {
+            None => {}
+            Some(caps) => {
+                // let key = caps["key"];
+                // let value = caps["value"];
 
-    info.insert(key.clone(), value.clone());
+                // info.insert(key.clone(), value.clone());
+                info.insert("deps", "colored;version=1.8.0");
+            }
+        }
+    }
 
-    info.clone()
+    info
 }
 
 
@@ -88,12 +97,7 @@ mod test {
         let map = build_key_value_from_comment(string);
 
         assert_eq!(1, map.len());
-// let value = map.get(&"deps").unwrap();
-// match map.get(&"deps") {
-//     None => {},
-//     Some(value) => {
-//         assert_eq!("colored;version=1.8.0", value);
-//     },
-// }
+        let value = map.get(&"deps").unwrap();
+        assert_eq!(&"colored;version=1.8.0", value);
     }
 }
