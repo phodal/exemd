@@ -89,10 +89,9 @@ pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
 pub fn parse_deps(str: String) -> Vec<Dependency> {
     let mut split = str.split(",");
     let vec: Vec<&str> = split.collect();
-    let re = Regex::new(r"(?x)(?P<name>([a-zA-Z]+))(;(?P<key>(\w+))=(?P<version>([a-zA-Z0-9.]+)))?").unwrap();
+    let re = Regex::new(r"(?x)(?P<name>([a-zA-Z-]+))(;(?P<key>(\w+))=(?P<version>([a-zA-Z0-9.]+)))?").unwrap();
 
     let mut deps: Vec<Dependency> = Vec::new();
-
     for line in vec {
         match re.captures(&line) {
             None => {}
@@ -130,7 +129,7 @@ mod test {
     }
 
     #[test]
-    fn should_parse_deps() {
+    fn should_parse_one_dep() {
         let string = String::from("    colored;version=1.8.0");
         let deps = parse_deps(string);
 
@@ -138,5 +137,16 @@ mod test {
         let first_dep = deps.get(0).unwrap();
         assert_eq!("colored", first_dep.name);
         assert_eq!("1.8.0", first_dep.version);
+    }
+
+    #[test]
+    fn should_parse_deps() {
+        let string = String::from("colored;version=1.8.0, pulldown-cmark;version=0.7");
+        let deps = parse_deps(string);
+
+        assert_eq!(2, deps.len());
+        let first_dep = deps.get(1).unwrap();
+        assert_eq!("pulldown-cmark", first_dep.name);
+        assert_eq!("0.7", first_dep.version);
     }
 }
