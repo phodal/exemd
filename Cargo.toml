@@ -1,5 +1,5 @@
 [package]
-name = "rmd"
+name = "exemd"
 version = "0.1.0"
 authors = ["Phodal Huang <h@phodal.com>"]
 edition = "2018"
@@ -14,5 +14,5 @@ regex = "1"
 
 [[bin]]
 path = "src/main.rs"
-name = "rmd"
+name = "exemd"
 doc = false

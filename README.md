@@ -1,10 +1,10 @@
-# rmd
+# exemd
 
-> rmd is a markdown executor, it will make markdown executable. 
+> exemd is a markdown executor, it will make markdown executable. 
 
-[![Build Status](https://travis-ci.org/phodal/rmd.svg?branch=master)](https://travis-ci.org/phodal/rmd)
+[![Build Status](https://travis-ci.org/phodal/exemd.svg?branch=master)](https://travis-ci.org/phodal/exemd)
 
-![build](https://github.com/phodal/rmd/workflows/build/badge.svg)
+![build](https://github.com/phodal/exemd/workflows/build/badge.svg)
 
 ## Development
 
@@ -15,7 +15,7 @@
 ```
 
 ```bash
-rmd run _fixtures/sample.md
+exemd run _fixtures/sample.md
 ```
 
 ## LICENSE
