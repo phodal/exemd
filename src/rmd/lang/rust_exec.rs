@@ -20,7 +20,7 @@ impl RustExec {
             source_code: source.to_string(),
             dir: "".to_string(),
             output_dir: "".to_string(),
-            project: ProjectInfo::new()
+            project: ProjectInfo::new(),
         }
     }
 }
@@ -34,7 +34,6 @@ impl LangExecutor for RustExec {
                 // let mut split = line.split("// rinput-");
                 // let vec: Vec<&str> = split.collect();
                 // let info = vec[1];
-
             }
         }
 
@@ -74,24 +73,5 @@ impl CompiledLangExecutor for RustExec {
 
 #[cfg(test)]
 mod test {
-    use crate::rmd::lang::{RustExec, LangExecutor};
-    use regex::Regex;
 
-    #[test]
-    fn should_get_deps() {
-        let re = Regex::new(r"(?x)//\s?rinput-(?P<key>([a-zA-z]+)):\s?(?P<value>(.*))").unwrap();
-        let caps = re.captures("// rinput-deps: colored;version=1.8.0").unwrap();
-
-
-        assert_eq!("deps", &caps["key"]);
-        assert_eq!("colored;version=1.8.0", &caps["value"]);
-    }
-
-    // #[test]
-    // fn should_get_deps() {
-    //     let mut rustexec = RustExec::new(String::from("// rinput-deps: colored;version=1.8.0\n"));
-    //     rustexec.execute();
-    //
-    //     assert_eq!(rustexec.project.deps.len(), 1);
-    // }
 }

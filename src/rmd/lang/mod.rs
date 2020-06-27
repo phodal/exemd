@@ -1,11 +1,15 @@
 use std::{env, fs};
+use std::collections::hash_map::RandomState;
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::Write;
 use std::path::PathBuf;
 use std::process::Command;
 
-pub use self::rust_exec::RustExec;
+use regex::{Captures, Regex};
+
 pub use self::python_exec::PythonExec;
+pub use self::rust_exec::RustExec;
 
 mod python_exec;
 mod rust_exec;
@@ -58,4 +62,38 @@ pub fn create_lang_dir(lang: String) -> PathBuf {
     fs::create_dir_all(dir.clone()).unwrap();
 
     dir
+}
+
+pub fn build_key_value_from_comment(str: String) -> HashMap<&'static str, &'static str, RandomState> {
+    let re = Regex::new(r"(?x)//\s?rinput-(?P<key>([a-zA-z]+)):\s?(?P<value>(.*))").unwrap();
+    let caps = re.captures(&str).unwrap();
+    let mut info = HashMap::new();
+
+    let key = &caps["key"];
+    let value = &caps["value"];
+
+    info.insert(key.clone(), value.clone());
+
+    info.clone()
+}
+
+
+#[cfg(test)]
+mod test {
+    use crate::rmd::lang::{build_key_value_from_comment, LangExecutor, RustExec};
+
+    #[test]
+    fn should_parse_key_values() {
+        let string = String::from("// rinput-deps: colored;version=1.8.0");
+        let map = build_key_value_from_comment(string);
+
+        assert_eq!(1, map.len());
+// let value = map.get(&"deps").unwrap();
+// match map.get(&"deps") {
+//     None => {},
+//     Some(value) => {
+//         assert_eq!("colored;version=1.8.0", value);
+//     },
+// }
+    }
 }
