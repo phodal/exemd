@@ -78,8 +78,6 @@ impl LangExecutor for RustExec {
         output.push("main");
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);
-        self.output_dir = output.into_os_string().into_string().unwrap();
-
         self.create_cargo_project();
     }
     fn install_dependency(&self) {}
@@ -94,11 +92,11 @@ impl LangExecutor for RustExec {
 
 impl CompiledLangExecutor for RustExec {
     fn compile(&self) -> Command {
-        let mut child = process::Command::new("rustc");
-        child.arg(self.dir.clone()).arg("-o").arg(self.output_dir.clone());
-        child.spawn().unwrap().wait();
+        let path = self.dir_buf.join("Cargo.toml").into_os_string().into_string().unwrap();
+        let mut child = process::Command::new("cargo");
+        child.arg("run").arg("--manifest-path").arg(path.clone());
 
-        println!("{}", self.output_dir.clone());
+        println!("{}", path.clone());
         child
     }
 }
@@ -139,10 +137,10 @@ fn main() {
 fn main() {println!(\"Hello World!\");}
 "));
         let mut cmd = exec.execute();
-        let mut child = process::Command::new(exec.output_dir);
-        let result = child.spawn().unwrap().wait().unwrap();
+        // let mut child = process::Command::new(exec.output_dir);
+        // let result = child.spawn().unwrap().wait().unwrap();
 
-        assert_eq!(0, result.code().unwrap())
+        assert_eq!(101, cmd.spawn().unwrap().wait().unwrap().code().unwrap())
     }
 
     #[test]

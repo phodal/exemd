@@ -55,9 +55,7 @@ fn prepare_command(cmd: &Command) -> process::Command {
         }
         "rust" => {
             let mut rustexec = RustExec::new(source.clone());
-            rustexec.execute();
-
-            let child = process::Command::new(rustexec.output_dir);
+            let child = rustexec.execute();
             child
         }
         _ => {
