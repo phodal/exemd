@@ -28,12 +28,6 @@ checksum = "f8aac770f1885fd7e387acedd76065302551364496e46b3dd00860b2f8359b9d"
 
 [[package]]
 name = "bitflags"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a41f80ec2e140d19e789764fdf22d0f2da98fe7e55d26f99db59cb3d2605d327"
-
-[[package]]
-name = "bitflags"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf1de2fe8c75bc145a2f577add951f8134889b4795d47466a54a5c846d691693"
@@ -51,7 +45,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "860643c53f980f0d38a5e25dfab6c3c93b2cb3aa1fe192643d17a293c6c41936"
 dependencies = [
  "atty",
- "bitflags 1.2.1",
+ "bitflags",
  "clap_derive",
  "indexmap",
  "lazy_static",
@@ -92,16 +86,6 @@ name = "fuchsia-cprng"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a06f77d526c1a601b7c4cdd98f54b5eaabffc14d5f2f0296febdc7f357c6d3ba"
-
-[[package]]
-name = "gag"
-version = "0.1.10"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8cc0b9f53275dc5fada808f1d2f82e3688a6c14d735633d1590b7be8eb2307b5"
-dependencies = [
- "libc",
- "tempfile",
-]
 
 [[package]]
 name = "getrandom"
@@ -160,15 +144,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3728d817d99e5ac407411fa471ff9800a778d88a24685968b36824eaf4bee400"
 
 [[package]]
-name = "num-traits"
-version = "0.2.12"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ac267bcc07f48ee5f8935ab0d24f316fb722d7a1292e2913f0cc196b29ffd611"
-dependencies = [
- "autocfg",
-]
-
-[[package]]
 name = "os_str_bytes"
 version = "2.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -221,7 +196,7 @@ version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3e142c3b8f49d2200605ee6ba0b1d757310e9e7a72afe78c36ee2ef67300ee00"
 dependencies = [
- "bitflags 1.2.1",
+ "bitflags",
  "memchr",
  "unicase",
 ]
@@ -350,16 +325,12 @@ dependencies = [
 name = "rmd"
 version = "0.1.0"
 dependencies = [
- "bitflags 0.2.1",
  "clap",
  "colored",
- "gag",
- "num-traits",
  "pulldown-cmark",
  "regex",
  "tempdir",
  "tempfile",
- "termbox-sys",
 ]
 
 [[package]]
@@ -413,12 +384,6 @@ dependencies = [
  "remove_dir_all",
  "winapi",
 ]
-
-[[package]]
-name = "termbox-sys"
-version = "0.2.12"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "625000eb24971280658d44c896a88e7aa252c1f13b4d86c8fc7b87c9f26e7e61"
 
 [[package]]
 name = "termcolor"

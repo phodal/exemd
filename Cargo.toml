@@ -12,12 +12,6 @@ pulldown-cmark = { version = "0.7", default-features = false }
 tempfile = "3.1.0"
 regex = "1"
 
-# rustbox
-bitflags = "0.2.1"
-termbox-sys = "0.2.11"
-gag = "0.1.10"
-num-traits = "0.2.12"
-
 [[bin]]
 path = "src/main.rs"
 name = "rmd"

@@ -1,5 +1,5 @@
 [clog]
-repository = "https://github.com/phodal/rinput"
+repository = "https://github.com/phodal/rmd"
 outfile = "CHANGELOG.md"
 from-latest-tag = true
 

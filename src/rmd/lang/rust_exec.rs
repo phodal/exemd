@@ -137,10 +137,7 @@ fn main() {
 fn main() {println!(\"Hello World!\");}
 "));
         let mut cmd = exec.execute();
-        // let mut child = process::Command::new(exec.output_dir);
-        // let result = child.spawn().unwrap().wait().unwrap();
-
-        assert_eq!(101, cmd.spawn().unwrap().wait().unwrap().code().unwrap())
+        assert_eq!(0, cmd.spawn().unwrap().wait().unwrap().code().unwrap())
     }
 
     #[test]
