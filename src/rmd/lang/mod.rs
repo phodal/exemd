@@ -69,7 +69,6 @@ pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
     let re = Regex::new(r"(?x)//\s?rinput-(?P<key>([a-zA-z]+)):\s?(?P<value>(.*))").unwrap();
     let mut split = str.split("\n");
     let vec: Vec<&str> = split.collect();
-    info.insert(String::from("deps"), String::from("colored;version=1.8.0"));
 
     for line in vec {
         match re.captures(&line) {
@@ -78,7 +77,7 @@ pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
                 let key = &caps["key"];
                 let value = &caps["value"];
 
-                // info.insert(&String::from(key), &String::from(value));
+                info.insert(String::from(key), String::from(value));
             }
         }
     }
