@@ -23,6 +23,15 @@ pub struct ProjectInfo {
     pub name: String,
 }
 
+impl ProjectInfo {
+    fn new() -> ProjectInfo {
+        ProjectInfo {
+            deps: vec![],
+            name: "".to_string(),
+        }
+    }
+}
+
 pub trait LangExecutor {
     fn parse_project_info(&self) -> ProjectInfo;
     fn build_project(&mut self);
