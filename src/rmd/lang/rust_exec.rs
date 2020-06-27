@@ -32,7 +32,10 @@ impl LangExecutor for RustExec {
 
         for (key, value) in map {
             if key == String::from("deps") {
-                project_info.deps = parse_deps(value);
+                project_info.deps = parse_deps(value.clone());
+            }
+            if key == String::from("name") {
+                project_info.name = String::from(value.clone());
             }
         }
 
@@ -77,6 +80,7 @@ mod test {
 
     fn get_hello_world_code() -> &'static str {
         "// rinput-deps: colored;version=1.8.0
+// rinput-name: demo
 fn main() {
   println!(\"Hello World!\");
 }
@@ -89,6 +93,14 @@ fn main() {
         exec.execute();
 
         assert_eq!(1, exec.project.deps.len())
+    }
+
+    #[test]
+    fn should_parse_project_info() {
+        let mut exec = RustExec::new(String::from(get_hello_world_code()));
+        exec.execute();
+
+        assert_eq!("demo", exec.project.name)
     }
 
     #[test]
