@@ -1,6 +1,6 @@
 use super::{LangExecutor, CompiledLangExecutor, ProjectInfo};
 use crate::rmd::lang::{create_lang_dir, write_content_to_file, build_key_value_from_comment, parse_deps};
-use std::process;
+use std::{process, fs};
 use std::process::Command;
 use std::path::PathBuf;
 
@@ -66,10 +66,13 @@ impl LangExecutor for RustExec {
         project_info
     }
     fn build_project(&mut self) {
-        let mut dir = create_lang_dir(String::from("rust"), String::from(self.project.name.clone()));
-        let mut output = dir.clone();
+        let mut base_dir = create_lang_dir(String::from("rust"), String::from(self.project.name.clone()));
+        let mut output = base_dir.clone();
 
-        self.dir_buf = dir.clone();
+        let mut dir = base_dir.clone().join("src");
+        fs::create_dir_all(dir.clone()).unwrap();
+
+        self.dir_buf = base_dir.clone();
 
         dir.push("main.rs");
         output.push("main");
