@@ -49,8 +49,8 @@ impl LangExecutor for RustExec {
         let mut dir = create_lang_dir(String::from("rust"), String::from(self.project.name.clone()));
         let mut output = dir.clone();
 
-        dir.push(self.project.name.clone() + &".rs");
-        output.push(self.project.name.clone());
+        dir.push("main.rs");
+        output.push("main");
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);
         self.output_dir = output.into_os_string().into_string().unwrap();
