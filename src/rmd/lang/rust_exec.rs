@@ -1,6 +1,7 @@
 use super::{LangExecutor, CompiledLangExecutor, ProjectInfo};
 use crate::rmd::lang::{create_lang_dir, write_content_to_file};
 use std::process;
+use std::process::Command;
 
 pub struct RustExec {
     filename: String,
@@ -41,18 +42,20 @@ impl LangExecutor for RustExec {
     }
     fn install_dependency(&self) {}
     fn try_run(&self) {}
-    fn execute(&mut self) {
+    fn execute(&mut self) -> Command {
         self.build_project();
-        self.compile();
+        let child = self.compile();
+        child
     }
 }
 
 impl CompiledLangExecutor for RustExec {
-    fn compile(&self) {
+    fn compile(&self) -> Command {
         let mut child = process::Command::new("rustc");
         child.arg(self.dir.clone()).arg("-o").arg(self.output_dir.clone());
         child.spawn().unwrap().wait();
 
         println!("{}", self.output_dir.clone());
+        child
     }
 }

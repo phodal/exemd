@@ -1,10 +1,14 @@
-mod rustexec;
-
-pub use self::rustexec::RustExec;
-use std::path::PathBuf;
-use std::fs::File;
 use std::{env, fs};
+use std::fs::File;
 use std::io::Write;
+use std::path::PathBuf;
+use std::process::Command;
+
+pub use self::rust_exec::RustExec;
+pub use self::python_exec::PythonExec;
+
+mod python_exec;
+mod rust_exec;
 
 #[derive(Debug)]
 pub struct Dependency {
@@ -24,11 +28,11 @@ pub trait LangExecutor {
     fn build_project(&mut self);
     fn install_dependency(&self);
     fn try_run(&self);
-    fn execute(&mut self);
+    fn execute(&mut self) -> Command;
 }
 
 pub trait CompiledLangExecutor: LangExecutor {
-    fn compile(&self);
+    fn compile(&self) -> Command;
 }
 
 

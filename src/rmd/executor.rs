@@ -11,7 +11,7 @@ use crate::rmd::command::Command;
 use crate::main;
 use std::fmt::Debug;
 use std::ffi::OsStr;
-use crate::rmd::lang::{RustExec, LangExecutor};
+use crate::rmd::lang::{RustExec, LangExecutor, PythonExec};
 
 pub fn execute_command(cmd: Command) -> Result<ExitStatus> {
     if cmd.script.source == String::from("") {
@@ -40,8 +40,8 @@ fn prepare_command(cmd: &Command) -> process::Command {
             child
         }
         "py" | "python" => {
-            let mut child = process::Command::new("python");
-            child.arg("-c").arg(source);
+            let mut py_exec = PythonExec::new(source.clone());
+            let child = py_exec.execute();
             child
         }
         "rb" | "ruby" => {
