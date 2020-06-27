@@ -85,10 +85,31 @@ pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
     info
 }
 
+pub fn parse_deps(str: String) -> HashMap<String, String> {
+    let mut info = HashMap::new();
+    let mut split = str.split(",");
+    let vec: Vec<&str> = split.collect();
+    let re = Regex::new(r"(?x)(?P<name>([a-zA-Z]+))(;(?P<key>(\w+))=(?P<version>([a-zA-Z0-9.]+)))?").unwrap();
+
+    for line in vec {
+        match re.captures(&line) {
+            None => {}
+            Some(caps) => {
+                let name = &caps["name"];
+                let version = &caps["version"];
+
+                info.insert(String::from(name), String::from(version));
+            }
+        }
+    }
+
+    info
+}
+
 
 #[cfg(test)]
 mod test {
-    use crate::rmd::lang::{build_key_value_from_comment, LangExecutor, RustExec};
+    use crate::rmd::lang::{build_key_value_from_comment, LangExecutor, RustExec, parse_deps};
 
     #[test]
     fn should_parse_key_values() {
@@ -98,5 +119,15 @@ mod test {
         assert_eq!(1, map.len());
         let value = map.get("deps").unwrap();
         assert_eq!(&"colored;version=1.8.0", value);
+    }
+
+    #[test]
+    fn should_parse_deps() {
+        let string = String::from("    colored;version=1.8.0");
+        let map = parse_deps(string);
+
+        assert_eq!(1, map.len());
+        // assert_eq!(&"colored", map.get("name").unwrap());
+        // assert_eq!(&"1.8.0", map.get("version").unwrap());
     }
 }
