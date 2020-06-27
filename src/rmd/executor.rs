@@ -59,21 +59,16 @@ fn prepare_command(cmd: &Command) -> process::Command {
             let mut origin = dir.clone();
 
             dir.push("hello.rs");
-            origin.push("hello");
-
             let mut f = File::create(dir.clone()).unwrap();
             f.write_all(source.as_ref()).unwrap();
-
             let code_path = dir.into_os_string().into_string().unwrap();
+
+            origin.push("hello");
             let mut output_path = origin.into_os_string().into_string().unwrap();
 
             let mut child = process::Command::new("rustc");
-            println!("rustc {}", code_path);
             child.arg(code_path).arg("-o").arg(output_path.clone());
             child.spawn().unwrap().wait();
-
-            let mut child = process::Command::new(".");
-            child.arg(output_path.clone());
 
             child = process::Command::new(output_path.clone());
 
