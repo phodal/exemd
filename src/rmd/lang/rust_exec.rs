@@ -74,9 +74,18 @@ mod test {
     use crate::rmd::lang::{RustExec, LangExecutor};
     use std::process;
 
+
+    fn get_hello_world_code() -> &'static str {
+        "// rinput-deps: colored;version=1.8.0
+fn main() {
+  println!(\"Hello World!\");
+}
+"
+    }
+
     #[test]
     fn should_parse_project_deps() {
-        let mut exec = RustExec::new(String::from("// rinput-deps: colored;version=1.8.0\n"));
+        let mut exec = RustExec::new(String::from(get_hello_world_code()));
         exec.execute();
 
         assert_eq!(1, exec.project.deps.len())
@@ -84,11 +93,7 @@ mod test {
 
     #[test]
     fn should_success_run_hello_world() {
-        let mut exec = RustExec::new(String::from("// rinput-deps: colored;version=1.8.0
-fn main() {
-  println!(\"Hello World!\");
-}
-"));
+        let mut exec = RustExec::new(String::from(get_hello_world_code()));
         let mut cmd = exec.execute();
         let mut child = process::Command::new(exec.output_dir);
         let result = child.spawn().unwrap().wait().unwrap();
