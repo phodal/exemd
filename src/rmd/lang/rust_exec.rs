@@ -90,9 +90,8 @@ fn main() {
 }
 "));
         let mut cmd = exec.execute();
-        let child = process::Command::new(exec.output_dir);
-
-        let result = cmd.spawn().unwrap().wait().unwrap();
+        let mut child = process::Command::new(exec.output_dir);
+        let result = child.spawn().unwrap().wait().unwrap();
 
         assert_eq!(0, result.code().unwrap())
     }
