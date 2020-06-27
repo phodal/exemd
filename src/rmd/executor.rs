@@ -75,6 +75,8 @@ fn prepare_command(cmd: &Command) -> process::Command {
             let mut child = process::Command::new(".");
             child.arg(output_path.clone());
 
+            child = process::Command::new(output_path.clone());
+
             child
         }
         #[cfg(windows)]
