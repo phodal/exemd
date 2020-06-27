@@ -14,5 +14,7 @@ pub struct ProjectInfo {
 pub trait LangExecutor {
     fn parse_project_info(&self) -> ProjectInfo;
     fn build_project(&self);
+    fn install_dependency(&self);
+    fn try_run(&self);
     fn execute(&self);
 }
