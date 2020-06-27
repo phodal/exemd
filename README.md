@@ -8,40 +8,19 @@
 
 ## Development
 
-Set to Nightly: `rustup install nightly`
-
-1. install `just`
+## Usage
 
 ```
-brew install just
+
 ```
 
-
-### Others:
-
-.clog.toml -> [clog-cli](https://github.com/clog-tool/clog-cli) A conventional changelog for the rest of us.  
-
-## Ideas
-
- - [ ] Basic Editor
-   - [ ] Language Server Protocol?
-   - [ ] Syntax Highlighting
-      - [ ] [syntect](https://github.com/trishume/syntect) is a syntax highlighting library for Rust
-   - [ ] Code Highlight Plugins
-      - [ ] Markdown
- - [ ] Mock Server
-   - [ ] DSL
- - [ ] Diff Manage
-   - [ ] git-like coca analysis tools
- - [ ] Command Line Tools
-   - [ ] search tool, such as [ripgrep](https://github.com/BurntSushi/ripgrep)
-   - [ ] `cut` and `awk` [Choose](https://github.com/theryangeary/choose)
-   - [ ] find todo, [todo_r](https://github.com/lavifb/todo_r)
- - [ ] Markdown Run
- - [ ] Shell Parser for DSL
-   - [ ] Regex DSL for AWK Query
+```bash
+rmd run _fixtures/sample.md
+```
 
 ## LICENSE
+
+origin code inspired by [mask](https://github.com/jakedeichert/mask) with MIT LICENSE;
 
 [![Phodal's Idea](http://brand.phodal.com/shields/idea-small.svg)](http://ideas.phodal.com/)
 
