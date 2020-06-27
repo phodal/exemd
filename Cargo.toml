@@ -3,6 +3,21 @@ name = "exemd"
 version = "0.1.0"
 authors = ["Phodal Huang <h@phodal.com>"]
 edition = "2018"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/phodal/exemd"
+documentation = "https://github.com/phodal/exemd"
+homepage = "https://github.com/phodal/exemd"
+description = """
+exemd is a markdown executor, it will make markdown executable.
+"""
+categories = ["text-processing"]
+exclude = [
+    "_fixtures",
+    "docs",
+    ".github",
+    ".travis.yml",
+]
 
 [dependencies]
 clap = "3.0.0-beta.1"
