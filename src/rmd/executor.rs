@@ -11,6 +11,7 @@ use crate::rmd::command::Command;
 use crate::main;
 use std::fmt::Debug;
 use std::ffi::OsStr;
+use crate::rmd::lang::{RustExec, LangExecutor};
 
 pub fn execute_command(cmd: Command) -> Result<ExitStatus> {
     if cmd.script.source == String::from("") {
@@ -54,21 +55,10 @@ fn prepare_command(cmd: &Command) -> process::Command {
             child
         }
         "rust" => {
-            let mut dir = create_lang_dir(String::from("rust"));
-            let mut output = dir.clone();
+            let mut rustexec = RustExec::new(source.clone());
+            rustexec.execute();
 
-            dir.push("hello.rs");
-            let code_path = write_content_to_file(source, dir);
-            output.push("hello");
-            let mut output_path = output.into_os_string().into_string().unwrap();
-
-            let mut child = process::Command::new("rustc");
-            child.arg(code_path).arg("-o").arg(output_path.clone());
-            child.spawn().unwrap().wait();
-
-            println!("{}", output_path);
-            child = process::Command::new(output_path.clone());
-
+            let child = process::Command::new(rustexec.output_dir);
             child
         }
         #[cfg(windows)]
@@ -90,19 +80,4 @@ fn prepare_command(cmd: &Command) -> process::Command {
             child
         }
     }
-}
-
-fn write_content_to_file(source: String, dir: PathBuf) -> String {
-    let mut f = File::create(dir.clone()).unwrap();
-    f.write_all(source.as_ref()).unwrap();
-    let code_path = dir.into_os_string().into_string().unwrap();
-
-    code_path
-}
-
-fn create_lang_dir(lang: String) -> PathBuf {
-    let mut dir = env::temp_dir().join("com.phodal.rinput").join(lang);
-    fs::create_dir_all(dir.clone()).unwrap();
-
-    dir
 }
