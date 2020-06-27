@@ -58,8 +58,12 @@ pub fn write_content_to_file(source: String, dir: PathBuf) -> String {
     code_path
 }
 
-pub fn create_lang_dir(lang: String) -> PathBuf {
-    let mut dir = env::temp_dir().join("com.phodal.rinput").join(lang);
+pub fn create_lang_dir(lang: String, project_name: String) -> PathBuf {
+    let mut dir = env::temp_dir()
+        .join("com.phodal.rinput")
+        .join(lang)
+        .join(project_name);
+
     fs::create_dir_all(dir.clone()).unwrap();
 
     dir

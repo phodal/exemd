@@ -46,7 +46,7 @@ impl LangExecutor for RustExec {
         project_info
     }
     fn build_project(&mut self) {
-        let mut dir = create_lang_dir(String::from("rust"));
+        let mut dir = create_lang_dir(String::from("rust"), String::from(self.project.name.clone()));
         let mut output = dir.clone();
 
         dir.push(self.project.name.clone() + &".rs");
@@ -83,7 +83,6 @@ mod test {
     use crate::rmd::lang::{RustExec, LangExecutor};
     use std::process;
 
-
     fn get_hello_world_code() -> &'static str {
         "// rinput-deps: colored;version=1.8.0
 // rinput-name: demo
@@ -111,7 +110,9 @@ fn main() {
 
     #[test]
     fn should_success_run_hello_world() {
-        let mut exec = RustExec::new(String::from(get_hello_world_code()));
+        let mut exec = RustExec::new(String::from("// rinput-name: hello2
+fn main() {println!(\"Hello World!\");}
+"));
         let mut cmd = exec.execute();
         let mut child = process::Command::new(exec.output_dir);
         let result = child.spawn().unwrap().wait().unwrap();
