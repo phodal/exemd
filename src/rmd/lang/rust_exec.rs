@@ -1,5 +1,5 @@
 use super::{LangExecutor, CompiledLangExecutor, ProjectInfo};
-use crate::rmd::lang::{create_lang_dir, write_content_to_file};
+use crate::rmd::lang::{create_lang_dir, write_content_to_file, build_key_value_from_comment, parse_deps};
 use std::process;
 use std::process::Command;
 
@@ -26,18 +26,16 @@ impl RustExec {
 }
 
 impl LangExecutor for RustExec {
-    fn parse_project_info(&self) -> ProjectInfo {
-        let mut split = self.source_code.split("\n");
-        let vec: Vec<&str> = split.collect();
-        for line in vec {
-            if line.starts_with("// rinput-") || line.starts_with("//rinput-") {
-                // let mut split = line.split("// rinput-");
-                // let vec: Vec<&str> = split.collect();
-                // let info = vec[1];
+    fn parse_project_info(&mut self) -> ProjectInfo {
+        let map = build_key_value_from_comment(self.source_code.clone());
+        let mut project_info = ProjectInfo::new();
+
+        for (key, value) in map {
+            if key == String::from("deps") {
+                project_info.deps = parse_deps(value);
             }
         }
 
-        let project_info = ProjectInfo::new();
         project_info
     }
     fn build_project(&mut self) {
@@ -73,5 +71,13 @@ impl CompiledLangExecutor for RustExec {
 
 #[cfg(test)]
 mod test {
+    use crate::rmd::lang::{RustExec, LangExecutor};
 
+    #[test]
+    fn should_parse_project_deps() {
+        let mut exec = RustExec::new(String::from("// rinput-deps: colored;version=1.8.0\n"));
+        exec.execute();
+
+        assert_eq!(1, exec.project.deps.len())
+    }
 }

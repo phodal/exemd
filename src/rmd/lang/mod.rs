@@ -38,7 +38,7 @@ impl ProjectInfo {
 }
 
 pub trait LangExecutor {
-    fn parse_project_info(&self) -> ProjectInfo;
+    fn parse_project_info(&mut self) -> ProjectInfo;
     fn build_project(&mut self);
     fn install_dependency(&self);
     fn try_run(&self);
