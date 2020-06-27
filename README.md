@@ -1,10 +1,10 @@
-# rinput
+# rmd
 
-> rinput is a markdown executor, it will make markdown executable. 
+> rmd is a markdown executor, it will make markdown executable. 
 
-[![Build Status](https://travis-ci.org/phodal/rinput.svg?branch=master)](https://travis-ci.org/phodal/rinput)
+[![Build Status](https://travis-ci.org/phodal/rmd.svg?branch=master)](https://travis-ci.org/phodal/rmd)
 
-![build](https://github.com/phodal/rinput/workflows/build/badge.svg)
+![build](https://github.com/phodal/rmd/workflows/build/badge.svg)
 
 ## Development
 
@@ -42,8 +42,6 @@ brew install just
    - [ ] Regex DSL for AWK Query
 
 ## LICENSE
-
-[rinput](src/rinput) based on [iota](https://github.com/gchp/iota) with MIT LICENSE
 
 [![Phodal's Idea](http://brand.phodal.com/shields/idea-small.svg)](http://ideas.phodal.com/)
 
