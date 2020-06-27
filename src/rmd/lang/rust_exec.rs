@@ -72,6 +72,7 @@ impl CompiledLangExecutor for RustExec {
 #[cfg(test)]
 mod test {
     use crate::rmd::lang::{RustExec, LangExecutor};
+    use std::process;
 
     #[test]
     fn should_parse_project_deps() {
@@ -79,5 +80,20 @@ mod test {
         exec.execute();
 
         assert_eq!(1, exec.project.deps.len())
+    }
+
+    #[test]
+    fn should_success_run_hello_world() {
+        let mut exec = RustExec::new(String::from("// rinput-deps: colored;version=1.8.0
+fn main() {
+  println!(\"Hello World!\");
+}
+"));
+        let mut cmd = exec.execute();
+        let child = process::Command::new(exec.output_dir);
+
+        let result = cmd.spawn().unwrap().wait().unwrap();
+
+        assert_eq!(0, result.code().unwrap())
     }
 }
