@@ -16,6 +16,7 @@ mod rust_exec;
 
 #[derive(Debug)]
 pub struct Dependency {
+    pub name: String,
     pub version: String,
     pub artifact_id: String,
     pub group_id: String,
@@ -85,11 +86,12 @@ pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
     info
 }
 
-pub fn parse_deps(str: String) -> HashMap<String, String> {
-    let mut info = HashMap::new();
+pub fn parse_deps(str: String) -> Vec<Dependency> {
     let mut split = str.split(",");
     let vec: Vec<&str> = split.collect();
     let re = Regex::new(r"(?x)(?P<name>([a-zA-Z]+))(;(?P<key>(\w+))=(?P<version>([a-zA-Z0-9.]+)))?").unwrap();
+
+    let mut deps: Vec<Dependency> = Vec::new();
 
     for line in vec {
         match re.captures(&line) {
@@ -98,12 +100,18 @@ pub fn parse_deps(str: String) -> HashMap<String, String> {
                 let name = &caps["name"];
                 let version = &caps["version"];
 
-                info.insert(String::from(name), String::from(version));
+                let dep = Dependency {
+                    name: String::from(name),
+                    version: String::from(version),
+                    artifact_id: "".to_string(),
+                    group_id: "".to_string(),
+                };
+                deps.push(dep);
             }
         }
     }
 
-    info
+    deps
 }
 
 
@@ -124,10 +132,11 @@ mod test {
     #[test]
     fn should_parse_deps() {
         let string = String::from("    colored;version=1.8.0");
-        let map = parse_deps(string);
+        let deps = parse_deps(string);
 
-        assert_eq!(1, map.len());
-        // assert_eq!(&"colored", map.get("name").unwrap());
-        // assert_eq!(&"1.8.0", map.get("version").unwrap());
+        assert_eq!(1, deps.len());
+        let first_dep = deps.get(0).unwrap();
+        assert_eq!("colored", first_dep.name);
+        assert_eq!("1.8.0", first_dep.version);
     }
 }
