@@ -2,6 +2,12 @@ use super::{LangExecutor, ProjectInfo};
 
 pub struct RustExec {}
 
+impl RustExec {
+    fn new() -> RustExec {
+        RustExec {}
+    }
+}
+
 impl LangExecutor for RustExec {
     fn parse_project_info(&self) -> ProjectInfo {
         ProjectInfo {

@@ -2,7 +2,9 @@ mod rustexec;
 
 #[derive(Debug)]
 pub struct Dependency {
-
+    pub version: String,
+    pub artifact_id: String,
+    pub group_id: String,
 }
 
 #[derive(Debug)]
@@ -17,4 +19,8 @@ pub trait LangExecutor {
     fn install_dependency(&self);
     fn try_run(&self);
     fn execute(&self);
+}
+
+pub trait CompiledLangExecutor: LangExecutor {
+    fn compile(&self);
 }
