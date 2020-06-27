@@ -2,12 +2,14 @@ use super::{LangExecutor, CompiledLangExecutor, ProjectInfo};
 use crate::rmd::lang::{create_lang_dir, write_content_to_file, build_key_value_from_comment, parse_deps};
 use std::process;
 use std::process::Command;
+use std::path::PathBuf;
 
 pub struct RustExec {
     filename: String,
     origin: String,
     source_code: String,
     dir: String,
+    dir_buf: PathBuf,
     pub(crate) output_dir: String,
     project: ProjectInfo,
 }
@@ -19,6 +21,7 @@ impl RustExec {
             origin: source.to_string(),
             source_code: source.to_string(),
             dir: "".to_string(),
+            dir_buf: Default::default(),
             output_dir: "".to_string(),
             project: ProjectInfo::new(),
         }
@@ -37,6 +40,7 @@ version = \"0.1.0\"
             let pkg = default_package.push_str(&result);
         }
 
+        write_content_to_file(default_package.clone(), self.dir_buf.join("Cargo.toml"));
         default_package
     }
 }
@@ -64,6 +68,8 @@ impl LangExecutor for RustExec {
     fn build_project(&mut self) {
         let mut dir = create_lang_dir(String::from("rust"), String::from(self.project.name.clone()));
         let mut output = dir.clone();
+
+        self.dir_buf = dir.clone();
 
         dir.push("main.rs");
         output.push("main");
