@@ -64,21 +64,21 @@ pub fn create_lang_dir(lang: String) -> PathBuf {
     dir
 }
 
-pub fn build_key_value_from_comment(str: String) -> HashMap<&'static str, &'static str, RandomState> {
+pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
     let mut info = HashMap::new();
     let re = Regex::new(r"(?x)//\s?rinput-(?P<key>([a-zA-z]+)):\s?(?P<value>(.*))").unwrap();
     let mut split = str.split("\n");
     let vec: Vec<&str> = split.collect();
+    info.insert(String::from("deps"), String::from("colored;version=1.8.0"));
 
     for line in vec {
         match re.captures(&line) {
             None => {}
             Some(caps) => {
-                // let key = caps["key"];
-                // let value = caps["value"];
+                let key = &caps["key"];
+                let value = &caps["value"];
 
-                // info.insert(key.clone(), value.clone());
-                info.insert("deps", "colored;version=1.8.0");
+                // info.insert(&String::from(key), &String::from(value));
             }
         }
     }
@@ -97,7 +97,7 @@ mod test {
         let map = build_key_value_from_comment(string);
 
         assert_eq!(1, map.len());
-        let value = map.get(&"deps").unwrap();
+        let value = map.get("deps").unwrap();
         assert_eq!(&"colored;version=1.8.0", value);
     }
 }
