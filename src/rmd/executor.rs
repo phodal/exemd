@@ -1,7 +1,7 @@
-use std::{process};
-use std::io::{Error, ErrorKind};
+use std::{process, io};
+use std::io::{Error, ErrorKind, Read, Write};
 use std::io::Result;
-use std::process::ExitStatus;
+use std::process::{ExitStatus, Stdio};
 
 use crate::main;
 use crate::rmd::command::Command;
@@ -75,10 +75,14 @@ fn prepare_command(cmd: &Command) -> process::Command {
             let first = vec[0].clone();
             let mut copy = vec.clone();
             copy.remove(0);
-            let mut child = process::Command::new(first);
+
+            let mut args: Vec<String> = Vec::new();
             for arg in copy {
-                child.arg(arg);
+                args.push(String::from(arg.replace("\n", "")));
             }
+
+            let mut child = process::Command::new(first);
+            child.args(args);
 
             child
         }

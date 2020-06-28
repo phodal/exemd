@@ -75,6 +75,7 @@ impl CompiledLangExecutor for GoExec {
     fn compile(&self) -> Command {
         let mut child = process::Command::new("go");
         child.arg("run").arg(self.dir.clone());
+        println!("{}", self.dir.clone());
 
         child
     }
