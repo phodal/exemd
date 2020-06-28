@@ -50,6 +50,9 @@ impl Rmd {
                                 && lang_code.to_string() != String::from("cmd")
                             {
                                 current_command.script.source = text.to_string();
+
+                                commands.push(current_command.build());
+                                current_command = Command::new(0);
                             }
                         }
                         CodeBlockKind::Indented => {}
@@ -67,7 +70,6 @@ impl Rmd {
             }
         }
 
-        commands.push(current_command.build());
         commands
     }
 }
@@ -77,4 +79,62 @@ fn create_markdown_parser(content: &String) -> Parser {
     options.insert(Options::ENABLE_STRIKETHROUGH);
     let parser = Parser::new_ext(&content, options);
     parser
+}
+
+
+#[cfg(test)]
+const TEST_MASKFILE: &str = r#"
+# Document Title
+
+This is an example maskfile for the tests below.
+
+## serve (port)
+
+> Serve the app on the `port`
+
+~~~bash
+echo "Serving on port $port"
+~~~
+
+
+## node (name)
+
+> An example node script
+
+Valid lang codes: js, javascript
+
+```js
+const { name } = process.env;
+console.log(`Hello, ${name}!`);
+```
+
+
+## no_script
+
+This command has no source/script.
+"#;
+
+#[cfg(test)]
+mod build_command_structure {
+    use super::*;
+
+    #[test]
+    fn should_success_parse_len() {
+        let mut rmd = Rmd::new(TEST_MASKFILE.to_string());
+        let tree = rmd.parse();
+        assert_eq!(2, tree.len());
+    }
+
+    #[test]
+    fn should_success_parse_multiple() {
+        let mut rmd = Rmd::new(TEST_MASKFILE.to_string());
+        let tree = rmd.parse();
+        assert_eq!("bash", tree[0].script.executor);
+        assert_eq!("echo \"Serving on port $port\"
+", tree[0].script.source);
+        assert_eq!("js", tree[1].script.executor);
+        assert_eq!("const { name } = process.env;
+console.log(`Hello, ${name}!`);
+", tree[1].script.source);
+    }
 }
