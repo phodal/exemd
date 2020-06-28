@@ -3,8 +3,8 @@
 > exemd is a markdown executor, it will make markdown executable. 
 
 [![Build Status](https://travis-ci.org/phodal/exemd.svg?branch=master)](https://travis-ci.org/phodal/exemd)
-
 ![build](https://github.com/phodal/exemd/workflows/build/badge.svg)
+[![crates.io badge](https://img.shields.io/crates/v/exemd.svg)](https://crates.io/crates/exemd)<br/>
 
 ## Development
 
