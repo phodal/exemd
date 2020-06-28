@@ -1,12 +1,7 @@
-use std::fmt::Debug;
-use std::fs::{canonicalize, File, Metadata};
+use std::{process};
+use std::io::{Error, ErrorKind};
 use std::io::Result;
-use std::io::{Error, ErrorKind, Read, Seek, SeekFrom, Write};
-use std::path::{Path, PathBuf};
 use std::process::ExitStatus;
-use std::{env, fs, process};
-
-use tempfile::{tempdir_in, NamedTempFile, TempDir};
 
 use crate::main;
 use crate::rmd::command::Command;

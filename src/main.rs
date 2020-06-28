@@ -1,5 +1,4 @@
 use std::fs;
-use std::io::stdin;
 
 use clap::Clap;
 use colored::*;

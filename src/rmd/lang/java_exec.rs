@@ -126,7 +126,7 @@ impl LangExecutor for JavaExec {
 
 impl CompiledLangExecutor for JavaExec {
     fn compile(&self) -> Command {
-        /// support: gradle -p [path] run
+        // support: gradle -p [path] run
         let mut child = process::Command::new("gradle");
         child.arg("-p").arg(self.dir_buf.clone()).arg("run");
         child

@@ -104,7 +104,7 @@ impl LangExecutor for RustExec {
 
 impl CompiledLangExecutor for RustExec {
     fn compile(&self) -> Command {
-        /// support: cargo run --manifest-path=[path]
+        // support: cargo run --manifest-path=[path]
         let path = self
             .dir_buf
             .join("Cargo.toml")

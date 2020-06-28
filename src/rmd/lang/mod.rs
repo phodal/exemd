@@ -1,4 +1,3 @@
-use std::collections::hash_map::RandomState;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::Write;
@@ -6,7 +5,7 @@ use std::path::PathBuf;
 use std::process::Command;
 use std::{env, fs};
 
-use regex::{Captures, Regex};
+use regex::{Regex};
 
 pub use self::java_exec::JavaExec;
 pub use self::python_exec::PythonExec;
