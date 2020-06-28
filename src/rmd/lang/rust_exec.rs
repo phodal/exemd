@@ -2,7 +2,7 @@ use std::path::PathBuf;
 use std::process::Command;
 use std::{fs, process};
 
-use crate::rmd::lang::{build_key_value_from_comment, create_lang_dir, parse_deps, write_content_to_file};
+use crate::rmd::lang::{create_lang_dir, write_content_to_file};
 
 use super::{CompiledLangExecutor, LangExecutor, ProjectInfo};
 

@@ -103,7 +103,7 @@ pub fn create_lang_dir(lang: String, project_name: String) -> PathBuf {
 pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
     let mut info = HashMap::new();
     let re = Regex::new(r"(?x)//\s?exemd-(?P<key>([a-zA-z]+)):\s?(?P<value>(.*))").unwrap();
-    let mut split = str.split("\n");
+    let split = str.split("\n");
     let vec: Vec<&str> = split.collect();
 
     for line in vec {

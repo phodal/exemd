@@ -61,7 +61,7 @@ impl CompiledLangExecutor for KotlinExec {
         let mut out_buf = self.dir_buf.clone();
         out_buf.push(string);
 
-        let mut output = out_buf.into_os_string().into_string().unwrap();
+        let output = out_buf.into_os_string().into_string().unwrap();
         println!("{}", output.clone());
 
         child.arg(self.dir.clone())

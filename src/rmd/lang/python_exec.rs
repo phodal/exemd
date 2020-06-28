@@ -1,7 +1,7 @@
 use std::process;
 use std::process::Command;
 
-use crate::rmd::lang::{LangExecutor, ProjectInfo};
+use crate::rmd::lang::{LangExecutor};
 
 pub struct PythonExec {
     filename: String,
