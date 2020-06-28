@@ -6,6 +6,7 @@ use std::path::PathBuf;
 
 pub struct RustExec {
     lang: String,
+    lang_prefix: String,
     filename: String,
     origin: String,
     source_code: String,
@@ -18,6 +19,7 @@ impl RustExec {
     pub fn new(mut source: String) -> RustExec {
         RustExec {
             lang: "rust".to_string(),
+            lang_prefix: "rs".to_string(),
             filename: "".to_string(),
             origin: source.to_string(),
             source_code: source.to_string(),
@@ -79,7 +81,7 @@ impl LangExecutor for RustExec {
 
         self.dir_buf = base_dir.clone();
 
-        dir.push(self.filename.clone() + &".rs");
+        dir.push(self.filename.clone() + &self.lang_prefix.clone());
         output.push(self.filename.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);
