@@ -15,7 +15,7 @@
    - [x] Javascript
    - [x] Python
    - [x] PHP
-   - [ ] TypeScript
+   - [x] TypeScript by [deno](https://deno.land/)
  - [ ] compiled language
    - [x] Rust
    - [ ] Java
