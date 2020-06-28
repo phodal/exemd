@@ -83,7 +83,7 @@ impl LangExecutor for RustExec {
 
         self.dir_buf = base_dir.clone();
 
-        dir.push(self.filename.clone() + &self.lang_prefix.clone());
+        dir.push(self.filename.clone() + &"." + &self.lang_prefix.clone());
         output.push(self.filename.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);

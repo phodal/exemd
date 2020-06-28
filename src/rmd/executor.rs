@@ -10,7 +10,7 @@ use tempfile::{NamedTempFile, TempDir, tempdir_in};
 
 use crate::main;
 use crate::rmd::command::Command;
-use crate::rmd::lang::{LangExecutor, PythonExec, RustExec};
+use crate::rmd::lang::{LangExecutor, PythonExec, RustExec, JavaExec};
 
 pub fn execute_command(cmd: Command) -> Result<ExitStatus> {
     if cmd.script.source == String::from("") {
@@ -56,6 +56,11 @@ fn prepare_command(cmd: &Command) -> process::Command {
         "rust" => {
             let mut rustexec = RustExec::new(source.clone());
             let child = rustexec.execute();
+            child
+        }
+        "java" => {
+            let mut javaexec = JavaExec::new(source.clone());
+            let child = javaexec.execute();
             child
         }
         _ => {
