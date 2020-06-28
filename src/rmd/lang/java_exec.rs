@@ -43,12 +43,25 @@ apply plugin: 'application'
 
 mainClassName = 'main'
 
+repositories {
+    mavenCentral()
+}
+
+dependencies {
 ".to_owned();
+
+        for dep in self.project.deps.clone() {
+            let result = format!("compile \"{}:{}\"", dep.name, dep.version);
+            default_package.push_str(&result);
+        }
+
+        default_package.push_str("\n}\n");
+        // default_package.push_str(&format!("mainClassName = '{}.{}'", self.project.name.clone(), self.filename.clone()));
+        // default_package.push_str(&format!("mainClassName = 'main'", self.filename.clone()));
 
         write_content_to_file(default_package.clone(), self.dir_buf.join("build.gradle"));
         default_package
     }
-
 }
 
 impl LangExecutor for JavaExec {
