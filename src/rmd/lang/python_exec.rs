@@ -1,22 +1,27 @@
 use std::process;
 use std::process::Command;
 
-use crate::rmd::lang::{LangExecutor};
+use crate::rmd::lang::{LangExecutor, ProjectInfo};
+use std::path::PathBuf;
 
 pub struct PythonExec {
-    filename: String,
-    origin: String,
+    lang: String,
+    lang_prefix: String,
     source_code: String,
     dir: String,
+    dir_buf: PathBuf,
+    project: ProjectInfo,
 }
 
 impl PythonExec {
     pub fn new(source: String) -> PythonExec {
         PythonExec {
-            filename: "".to_string(),
-            origin: source.to_string(),
+            lang: "python".to_string(),
+            lang_prefix: "py".to_string(),
             source_code: source.to_string(),
             dir: "".to_string(),
+            dir_buf: Default::default(),
+            project: ProjectInfo::from_code(source),
         }
     }
 }
