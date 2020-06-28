@@ -10,7 +10,9 @@ use regex::{Captures, Regex};
 
 pub use self::python_exec::PythonExec;
 pub use self::rust_exec::RustExec;
+pub use self::java_exec::JavaExec;
 
+mod java_exec;
 mod python_exec;
 mod rust_exec;
 

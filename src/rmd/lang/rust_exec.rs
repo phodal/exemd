@@ -35,7 +35,7 @@ version = \"0.1.0\"
 
         for dep in self.project.deps.clone() {
             let result = format!("{} = \"{}\"\n", dep.name, dep.version);
-            let pkg = default_package.push_str(&result);
+            default_package.push_str(&result);
         }
 
         write_content_to_file(default_package.clone(), self.dir_buf.join("Cargo.toml"));
