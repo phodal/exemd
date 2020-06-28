@@ -5,7 +5,7 @@ use std::process::ExitStatus;
 
 use crate::main;
 use crate::rmd::command::Command;
-use crate::rmd::lang::{JavaExec, LangExecutor, PythonExec, RustExec};
+use crate::rmd::lang::{JavaExec, LangExecutor, PythonExec, RustExec, GoExec};
 
 pub fn execute_command(cmd: Command) -> Result<ExitStatus> {
     if cmd.script.source == String::from("") {
@@ -62,6 +62,11 @@ fn prepare_command(cmd: &Command) -> process::Command {
         "java" => {
             let mut javaexec = JavaExec::new(source.clone());
             let child = javaexec.execute();
+            child
+        }
+        "go" => {
+            let mut exec = GoExec::new(source.clone());
+            let child = exec.execute();
             child
         }
         _ => {

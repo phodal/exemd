@@ -10,10 +10,12 @@ use regex::{Regex};
 pub use self::java_exec::JavaExec;
 pub use self::python_exec::PythonExec;
 pub use self::rust_exec::RustExec;
+pub use self::go_exec::GoExec;
 
 mod java_exec;
 mod python_exec;
 mod rust_exec;
+mod go_exec;
 
 #[derive(Clone, Debug)]
 pub struct Dependency {

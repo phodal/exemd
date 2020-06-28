@@ -19,10 +19,15 @@
    - [x] TypeScript by [deno](https://deno.land/)
  - [ ] compiled language
    - [x] Rust
+     - [x] single file
+     - [x] dependency
    - [x] Java
      - [x] Gradle
+     - [x] single file
+     - [x] dependency
    - [ ] C
-   - [ ] Go
+   - [x] Go
+     - [x] single file
  
 ## Examples
 
