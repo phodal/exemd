@@ -43,7 +43,10 @@ fn run_markdown(args: EditorCmd) {
     for cmd in vec.into_iter() {
         match execute_command(cmd) {
             Ok(status) => match status.code() {
-                Some(code) => std::process::exit(code),
+                Some(code) => {
+                    // todo: try catch error for not broken
+                    std::process::exit(code)
+                },
                 None => return,
             },
             Err(err) => {
