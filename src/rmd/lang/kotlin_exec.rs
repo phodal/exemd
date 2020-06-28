@@ -7,8 +7,6 @@ use crate::rmd::lang::{LangExecutor, ProjectInfo, create_lang_dir, write_content
 pub struct KotlinExec {
     lang: String,
     lang_prefix: String,
-    filename: String,
-    origin: String,
     source_code: String,
     dir: String,
     dir_buf: PathBuf,
@@ -20,8 +18,6 @@ impl KotlinExec {
         KotlinExec {
             lang: "kotlin".to_string(),
             lang_prefix: "kt".to_string(),
-            filename: "".to_string(),
-            origin: source.to_string(),
             source_code: source.to_string(),
             dir: "".to_string(),
             dir_buf: Default::default(),
@@ -61,7 +57,7 @@ impl LangExecutor for KotlinExec {
 impl CompiledLangExecutor for KotlinExec {
     fn compile(&self) -> Command {
         let mut child = process::Command::new("kotlinc");
-        let string = format!("{}.{}", self.filename, "jar");
+        let string = format!("{}.{}", self.project.filename, "jar");
         let mut out_buf = self.dir_buf.clone();
         out_buf.push(string);
 

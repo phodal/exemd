@@ -7,8 +7,6 @@ use crate::rmd::lang::{LangExecutor, ProjectInfo, create_lang_dir, write_content
 pub struct GoExec {
     lang: String,
     lang_prefix: String,
-    filename: String,
-    origin: String,
     source_code: String,
     dir: String,
     dir_buf: PathBuf,
@@ -20,8 +18,6 @@ impl GoExec {
         GoExec {
             lang: "go".to_string(),
             lang_prefix: "go".to_string(),
-            filename: "".to_string(),
-            origin: source.to_string(),
             source_code: source.to_string(),
             dir: "".to_string(),
             dir_buf: Default::default(),

@@ -7,8 +7,6 @@ use crate::rmd::lang::{build_key_value_from_comment, create_lang_dir, parse_deps
 pub struct JavaExec {
     lang: String,
     lang_prefix: String,
-    filename: String,
-    origin: String,
     source_code: String,
     dir: String,
     dir_buf: PathBuf,
@@ -20,8 +18,6 @@ impl JavaExec {
         JavaExec {
             lang: "java".to_string(),
             lang_prefix: "java".to_string(),
-            filename: "".to_string(),
-            origin: source.to_string(),
             source_code: source.to_string(),
             dir: "".to_string(),
             dir_buf: Default::default(),

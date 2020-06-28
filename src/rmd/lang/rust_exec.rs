@@ -9,8 +9,6 @@ use super::{CompiledLangExecutor, LangExecutor, ProjectInfo};
 pub struct RustExec {
     lang: String,
     lang_prefix: String,
-    filename: String,
-    origin: String,
     source_code: String,
     dir: String,
     dir_buf: PathBuf,
@@ -22,8 +20,6 @@ impl RustExec {
         RustExec {
             lang: "rust".to_string(),
             lang_prefix: "rs".to_string(),
-            filename: "".to_string(),
-            origin: source.to_string(),
             source_code: source.to_string(),
             dir: "".to_string(),
             dir_buf: Default::default(),
