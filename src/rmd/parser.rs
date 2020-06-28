@@ -24,15 +24,9 @@ impl Rmd {
             match event {
                 Start(tag) => {
                     match tag {
-                        #[cfg(not(windows))]
                         Tag::CodeBlock(info) => match info {
                             CodeBlockKind::Fenced(lang_code) => {
-                                if lang_code.to_string() != String::from("powershell")
-                                    && lang_code.to_string() != String::from("batch")
-                                    && lang_code.to_string() != String::from("cmd")
-                                {
-                                    current_command.script.executor = lang_code.to_string();
-                                }
+                                current_command.script.executor = lang_code.to_string();
                             }
                             CodeBlockKind::Indented => {}
                         },
@@ -42,18 +36,12 @@ impl Rmd {
                     text = "".to_string();
                 }
                 End(tag) => match tag {
-                    #[cfg(not(windows))]
                     Tag::CodeBlock(info) => match info {
                         CodeBlockKind::Fenced(lang_code) => {
-                            if lang_code.to_string() != String::from("powershell")
-                                && lang_code.to_string() != String::from("batch")
-                                && lang_code.to_string() != String::from("cmd")
-                            {
-                                current_command.script.source = text.to_string();
+                            current_command.script.source = text.to_string();
 
-                                commands.push(current_command.build());
-                                current_command = Command::new(0);
-                            }
+                            commands.push(current_command.build());
+                            current_command = Command::new(0);
                         }
                         CodeBlockKind::Indented => {}
                     },
