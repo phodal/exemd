@@ -6,8 +6,20 @@
 ![build](https://github.com/phodal/exemd/workflows/build/badge.svg)
 [![crates.io badge](https://img.shields.io/crates/v/exemd.svg)](https://crates.io/crates/exemd)<br/>
 
-## Development
+## Todo
 
+ - [ ] shell
+   - [x] bash
+ - [ ] script language
+   - [x] Ruby
+   - [x] Javascript
+   - [x] Python
+   - [x] PHP
+   - [ ] TypeScript
+ - [ ] compiled language
+   - [x] Rust
+   - [ ] Java
+ 
 ## Usage
 
 ````
@@ -26,6 +38,16 @@ fn main() {
 ```bash
 exemd run _fixtures/sample.md
 ```
+
+## Development
+
+1. clone
+
+```
+git clone https://github.com/phodal/exemd
+```
+
+2. run
 
 ## LICENSE
 
