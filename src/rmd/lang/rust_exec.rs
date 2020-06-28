@@ -16,7 +16,7 @@ pub struct RustExec {
 }
 
 impl RustExec {
-    pub fn new(mut source: String) -> RustExec {
+    pub fn new(source: String) -> RustExec {
         RustExec {
             lang: "rust".to_string(),
             lang_prefix: "rs".to_string(),

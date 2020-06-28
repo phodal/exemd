@@ -14,7 +14,7 @@ pub struct JavaExec {
 }
 
 impl JavaExec {
-    pub fn new(mut source: String) -> JavaExec {
+    pub fn new(source: String) -> JavaExec {
         JavaExec {
             lang: "java".to_string(),
             lang_prefix: "java".to_string(),

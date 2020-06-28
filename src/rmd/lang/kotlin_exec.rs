@@ -14,7 +14,7 @@ pub struct KotlinExec {
 }
 
 impl KotlinExec {
-    pub fn new(mut source: String) -> KotlinExec {
+    pub fn new(source: String) -> KotlinExec {
         KotlinExec {
             lang: "kotlin".to_string(),
             lang_prefix: "kt".to_string(),

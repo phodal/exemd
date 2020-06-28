@@ -11,7 +11,7 @@ pub struct PythonExec {
 }
 
 impl PythonExec {
-    pub fn new(mut source: String) -> PythonExec {
+    pub fn new(source: String) -> PythonExec {
         PythonExec {
             filename: "".to_string(),
             origin: source.to_string(),
