@@ -31,6 +31,7 @@ pub struct Dependency {
 pub struct ProjectInfo {
     pub deps: Vec<Dependency>,
     pub name: String,
+    pub filename: String,
 }
 
 impl ProjectInfo {
@@ -38,6 +39,7 @@ impl ProjectInfo {
         ProjectInfo {
             deps: vec![],
             name: "".to_string(),
+            filename: "".to_string(),
         }
     }
 }
