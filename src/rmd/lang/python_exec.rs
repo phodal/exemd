@@ -7,7 +7,6 @@ pub struct PythonExec {
     origin: String,
     source_code: String,
     dir: String,
-    pub(crate) output_dir: String,
 }
 
 impl PythonExec {
@@ -17,7 +16,6 @@ impl PythonExec {
             origin: source.to_string(),
             source_code: source.to_string(),
             dir: "".to_string(),
-            output_dir: "".to_string(),
         }
     }
 }

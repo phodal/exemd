@@ -1,5 +1,5 @@
 use std::path::PathBuf;
-use crate::rmd::lang::{ProjectInfo, LangExecutor, CompiledLangExecutor};
+use crate::rmd::lang::{ProjectInfo, LangExecutor, CompiledLangExecutor, build_key_value_from_comment, parse_deps};
 use std::process::Command;
 
 pub struct JavaExec {
@@ -42,12 +42,23 @@ impl LangExecutor for JavaExec {
     }
 
     fn execute(&mut self) -> Command {
-        unimplemented!()
+        self.project = self.parse_project_info();
+        self.build_project();
+        let child = self.compile();
+        child
     }
 }
 
 impl CompiledLangExecutor for JavaExec {
     fn compile(&self) -> Command {
         unimplemented!()
+    }
+}
+
+#[cfg(test)]
+mod test {
+    #[test]
+    fn should_parse_project_deps() {
+
     }
 }

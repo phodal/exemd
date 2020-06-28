@@ -5,6 +5,7 @@ use std::process::Command;
 use std::path::PathBuf;
 
 pub struct RustExec {
+    lang: String,
     filename: String,
     origin: String,
     source_code: String,
@@ -16,6 +17,7 @@ pub struct RustExec {
 impl RustExec {
     pub fn new(mut source: String) -> RustExec {
         RustExec {
+            lang: "rust".to_string(),
             filename: "".to_string(),
             origin: source.to_string(),
             source_code: source.to_string(),
@@ -69,7 +71,7 @@ impl LangExecutor for RustExec {
         project_info
     }
     fn build_project(&mut self) {
-        let mut base_dir = create_lang_dir(String::from("rust"), String::from(self.project.name.clone()));
+        let mut base_dir = create_lang_dir(self.lang.clone(), self.project.name.clone());
         let mut output = base_dir.clone();
 
         let mut dir = base_dir.clone().join("src");
