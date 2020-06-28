@@ -2,7 +2,7 @@ use std::path::PathBuf;
 use std::{process, fs};
 use std::process::Command;
 
-use crate::rmd::lang::{LangExecutor, ProjectInfo, create_lang_dir, write_content_to_file, CompiledLangExecutor};
+use crate::rmd::lang::{LangExecutor, ProjectInfo, create_lang_dir, write_content_to_file, CompiledLangExecutor, parse_project_info};
 
 pub struct GoExec {
     lang: String,
@@ -31,14 +31,6 @@ impl GoExec {
 }
 
 impl LangExecutor for GoExec {
-    fn parse_project_info(&mut self, string: String) -> ProjectInfo {
-        self.filename = String::from("main");
-
-        let mut project_info = ProjectInfo::new();
-        project_info.name = String::from("hello");
-        project_info
-    }
-
     fn build_project(&mut self) {
         let mut base_dir = create_lang_dir(self.lang.clone(), self.project.name.clone());
         let mut output = base_dir.clone();
@@ -48,8 +40,8 @@ impl LangExecutor for GoExec {
 
         self.dir_buf = base_dir.clone();
 
-        dir.push(self.filename.clone() + &"." + &self.lang_prefix.clone());
-        output.push(self.filename.clone());
+        dir.push(self.project.filename.clone() + &"." + &self.lang_prefix.clone());
+        output.push(self.project.filename.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir.clone());
         println!("{}", dir.clone().into_os_string().into_string().unwrap())
@@ -64,7 +56,7 @@ impl LangExecutor for GoExec {
     }
 
     fn execute(&mut self) -> Command {
-        self.project = self.parse_project_info(self.source_code.clone());
+        self.project = parse_project_info(self.source_code.clone());
         self.build_project();
         let child = self.compile();
         child

@@ -2,10 +2,7 @@ use std::path::PathBuf;
 use std::process::Command;
 use std::{fs, process};
 
-use crate::rmd::lang::{
-    build_key_value_from_comment, create_lang_dir, parse_deps, write_content_to_file,
-    CompiledLangExecutor, LangExecutor, ProjectInfo,
-};
+use crate::rmd::lang::{build_key_value_from_comment, create_lang_dir, parse_deps, write_content_to_file, CompiledLangExecutor, LangExecutor, ProjectInfo, parse_project_info};
 
 pub struct JavaExec {
     lang: String,
@@ -54,7 +51,7 @@ dependencies {
             default_package.push_str(&format!(
                 "mainClassName = '{}.{}'\n",
                 self.project.name.clone(),
-                self.filename.clone()
+                self.project.filename.clone()
             ));
         } else {
             default_package.push_str(&format!("mainClassName = 'main'"));
@@ -66,31 +63,6 @@ dependencies {
 }
 
 impl LangExecutor for JavaExec {
-    fn parse_project_info(&mut self, string: String) -> ProjectInfo {
-        let map = build_key_value_from_comment(self.source_code.clone());
-        let mut project_info = ProjectInfo::new();
-
-        self.filename = String::from("main");
-        project_info.name = String::from("hello");
-
-        for (key, value) in map {
-            match &key[..] {
-                "deps" => {
-                    project_info.deps = parse_deps(value.clone());
-                }
-                "name" => {
-                    project_info.name = String::from(value.clone());
-                }
-                "filename" => {
-                    self.filename = String::from(value.clone());
-                }
-                _ => {}
-            }
-        }
-
-        project_info
-    }
-
     fn build_project(&mut self) {
         let mut base_dir = create_lang_dir(self.lang.clone(), self.project.name.clone());
         let mut output = base_dir.clone();
@@ -105,8 +77,8 @@ impl LangExecutor for JavaExec {
 
         self.dir_buf = base_dir.clone();
 
-        dir.push(self.filename.clone() + &"." + &self.lang_prefix.clone());
-        output.push(self.filename.clone());
+        dir.push(self.project.filename.clone() + &"." + &self.lang_prefix.clone());
+        output.push(self.project.filename.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);
         self.create_dependency_file();
@@ -117,7 +89,7 @@ impl LangExecutor for JavaExec {
     fn try_run(&self) {}
 
     fn execute(&mut self) -> Command {
-        self.project = self.parse_project_info(self.source_code.clone());
+        self.project = parse_project_info(self.source_code.clone());
         self.build_project();
         let child = self.compile();
         child

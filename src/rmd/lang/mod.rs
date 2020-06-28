@@ -45,7 +45,6 @@ impl ProjectInfo {
 }
 
 pub trait LangExecutor {
-    fn parse_project_info(&mut self, string: String) -> ProjectInfo;
     fn build_project(&mut self);
     fn install_dependency(&self);
     fn try_run(&self);
@@ -54,6 +53,31 @@ pub trait LangExecutor {
 
 pub trait CompiledLangExecutor: LangExecutor {
     fn compile(&self) -> Command;
+}
+
+fn parse_project_info(string: String) -> ProjectInfo {
+    let map = build_key_value_from_comment(string.clone());
+    let mut project_info = ProjectInfo::new();
+
+    project_info.filename = String::from("main");
+    project_info.name = String::from("hello");
+
+    for (key, value) in map {
+        match &key[..] {
+            "deps" => {
+                project_info.deps = parse_deps(value.clone());
+            }
+            "name" => {
+                project_info.name = String::from(value.clone());
+            }
+            "filename" => {
+                project_info.filename = String::from(value.clone());
+            }
+            _ => {}
+        }
+    }
+
+    project_info
 }
 
 pub fn write_content_to_file(source: String, dir: PathBuf) -> String {
@@ -127,7 +151,7 @@ pub fn parse_deps(str: String) -> Vec<Dependency> {
 
 #[cfg(test)]
 mod test {
-    use crate::rmd::lang::{build_key_value_from_comment, parse_deps, LangExecutor, RustExec};
+    use crate::rmd::lang::{build_key_value_from_comment, parse_deps, LangExecutor, RustExec, parse_project_info};
 
     #[test]
     fn should_parse_key_values() {
@@ -170,5 +194,21 @@ mod test {
         let first_dep = deps.get(0).unwrap();
         assert_eq!("joda-time:joda-time", first_dep.name);
         assert_eq!("2.2", first_dep.version);
+    }
+
+
+    fn get_hello_world_code() -> &'static str {
+        "// exemd-deps: colored;version=1.8.0
+// exemd-filename: hello2
+fn main() {
+  println!(\"Hello World!\");
+}
+"
+    }
+
+    #[test]
+    fn should_support_for_filename() {
+        let project = parse_project_info(String::from(get_hello_world_code()));
+        assert_eq!("hello2", project.filename.clone())
     }
 }

@@ -2,9 +2,7 @@ use std::path::PathBuf;
 use std::process::Command;
 use std::{fs, process};
 
-use crate::rmd::lang::{
-    build_key_value_from_comment, create_lang_dir, parse_deps, write_content_to_file,
-};
+use crate::rmd::lang::{build_key_value_from_comment, create_lang_dir, parse_deps, write_content_to_file, parse_project_info};
 
 use super::{CompiledLangExecutor, LangExecutor, ProjectInfo};
 
@@ -53,30 +51,6 @@ version = \"0.1.0\"
 }
 
 impl LangExecutor for RustExec {
-    fn parse_project_info(&mut self, string: String) -> ProjectInfo {
-        let map = build_key_value_from_comment(string.clone());
-        let mut project_info = ProjectInfo::new();
-
-        project_info.filename = String::from("main");
-        project_info.name = String::from("hello");
-
-        for (key, value) in map {
-            match &key[..] {
-                "deps" => {
-                    project_info.deps = parse_deps(value.clone());
-                }
-                "name" => {
-                    project_info.name = String::from(value.clone());
-                }
-                "filename" => {
-                    project_info.filename = String::from(value.clone());
-                }
-                _ => {}
-            }
-        }
-
-        project_info
-    }
     fn build_project(&mut self) {
         let mut base_dir = create_lang_dir(self.lang.clone(), self.project.name.clone());
         let mut output = base_dir.clone();
@@ -95,7 +69,7 @@ impl LangExecutor for RustExec {
     fn install_dependency(&self) {}
     fn try_run(&self) {}
     fn execute(&mut self) -> Command {
-        self.project = self.parse_project_info(self.source_code.clone());
+        self.project = parse_project_info(self.source_code.clone());
         self.build_project();
         let child = self.compile();
         child
@@ -159,18 +133,6 @@ fn main() {println!(\"Hello World!\");}
         ));
         let mut cmd = exec.execute();
         assert_eq!(0, cmd.spawn().unwrap().wait().unwrap().code().unwrap())
-    }
-
-    #[test]
-    fn should_support_for_filename() {
-        let mut exec = RustExec::new(String::from(
-            "// exemd-name: hello2
-// exemd-filename: hello2
-fn main() {println!(\"Hello World!\");}
-",
-        ));
-        let project = exec.parse_project_info(exec.source_code.clone());
-        assert_eq!("hello2", project.filename.clone())
     }
 
     #[test]
