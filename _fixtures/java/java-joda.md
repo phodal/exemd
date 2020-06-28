@@ -2,7 +2,7 @@
 // exemd-name: joda
 // exemd-filename: HelloWorld
 // exemd-deps: joda-time:joda-time;version=2.2
-package hello;
+package joda;
 
 import org.joda.time.LocalTime;
 

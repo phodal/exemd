@@ -54,8 +54,11 @@ dependencies {
         }
 
         default_package.push_str("\n}\n\n");
-        default_package.push_str(&format!("mainClassName = '{}'\n", self.filename.clone()));
-        // default_package.push_str(&format!("mainClassName = 'main'", self.filename.clone()));
+        if self.project.name != String::from("") {
+            default_package.push_str(&format!("mainClassName = '{}.{}'\n", self.project.name.clone(), self.filename.clone()));
+        } else {
+            default_package.push_str(&format!("mainClassName = 'main'"));
+        }
 
         write_content_to_file(default_package.clone(), self.dir_buf.join("build.gradle"));
         default_package
@@ -97,6 +100,10 @@ impl LangExecutor for JavaExec {
             .join("main")
             .join("java");
 
+        if self.project.name != String::from("") {
+            dir.push(self.project.name.clone());
+        }
+
         fs::create_dir_all(dir.clone()).unwrap();
 
         self.dir_buf = base_dir.clone();
@@ -137,7 +144,7 @@ mod test {
     fn get_hello_world_code() -> &'static str {
         "java
 // exemd-deps: joda-time:joda-time;version=2.2
-package hello;
+package joda;
 
 import org.joda.time.LocalTime;
 
@@ -154,7 +161,7 @@ public class HelloWorld {
     }
 
     #[test]
-    fn should_create_java_tomal() {
+    fn should_build_normal_java_dep() {
         let mut exec = JavaExec::new(String::from(get_hello_world_code()));
         exec.execute();
         let dep = exec.create_dependency_file();
@@ -170,7 +177,37 @@ dependencies {
 compile \"joda-time:joda-time:2.2\"
 }
 
-mainClassName = 'main'
+mainClassName = 'hello.main'
+", String::from(dep))
+    }
+
+    #[test]
+    fn should_build_naming_file_java_deps() {
+        let mut exec = JavaExec::new(String::from("// exemd-name: joda
+// exemd-filename: HelloWorld
+// exemd-deps: joda-time:joda-time;version=2.2
+package joda;
+
+import org.joda.time.LocalTime;
+
+public class HelloWorld {
+}
+"));
+        exec.execute();
+        let dep = exec.create_dependency_file();
+
+        assert_eq!("apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+compile \"joda-time:joda-time:2.2\"
+}
+
+mainClassName = 'joda.HelloWorld'
 ", String::from(dep))
     }
 }
