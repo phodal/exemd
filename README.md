@@ -22,9 +22,9 @@
      - [x] single file
      - [x] dependency
    - [x] Java
-     - [x] Gradle
      - [x] single file
      - [x] dependency
+       - [x] Gradle
    - [ ] C
    - [x] Go
      - [x] single file
