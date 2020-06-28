@@ -31,7 +31,7 @@ impl RustExec {
         }
     }
 
-    fn create_cargo_project(&self) -> String {
+    fn create_dependency_file(&self) -> String {
         let mut default_package = "[package]
 name = \"hello_world\"
 version = \"0.1.0\"
@@ -87,7 +87,7 @@ impl LangExecutor for RustExec {
         output.push(self.filename.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);
-        self.create_cargo_project();
+        self.create_dependency_file();
     }
     fn install_dependency(&self) {}
     fn try_run(&self) {}
@@ -164,7 +164,7 @@ fn main() {println!(\"Hello World!\");}
     fn should_create_cargo_tomal() {
         let mut exec = RustExec::new(String::from(get_hello_world_code()));
         exec.execute();
-        let dep = exec.create_cargo_project();
+        let dep = exec.create_dependency_file();
 
         assert_eq!("[package]
 name = \"hello_world\"

@@ -36,6 +36,19 @@ impl JavaExec {
             project: ProjectInfo::new(),
         }
     }
+
+    fn create_dependency_file(&self) -> String {
+        let mut default_package = "apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'main'
+
+".to_owned();
+
+        write_content_to_file(default_package.clone(), self.dir_buf.join("build.gradle"));
+        default_package
+    }
+
 }
 
 impl LangExecutor for JavaExec {
@@ -68,7 +81,11 @@ impl LangExecutor for JavaExec {
         let mut base_dir = create_lang_dir(self.lang.clone(), self.project.name.clone());
         let mut output = base_dir.clone();
 
-        let mut dir = base_dir.clone().join("src");
+        let mut dir = base_dir.clone()
+            .join("src")
+            .join("main")
+            .join("java");
+
         fs::create_dir_all(dir.clone()).unwrap();
 
         self.dir_buf = base_dir.clone();
@@ -77,6 +94,7 @@ impl LangExecutor for JavaExec {
         output.push(self.filename.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);
+        self.create_dependency_file();
     }
 
     fn install_dependency(&self) {}
@@ -93,16 +111,8 @@ impl LangExecutor for JavaExec {
 
 impl CompiledLangExecutor for JavaExec {
     fn compile(&self) -> Command {
-        let mut child = process::Command::new("javac");
-        child.arg(self.dir.clone());
-        child.spawn().unwrap().wait().unwrap();
-
-        let mut child = process::Command::new("java");
-        let buf = self.dir_buf.join(self.filename.clone() + &".class");
-        let string = buf.into_os_string().into_string().unwrap();
-        println!("{}", string);
-        child.arg(string);
-
+        let mut child = process::Command::new("gradle");
+        child.arg("-p").arg(self.dir_buf.clone()).arg("run");
         child
     }
 }
