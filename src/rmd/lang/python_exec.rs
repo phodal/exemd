@@ -23,15 +23,12 @@ impl PythonExec {
 
 impl LangExecutor for PythonExec {
     fn build_project(&mut self) {
-        unimplemented!()
     }
 
     fn install_dependency(&self) {
-        unimplemented!()
     }
 
     fn try_run(&self) {
-        unimplemented!()
     }
 
     fn execute(&mut self) -> Command {

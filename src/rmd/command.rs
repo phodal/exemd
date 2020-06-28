@@ -88,6 +88,7 @@ pub struct OptionFlag {
     pub val: String,
 }
 
+#[allow(dead_code)]
 impl OptionFlag {
     pub fn new() -> Self {
         Self {
