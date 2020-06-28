@@ -38,6 +38,12 @@ fn prepare_command(cmd: &Command) -> process::Command {
             child.arg("-e").arg(source);
             child
         }
+        "ts" | "typescript" => {
+            let mut child;
+            child = process::Command::new("deno");
+            child.arg("eval").arg(source);
+            child
+        }
         "py" | "python" => {
             let mut py_exec = PythonExec::new(source.clone());
             let child = py_exec.execute();
