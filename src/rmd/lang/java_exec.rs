@@ -41,8 +41,6 @@ impl JavaExec {
         let mut default_package = "apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'main'
-
 repositories {
     mavenCentral()
 }
@@ -55,8 +53,8 @@ dependencies {
             default_package.push_str(&result);
         }
 
-        default_package.push_str("\n}\n");
-        // default_package.push_str(&format!("mainClassName = '{}.{}'", self.project.name.clone(), self.filename.clone()));
+        default_package.push_str("\n}\n\n");
+        default_package.push_str(&format!("mainClassName = '{}'\n", self.filename.clone()));
         // default_package.push_str(&format!("mainClassName = 'main'", self.filename.clone()));
 
         write_content_to_file(default_package.clone(), self.dir_buf.join("build.gradle"));
@@ -161,12 +159,18 @@ public class HelloWorld {
         exec.execute();
         let dep = exec.create_dependency_file();
 
-        assert_eq!("[package]
-name = \"hello_world\"
-version = \"0.1.0\"
+        assert_eq!("apply plugin: 'java'
+apply plugin: 'application'
 
-[dependencies]
-colored = \"1.8.0\"
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+compile \"joda-time:joda-time:2.2\"
+}
+
+mainClassName = 'main'
 ", String::from(dep))
     }
 }
