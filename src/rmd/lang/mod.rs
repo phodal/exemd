@@ -49,7 +49,6 @@ pub trait CompiledLangExecutor: LangExecutor {
     fn compile(&self) -> Command;
 }
 
-
 pub fn write_content_to_file(source: String, dir: PathBuf) -> String {
     let mut f = File::create(dir.clone()).unwrap();
     f.write_all(source.as_ref()).unwrap();
@@ -60,7 +59,7 @@ pub fn write_content_to_file(source: String, dir: PathBuf) -> String {
 
 pub fn create_lang_dir(lang: String, project_name: String) -> PathBuf {
     let mut dir = env::temp_dir()
-        .join("com.phodal.rinput")
+        .join("com.phodal.exemd")
         .join(lang)
         .join(project_name);
 
@@ -71,7 +70,7 @@ pub fn create_lang_dir(lang: String, project_name: String) -> PathBuf {
 
 pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
     let mut info = HashMap::new();
-    let re = Regex::new(r"(?x)//\s?rinput-(?P<key>([a-zA-z]+)):\s?(?P<value>(.*))").unwrap();
+    let re = Regex::new(r"(?x)//\s?exemd-(?P<key>([a-zA-z]+)):\s?(?P<value>(.*))").unwrap();
     let mut split = str.split("\n");
     let vec: Vec<&str> = split.collect();
 
@@ -124,7 +123,7 @@ mod test {
 
     #[test]
     fn should_parse_key_values() {
-        let string = String::from("// rinput-deps: colored;version=1.8.0");
+        let string = String::from("// exemd-deps: colored;version=1.8.0");
         let map = build_key_value_from_comment(string);
 
         assert_eq!(1, map.len());

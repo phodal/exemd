@@ -1,5 +1,5 @@
 ```rust
-// rinput-deps: colored;version=1.8.0 
+// exemd-deps: colored;version=1.8.0 
 extern crate colored; // not needed in Rust 2018
 
 use colored::*;

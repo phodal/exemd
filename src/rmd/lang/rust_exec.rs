@@ -107,8 +107,8 @@ mod test {
     use std::process;
 
     fn get_hello_world_code() -> &'static str {
-        "// rinput-deps: colored;version=1.8.0
-// rinput-name: demo
+        "// exemd-deps: colored;version=1.8.0
+// exemd-name: demo
 fn main() {
   println!(\"Hello World!\");
 }
@@ -133,7 +133,7 @@ fn main() {
 
     #[test]
     fn should_success_run_hello_world() {
-        let mut exec = RustExec::new(String::from("// rinput-name: hello2
+        let mut exec = RustExec::new(String::from("// exemd-name: hello2
 fn main() {println!(\"Hello World!\");}
 "));
         let mut cmd = exec.execute();
