@@ -49,6 +49,8 @@ impl LangExecutor for RustExec {
     fn parse_project_info(&mut self) -> ProjectInfo {
         let map = build_key_value_from_comment(self.source_code.clone());
         let mut project_info = ProjectInfo::new();
+
+        self.filename = String::from("main");
         project_info.name = String::from("hello");
 
         for (key, value) in map {
@@ -58,6 +60,9 @@ impl LangExecutor for RustExec {
                 }
                 "name" => {
                     project_info.name = String::from(value.clone());
+                }
+                "filename" => {
+                    self.filename = String::from(value.clone());
                 }
                 _ => {}
             }
@@ -74,8 +79,8 @@ impl LangExecutor for RustExec {
 
         self.dir_buf = base_dir.clone();
 
-        dir.push("main.rs");
-        output.push("main");
+        dir.push(self.filename.clone() + &".rs");
+        output.push(self.filename.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);
         self.create_cargo_project();
@@ -138,6 +143,16 @@ fn main() {println!(\"Hello World!\");}
 "));
         let mut cmd = exec.execute();
         assert_eq!(0, cmd.spawn().unwrap().wait().unwrap().code().unwrap())
+    }
+
+    #[test]
+    fn should_support_for_filename() {
+        let mut exec = RustExec::new(String::from("// exemd-name: hello2
+// exemd-filename: hello2
+fn main() {println!(\"Hello World!\");}
+"));
+        exec.parse_project_info();
+        assert_eq!("hello2", exec.filename.clone())
     }
 
     #[test]
