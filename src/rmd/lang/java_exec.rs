@@ -120,6 +120,40 @@ impl CompiledLangExecutor for JavaExec {
 
 #[cfg(test)]
 mod test {
+    use crate::rmd::lang::{JavaExec, LangExecutor};
+
+
+    fn get_hello_world_code() -> &'static str {
+        "java
+// exemd-deps: joda-time:joda-time;version=2.2
+package hello;
+
+import org.joda.time.LocalTime;
+
+public class HelloWorld {
+  public static void main(String[] args) {
+    LocalTime currentTime = new LocalTime();
+    System.out.println(\"The current local time is: \" + currentTime);
+
+    Greeter greeter = new Greeter();
+    System.out.println(greeter.sayHello());
+  }
+}
+"
+    }
+
     #[test]
-    fn should_parse_project_deps() {}
+    fn should_create_java_tomal() {
+        let mut exec = JavaExec::new(String::from(get_hello_world_code()));
+        exec.execute();
+        let dep = exec.create_dependency_file();
+
+        assert_eq!("[package]
+name = \"hello_world\"
+version = \"0.1.0\"
+
+[dependencies]
+colored = \"1.8.0\"
+", String::from(dep))
+    }
 }

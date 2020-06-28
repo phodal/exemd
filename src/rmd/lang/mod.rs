@@ -94,7 +94,7 @@ pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
 pub fn parse_deps(str: String) -> Vec<Dependency> {
     let mut split = str.split(",");
     let vec: Vec<&str> = split.collect();
-    let re = Regex::new(r"(?x)(?P<name>([a-zA-Z-]+))(;(?P<key>(\w+))=(?P<version>([a-zA-Z0-9.]+)))?").unwrap();
+    let re = Regex::new(r"(?x)(?P<name>([a-zA-Z-:]+))(;(?P<key>(\w+))=(?P<version>([a-zA-Z0-9.]+)))?").unwrap();
 
     let mut deps: Vec<Dependency> = Vec::new();
     for line in vec {
@@ -153,5 +153,16 @@ mod test {
         let first_dep = deps.get(1).unwrap();
         assert_eq!("pulldown-cmark", first_dep.name);
         assert_eq!("0.7", first_dep.version);
+    }
+
+    #[test]
+    fn should_parse_java_deps() {
+        let string = String::from("joda-time:joda-time;version=2.2");
+        let deps = parse_deps(string);
+
+        assert_eq!(1, deps.len());
+        let first_dep = deps.get(0).unwrap();
+        assert_eq!("joda-time:joda-time", first_dep.name);
+        assert_eq!("2.2", first_dep.version);
     }
 }
