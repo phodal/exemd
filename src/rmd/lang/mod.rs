@@ -11,11 +11,13 @@ pub use self::java_exec::JavaExec;
 pub use self::python_exec::PythonExec;
 pub use self::rust_exec::RustExec;
 pub use self::go_exec::GoExec;
+pub use self::kotlin_exec::KotlinExec;
 
 mod java_exec;
 mod python_exec;
 mod rust_exec;
 mod go_exec;
+mod kotlin_exec;
 
 #[derive(Clone, Debug)]
 pub struct Dependency {

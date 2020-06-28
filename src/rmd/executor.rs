@@ -5,7 +5,7 @@ use std::process::{ExitStatus, Stdio};
 
 use crate::main;
 use crate::rmd::command::Command;
-use crate::rmd::lang::{JavaExec, LangExecutor, PythonExec, RustExec, GoExec};
+use crate::rmd::lang::{JavaExec, LangExecutor, PythonExec, RustExec, GoExec, KotlinExec};
 
 pub fn execute_command(cmd: Command) -> Result<ExitStatus> {
     if cmd.script.source == String::from("") {
@@ -66,6 +66,11 @@ fn prepare_command(cmd: &Command) -> process::Command {
         }
         "go" => {
             let mut exec = GoExec::new(source.clone());
+            let child = exec.execute();
+            child
+        }
+        "kotlin" | "k" => {
+            let mut exec = KotlinExec::new(source.clone());
             let child = exec.execute();
             child
         }
