@@ -2,7 +2,7 @@ use std::path::PathBuf;
 use std::{process, fs};
 use std::process::Command;
 
-use crate::rmd::lang::{LangExecutor, ProjectInfo, create_lang_dir, write_content_to_file, CompiledLangExecutor, parse_project_info};
+use crate::rmd::lang::{LangExecutor, ProjectInfo, create_lang_dir, write_content_to_file, CompiledLangExecutor};
 
 pub struct KotlinExec {
     lang: String,
@@ -25,7 +25,7 @@ impl KotlinExec {
             source_code: source.to_string(),
             dir: "".to_string(),
             dir_buf: Default::default(),
-            project: ProjectInfo::new(),
+            project: ProjectInfo::from_code(source),
         }
     }
 }
@@ -52,7 +52,6 @@ impl LangExecutor for KotlinExec {
     fn try_run(&self) {}
 
     fn execute(&mut self) -> Command {
-        self.project = parse_project_info(self.source_code.clone());
         self.build_project();
         let child = self.compile();
         child

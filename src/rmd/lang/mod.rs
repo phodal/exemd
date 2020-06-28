@@ -42,6 +42,31 @@ impl ProjectInfo {
             filename: "".to_string(),
         }
     }
+
+    pub fn from_code(string: String) -> ProjectInfo {
+        let map = build_key_value_from_comment(string.clone());
+        let mut project_info = ProjectInfo::new();
+
+        project_info.filename = String::from("main");
+        project_info.name = String::from("hello");
+
+        for (key, value) in map {
+            match &key[..] {
+                "deps" => {
+                    project_info.deps = parse_deps(value.clone());
+                }
+                "name" => {
+                    project_info.name = String::from(value.clone());
+                }
+                "filename" => {
+                    project_info.filename = String::from(value.clone());
+                }
+                _ => {}
+            }
+        }
+
+        project_info
+    }
 }
 
 pub trait LangExecutor {
@@ -55,30 +80,6 @@ pub trait CompiledLangExecutor: LangExecutor {
     fn compile(&self) -> Command;
 }
 
-fn parse_project_info(string: String) -> ProjectInfo {
-    let map = build_key_value_from_comment(string.clone());
-    let mut project_info = ProjectInfo::new();
-
-    project_info.filename = String::from("main");
-    project_info.name = String::from("hello");
-
-    for (key, value) in map {
-        match &key[..] {
-            "deps" => {
-                project_info.deps = parse_deps(value.clone());
-            }
-            "name" => {
-                project_info.name = String::from(value.clone());
-            }
-            "filename" => {
-                project_info.filename = String::from(value.clone());
-            }
-            _ => {}
-        }
-    }
-
-    project_info
-}
 
 pub fn write_content_to_file(source: String, dir: PathBuf) -> String {
     let mut f = File::create(dir.clone()).unwrap();
@@ -151,7 +152,7 @@ pub fn parse_deps(str: String) -> Vec<Dependency> {
 
 #[cfg(test)]
 mod test {
-    use crate::rmd::lang::{build_key_value_from_comment, parse_deps, LangExecutor, RustExec, parse_project_info};
+    use crate::rmd::lang::{build_key_value_from_comment, parse_deps, LangExecutor, RustExec, ProjectInfo};
 
     #[test]
     fn should_parse_key_values() {
@@ -208,7 +209,7 @@ fn main() {
 
     #[test]
     fn should_support_for_filename() {
-        let project = parse_project_info(String::from(get_hello_world_code()));
+        let project = ProjectInfo::from_code(String::from(get_hello_world_code()));
         assert_eq!("hello2", project.filename.clone())
     }
 }

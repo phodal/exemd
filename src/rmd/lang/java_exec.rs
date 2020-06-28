@@ -2,7 +2,7 @@ use std::path::PathBuf;
 use std::process::Command;
 use std::{fs, process};
 
-use crate::rmd::lang::{build_key_value_from_comment, create_lang_dir, parse_deps, write_content_to_file, CompiledLangExecutor, LangExecutor, ProjectInfo, parse_project_info};
+use crate::rmd::lang::{build_key_value_from_comment, create_lang_dir, parse_deps, write_content_to_file, CompiledLangExecutor, LangExecutor, ProjectInfo};
 
 pub struct JavaExec {
     lang: String,
@@ -25,7 +25,7 @@ impl JavaExec {
             source_code: source.to_string(),
             dir: "".to_string(),
             dir_buf: Default::default(),
-            project: ProjectInfo::new(),
+            project: ProjectInfo::from_code(source),
         }
     }
 
@@ -89,7 +89,6 @@ impl LangExecutor for JavaExec {
     fn try_run(&self) {}
 
     fn execute(&mut self) -> Command {
-        self.project = parse_project_info(self.source_code.clone());
         self.build_project();
         let child = self.compile();
         child
