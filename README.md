@@ -18,8 +18,15 @@
    - [x] TypeScript by [deno](https://deno.land/)
  - [ ] compiled language
    - [x] Rust
-   - [ ] Java
+   - [x] Java
+     - [x] Gradle
+   - [ ] C
+   - [ ] Go
  
+## Examples
+
+see in [fixtures](_fixtures)
+
 ## Usage
 
 ````
