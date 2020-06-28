@@ -1,15 +1,17 @@
-use pulldown_cmark::{Event::{Code, End, Html, Start, Text}, Options, Parser, Tag, CodeBlockKind};
 use crate::rmd::command::Command;
+use pulldown_cmark::{
+    CodeBlockKind,
+    Event::{Code, End, Html, Start, Text},
+    Options, Parser, Tag,
+};
 
 pub struct Rmd {
-    text: String
+    text: String,
 }
 
 impl Rmd {
     pub fn new(text: String) -> Rmd {
-        Rmd {
-            text
-        }
+        Rmd { text }
     }
 
     pub fn parse(&mut self) -> Vec<Command> {
@@ -23,43 +25,37 @@ impl Rmd {
                 Start(tag) => {
                     match tag {
                         #[cfg(not(windows))]
-                        Tag::CodeBlock(info) => {
-                            match info {
-                                CodeBlockKind::Fenced(lang_code) => {
-                                    if lang_code.to_string() != String::from("powershell")
-                                        && lang_code.to_string() != String::from("batch")
-                                        && lang_code.to_string() != String::from("cmd")
-                                    {
-                                        current_command.script.executor = lang_code.to_string();
-                                    }
+                        Tag::CodeBlock(info) => match info {
+                            CodeBlockKind::Fenced(lang_code) => {
+                                if lang_code.to_string() != String::from("powershell")
+                                    && lang_code.to_string() != String::from("batch")
+                                    && lang_code.to_string() != String::from("cmd")
+                                {
+                                    current_command.script.executor = lang_code.to_string();
                                 }
-                                CodeBlockKind::Indented => {}
                             }
-                        }
+                            CodeBlockKind::Indented => {}
+                        },
                         _ => (),
                     }
 
                     text = "".to_string();
                 }
-                End(tag) => {
-                    match tag {
-                        #[cfg(not(windows))]
-                        Tag::CodeBlock(info) => {
-                            match info {
-                                CodeBlockKind::Fenced(lang_code) => {
-                                    if lang_code.to_string() != String::from("powershell")
-                                        && lang_code.to_string() != String::from("batch")
-                                        && lang_code.to_string() != String::from("cmd")
-                                    {
-                                        current_command.script.source = text.to_string();
-                                    }
-                                }
-                                CodeBlockKind::Indented => {}
+                End(tag) => match tag {
+                    #[cfg(not(windows))]
+                    Tag::CodeBlock(info) => match info {
+                        CodeBlockKind::Fenced(lang_code) => {
+                            if lang_code.to_string() != String::from("powershell")
+                                && lang_code.to_string() != String::from("batch")
+                                && lang_code.to_string() != String::from("cmd")
+                            {
+                                current_command.script.source = text.to_string();
                             }
                         }
-                        _ => (),
-                    }
-                }
+                        CodeBlockKind::Indented => {}
+                    },
+                    _ => (),
+                },
                 Text(body) => {
                     text += &body.to_string();
                 }
@@ -75,7 +71,6 @@ impl Rmd {
         commands
     }
 }
-
 
 fn create_markdown_parser(content: &String) -> Parser {
     let mut options = Options::empty();

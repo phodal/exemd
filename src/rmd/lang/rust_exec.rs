@@ -1,8 +1,10 @@
-use std::{fs, process};
 use std::path::PathBuf;
 use std::process::Command;
+use std::{fs, process};
 
-use crate::rmd::lang::{build_key_value_from_comment, create_lang_dir, parse_deps, write_content_to_file};
+use crate::rmd::lang::{
+    build_key_value_from_comment, create_lang_dir, parse_deps, write_content_to_file,
+};
 
 use super::{CompiledLangExecutor, LangExecutor, ProjectInfo};
 
@@ -37,7 +39,8 @@ name = \"hello_world\"
 version = \"0.1.0\"
 
 [dependencies]
-".to_owned();
+"
+        .to_owned();
 
         for dep in self.project.deps.clone() {
             let result = format!("{} = \"{}\"\n", dep.name, dep.version);
@@ -102,7 +105,12 @@ impl LangExecutor for RustExec {
 impl CompiledLangExecutor for RustExec {
     fn compile(&self) -> Command {
         /// support: cargo run --manifest-path=[path]
-        let path = self.dir_buf.join("Cargo.toml").into_os_string().into_string().unwrap();
+        let path = self
+            .dir_buf
+            .join("Cargo.toml")
+            .into_os_string()
+            .into_string()
+            .unwrap();
         let mut child = process::Command::new("cargo");
         child.arg("run").arg("--manifest-path").arg(path.clone());
 
@@ -144,19 +152,23 @@ fn main() {
 
     #[test]
     fn should_success_run_hello_world() {
-        let mut exec = RustExec::new(String::from("// exemd-name: hello2
+        let mut exec = RustExec::new(String::from(
+            "// exemd-name: hello2
 fn main() {println!(\"Hello World!\");}
-"));
+",
+        ));
         let mut cmd = exec.execute();
         assert_eq!(0, cmd.spawn().unwrap().wait().unwrap().code().unwrap())
     }
 
     #[test]
     fn should_support_for_filename() {
-        let mut exec = RustExec::new(String::from("// exemd-name: hello2
+        let mut exec = RustExec::new(String::from(
+            "// exemd-name: hello2
 // exemd-filename: hello2
 fn main() {println!(\"Hello World!\");}
-"));
+",
+        ));
         exec.parse_project_info();
         assert_eq!("hello2", exec.filename.clone())
     }
@@ -167,12 +179,15 @@ fn main() {println!(\"Hello World!\");}
         exec.execute();
         let dep = exec.create_dependency_file();
 
-        assert_eq!("[package]
+        assert_eq!(
+            "[package]
 name = \"hello_world\"
 version = \"0.1.0\"
 
 [dependencies]
 colored = \"1.8.0\"
-", String::from(dep))
+",
+            String::from(dep)
+        )
     }
 }

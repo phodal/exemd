@@ -1,15 +1,10 @@
-use std::{fs, process};
 use std::path::PathBuf;
 use std::process::Command;
+use std::{fs, process};
 
 use crate::rmd::lang::{
-    CompiledLangExecutor,
-    LangExecutor,
-    ProjectInfo,
-    build_key_value_from_comment,
-    create_lang_dir,
-    parse_deps,
-    write_content_to_file,
+    build_key_value_from_comment, create_lang_dir, parse_deps, write_content_to_file,
+    CompiledLangExecutor, LangExecutor, ProjectInfo,
 };
 
 pub struct JavaExec {
@@ -46,7 +41,8 @@ repositories {
 }
 
 dependencies {
-".to_owned();
+"
+        .to_owned();
 
         for dep in self.project.deps.clone() {
             let result = format!("compile \"{}:{}\"", dep.name, dep.version);
@@ -55,7 +51,11 @@ dependencies {
 
         default_package.push_str("\n}\n\n");
         if self.project.name != String::from("") {
-            default_package.push_str(&format!("mainClassName = '{}.{}'\n", self.project.name.clone(), self.filename.clone()));
+            default_package.push_str(&format!(
+                "mainClassName = '{}.{}'\n",
+                self.project.name.clone(),
+                self.filename.clone()
+            ));
         } else {
             default_package.push_str(&format!("mainClassName = 'main'"));
         }
@@ -95,10 +95,7 @@ impl LangExecutor for JavaExec {
         let mut base_dir = create_lang_dir(self.lang.clone(), self.project.name.clone());
         let mut output = base_dir.clone();
 
-        let mut dir = base_dir.clone()
-            .join("src")
-            .join("main")
-            .join("java");
+        let mut dir = base_dir.clone().join("src").join("main").join("java");
 
         if self.project.name != String::from("") {
             dir.push(self.project.name.clone());
@@ -140,7 +137,6 @@ impl CompiledLangExecutor for JavaExec {
 mod test {
     use crate::rmd::lang::{JavaExec, LangExecutor};
 
-
     fn get_hello_world_code() -> &'static str {
         "java
 // exemd-deps: joda-time:joda-time;version=2.2
@@ -166,7 +162,8 @@ public class HelloWorld {
         exec.execute();
         let dep = exec.create_dependency_file();
 
-        assert_eq!("apply plugin: 'java'
+        assert_eq!(
+            "apply plugin: 'java'
 apply plugin: 'application'
 
 repositories {
@@ -178,12 +175,15 @@ compile \"joda-time:joda-time:2.2\"
 }
 
 mainClassName = 'hello.main'
-", String::from(dep))
+",
+            String::from(dep)
+        )
     }
 
     #[test]
     fn should_build_naming_file_java_deps() {
-        let mut exec = JavaExec::new(String::from("// exemd-name: joda
+        let mut exec = JavaExec::new(String::from(
+            "// exemd-name: joda
 // exemd-filename: HelloWorld
 // exemd-deps: joda-time:joda-time;version=2.2
 package joda;
@@ -192,11 +192,13 @@ import org.joda.time.LocalTime;
 
 public class HelloWorld {
 }
-"));
+",
+        ));
         exec.execute();
         let dep = exec.create_dependency_file();
 
-        assert_eq!("apply plugin: 'java'
+        assert_eq!(
+            "apply plugin: 'java'
 apply plugin: 'application'
 
 repositories {
@@ -208,6 +210,8 @@ compile \"joda-time:joda-time:2.2\"
 }
 
 mainClassName = 'joda.HelloWorld'
-", String::from(dep))
+",
+            String::from(dep)
+        )
     }
 }

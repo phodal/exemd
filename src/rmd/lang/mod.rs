@@ -1,10 +1,10 @@
-use std::{env, fs};
 use std::collections::hash_map::RandomState;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::Write;
 use std::path::PathBuf;
 use std::process::Command;
+use std::{env, fs};
 
 use regex::{Captures, Regex};
 
@@ -94,7 +94,9 @@ pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
 pub fn parse_deps(str: String) -> Vec<Dependency> {
     let mut split = str.split(",");
     let vec: Vec<&str> = split.collect();
-    let re = Regex::new(r"(?x)(?P<name>([a-zA-Z-:]+))(;(?P<key>(\w+))=(?P<version>([a-zA-Z0-9.]+)))?").unwrap();
+    let re =
+        Regex::new(r"(?x)(?P<name>([a-zA-Z-:]+))(;(?P<key>(\w+))=(?P<version>([a-zA-Z0-9.]+)))?")
+            .unwrap();
 
     let mut deps: Vec<Dependency> = Vec::new();
     for line in vec {
@@ -118,10 +120,9 @@ pub fn parse_deps(str: String) -> Vec<Dependency> {
     deps
 }
 
-
 #[cfg(test)]
 mod test {
-    use crate::rmd::lang::{build_key_value_from_comment, LangExecutor, parse_deps, RustExec};
+    use crate::rmd::lang::{build_key_value_from_comment, parse_deps, LangExecutor, RustExec};
 
     #[test]
     fn should_parse_key_values() {

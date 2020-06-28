@@ -1,16 +1,16 @@
-use std::{env, fs, process};
 use std::fmt::Debug;
 use std::fs::{canonicalize, File, Metadata};
-use std::io::{Error, ErrorKind, Read, Seek, SeekFrom, Write};
 use std::io::Result;
+use std::io::{Error, ErrorKind, Read, Seek, SeekFrom, Write};
 use std::path::{Path, PathBuf};
 use std::process::ExitStatus;
+use std::{env, fs, process};
 
-use tempfile::{NamedTempFile, TempDir, tempdir_in};
+use tempfile::{tempdir_in, NamedTempFile, TempDir};
 
 use crate::main;
 use crate::rmd::command::Command;
-use crate::rmd::lang::{LangExecutor, PythonExec, RustExec, JavaExec};
+use crate::rmd::lang::{JavaExec, LangExecutor, PythonExec, RustExec};
 
 pub fn execute_command(cmd: Command) -> Result<ExitStatus> {
     if cmd.script.source == String::from("") {

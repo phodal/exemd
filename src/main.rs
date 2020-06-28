@@ -36,8 +36,7 @@ fn main() {
 
 fn run_markdown(args: EditorCmd) {
     let filename = args.path;
-    let contents = fs::read_to_string(filename)
-        .expect("Something went wrong reading the file");
+    let contents = fs::read_to_string(filename).expect("Something went wrong reading the file");
 
     let mut parser = rmd::Rmd::new(contents);
     let vec = parser.parse();
