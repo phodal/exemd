@@ -1,8 +1,8 @@
+use std::{fs, process};
 use std::path::PathBuf;
-use std::{process, fs};
 use std::process::Command;
 
-use crate::rmd::lang::{LangExecutor, ProjectInfo, create_lang_dir, write_content_to_file, CompiledLangExecutor};
+use crate::rmd::lang::{CompiledLangExecutor, create_lang_dir, LangExecutor, ProjectInfo, write_content_to_file};
 
 pub struct GoExec {
     lang: String,
@@ -14,7 +14,7 @@ pub struct GoExec {
 }
 
 impl GoExec {
-    pub fn new(mut source: String) -> GoExec {
+    pub fn new(source: String) -> GoExec {
         GoExec {
             lang: "go".to_string(),
             lang_prefix: "go".to_string(),
@@ -43,13 +43,9 @@ impl LangExecutor for GoExec {
         println!("{}", dir.clone().into_os_string().into_string().unwrap())
     }
 
-    fn install_dependency(&self) {
+    fn install_dependency(&self) {}
 
-    }
-
-    fn try_run(&self) {
-
-    }
+    fn try_run(&self) {}
 
     fn execute(&mut self) -> Command {
         self.build_project();
