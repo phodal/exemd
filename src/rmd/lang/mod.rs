@@ -200,7 +200,8 @@ mod test {
 
     fn get_hello_world_code() -> &'static str {
         "// exemd-deps: colored;version=1.8.0
-// exemd-filename: hello2
+// exemd-filename: main
+// exemd-name: hello2
 fn main() {
   println!(\"Hello World!\");
 }
@@ -208,8 +209,12 @@ fn main() {
     }
 
     #[test]
-    fn should_support_for_filename() {
+    fn should_success_build_project_info() {
         let project = ProjectInfo::from_code(String::from(get_hello_world_code()));
-        assert_eq!("hello2", project.filename.clone())
+        assert_eq!("main", project.filename.clone());
+        assert_eq!("hello2", project.name.clone());
+        assert_eq!(1, project.deps.len());
+        assert_eq!("colored", project.deps[0].name);
+        assert_eq!("1.8.0", project.deps[0].version);
     }
 }
