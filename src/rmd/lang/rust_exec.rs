@@ -53,8 +53,8 @@ version = \"0.1.0\"
 }
 
 impl LangExecutor for RustExec {
-    fn parse_project_info(&mut self) -> ProjectInfo {
-        let map = build_key_value_from_comment(self.source_code.clone());
+    fn parse_project_info(&mut self, string: String) -> ProjectInfo {
+        let map = build_key_value_from_comment(string.clone());
         let mut project_info = ProjectInfo::new();
 
         self.filename = String::from("main");
@@ -95,7 +95,7 @@ impl LangExecutor for RustExec {
     fn install_dependency(&self) {}
     fn try_run(&self) {}
     fn execute(&mut self) -> Command {
-        self.project = self.parse_project_info();
+        self.project = self.parse_project_info(self.source_code.clone());
         self.build_project();
         let child = self.compile();
         child
@@ -169,7 +169,7 @@ fn main() {println!(\"Hello World!\");}
 fn main() {println!(\"Hello World!\");}
 ",
         ));
-        exec.parse_project_info();
+        exec.parse_project_info(exec.source_code.clone());
         assert_eq!("hello2", exec.filename.clone())
     }
 

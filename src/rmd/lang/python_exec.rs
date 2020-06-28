@@ -22,7 +22,7 @@ impl PythonExec {
 }
 
 impl LangExecutor for PythonExec {
-    fn parse_project_info(&mut self) -> ProjectInfo {
+    fn parse_project_info(&mut self, string: String) -> ProjectInfo {
         unimplemented!()
     }
 

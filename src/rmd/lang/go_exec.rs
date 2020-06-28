@@ -31,7 +31,7 @@ impl GoExec {
 }
 
 impl LangExecutor for GoExec {
-    fn parse_project_info(&mut self) -> ProjectInfo {
+    fn parse_project_info(&mut self, string: String) -> ProjectInfo {
         self.filename = String::from("main");
 
         let mut project_info = ProjectInfo::new();
@@ -64,7 +64,7 @@ impl LangExecutor for GoExec {
     }
 
     fn execute(&mut self) -> Command {
-        self.project = self.parse_project_info();
+        self.project = self.parse_project_info(self.source_code.clone());
         self.build_project();
         let child = self.compile();
         child
