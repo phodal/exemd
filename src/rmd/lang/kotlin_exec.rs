@@ -69,7 +69,7 @@ impl CompiledLangExecutor for KotlinExec {
             .arg("-d")
             .arg(output.clone());
 
-        child.spawn().unwrap().wait();
+        child.spawn().unwrap().wait().unwrap();
 
         let mut result = process::Command::new("java");
         result.arg("-jar").arg(output.clone());
