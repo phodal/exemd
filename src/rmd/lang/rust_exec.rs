@@ -101,6 +101,7 @@ impl LangExecutor for RustExec {
 
 impl CompiledLangExecutor for RustExec {
     fn compile(&self) -> Command {
+        /// support: cargo run --manifest-path=[path]
         let path = self.dir_buf.join("Cargo.toml").into_os_string().into_string().unwrap();
         let mut child = process::Command::new("cargo");
         child.arg("run").arg("--manifest-path").arg(path.clone());
