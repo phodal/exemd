@@ -1,6 +1,7 @@
 use std::path::PathBuf;
-use crate::rmd::lang::{ProjectInfo, LangExecutor, CompiledLangExecutor, build_key_value_from_comment, parse_deps};
 use std::process::Command;
+
+use crate::rmd::lang::{build_key_value_from_comment, CompiledLangExecutor, LangExecutor, parse_deps, ProjectInfo};
 
 pub struct JavaExec {
     filename: String,

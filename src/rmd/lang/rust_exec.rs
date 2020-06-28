@@ -1,8 +1,10 @@
-use super::{LangExecutor, CompiledLangExecutor, ProjectInfo};
-use crate::rmd::lang::{create_lang_dir, write_content_to_file, build_key_value_from_comment, parse_deps};
-use std::{process, fs};
-use std::process::Command;
+use std::{fs, process};
 use std::path::PathBuf;
+use std::process::Command;
+
+use crate::rmd::lang::{build_key_value_from_comment, create_lang_dir, parse_deps, write_content_to_file};
+
+use super::{CompiledLangExecutor, LangExecutor, ProjectInfo};
 
 pub struct RustExec {
     lang: String,
@@ -110,8 +112,9 @@ impl CompiledLangExecutor for RustExec {
 
 #[cfg(test)]
 mod test {
-    use crate::rmd::lang::{RustExec, LangExecutor};
     use std::process;
+
+    use crate::rmd::lang::{LangExecutor, RustExec};
 
     fn get_hello_world_code() -> &'static str {
         "// exemd-deps: colored;version=1.8.0

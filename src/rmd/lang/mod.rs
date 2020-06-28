@@ -8,9 +8,9 @@ use std::process::Command;
 
 use regex::{Captures, Regex};
 
+pub use self::java_exec::JavaExec;
 pub use self::python_exec::PythonExec;
 pub use self::rust_exec::RustExec;
-pub use self::java_exec::JavaExec;
 
 mod java_exec;
 mod python_exec;
@@ -121,7 +121,7 @@ pub fn parse_deps(str: String) -> Vec<Dependency> {
 
 #[cfg(test)]
 mod test {
-    use crate::rmd::lang::{build_key_value_from_comment, LangExecutor, RustExec, parse_deps};
+    use crate::rmd::lang::{build_key_value_from_comment, LangExecutor, parse_deps, RustExec};
 
     #[test]
     fn should_parse_key_values() {
