@@ -69,6 +69,19 @@ fn prepare_command(cmd: &Command) -> process::Command {
             let child = exec.execute();
             child
         }
+        "cli" => {
+            let mut split = source.split(" ");
+            let vec: Vec<&str> = split.collect();
+            let first = vec[0].clone();
+            let mut copy = vec.clone();
+            copy.remove(0);
+            let mut child = process::Command::new(first);
+            for arg in copy {
+                child.arg(arg);
+            }
+
+            child
+        }
         _ => {
             let mut child = process::Command::new(executor);
             child.arg("-c").arg(source);
