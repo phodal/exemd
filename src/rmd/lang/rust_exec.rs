@@ -10,7 +10,6 @@ pub struct RustExec {
     source_code: String,
     dir: String,
     dir_buf: PathBuf,
-    pub(crate) output_dir: String,
     project: ProjectInfo,
 }
 
@@ -22,7 +21,6 @@ impl RustExec {
             source_code: source.to_string(),
             dir: "".to_string(),
             dir_buf: Default::default(),
-            output_dir: "".to_string(),
             project: ProjectInfo::new(),
         }
     }
