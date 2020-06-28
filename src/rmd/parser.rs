@@ -37,7 +37,7 @@ impl Rmd {
                 }
                 End(tag) => match tag {
                     Tag::CodeBlock(info) => match info {
-                        CodeBlockKind::Fenced(lang_code) => {
+                        CodeBlockKind::Fenced(_lang_code) => {
                             current_command.script.source = text.to_string();
 
                             commands.push(current_command.build());
@@ -50,7 +50,7 @@ impl Rmd {
                 Text(body) => {
                     text += &body.to_string();
                 }
-                Html(html) => {}
+                Html(_html) => {}
                 Code(inline_code) => {
                     text += &format!("`{}`", inline_code);
                 }

@@ -60,7 +60,7 @@ dependencies {
 
 impl LangExecutor for JavaExec {
     fn build_project(&mut self) {
-        let mut base_dir = create_lang_dir(self.lang.clone(), self.project.name.clone());
+        let base_dir = create_lang_dir(self.lang.clone(), self.project.name.clone());
         let mut output = base_dir.clone();
 
         let mut dir = base_dir.clone().join("src").join("main").join("java");

@@ -9,6 +9,7 @@ pub struct Command {
     pub option_flags: Vec<OptionFlag>,
 }
 
+#[allow(dead_code)]
 impl Command {
     pub fn new(cmd_level: u8) -> Self {
         Self {
@@ -48,6 +49,7 @@ pub struct Script {
     pub source: String,
 }
 
+#[allow(dead_code)]
 impl Script {
     pub fn new() -> Self {
         Self {
@@ -67,6 +69,7 @@ pub struct RequiredArg {
     pub val: String,
 }
 
+#[allow(dead_code)]
 impl RequiredArg {
     pub fn new(name: String) -> Self {
         Self {

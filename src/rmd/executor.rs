@@ -75,7 +75,7 @@ fn prepare_command(cmd: &Command) -> process::Command {
             child
         }
         "cli" => {
-            let mut split = source.split(" ");
+            let split = source.split(" ");
             let vec: Vec<&str> = split.collect();
             let first = vec[0].clone();
             let mut copy = vec.clone();

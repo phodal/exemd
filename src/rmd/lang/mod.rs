@@ -90,7 +90,7 @@ pub fn write_content_to_file(source: String, dir: PathBuf) -> String {
 }
 
 pub fn create_lang_dir(lang: String, project_name: String) -> PathBuf {
-    let mut dir = env::temp_dir()
+    let dir = env::temp_dir()
         .join("com.phodal.exemd")
         .join(lang)
         .join(project_name);
@@ -122,7 +122,7 @@ pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
 }
 
 pub fn parse_deps(str: String) -> Vec<Dependency> {
-    let mut split = str.split(",");
+    let split = str.split(",");
     let vec: Vec<&str> = split.collect();
     let re =
         Regex::new(r"(?x)(?P<name>([a-zA-Z-:]+))(;(?P<key>(\w+))=(?P<version>([a-zA-Z0-9.]+)))?")
