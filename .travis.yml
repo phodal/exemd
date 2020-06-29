@@ -1,13 +1,16 @@
 matrix:
   include:
-     -
-       language: rust
-     -
-       language: java
-       jdk: oraclejdk8
-     -
-       language: python
-       python: 3.6
+    - language: java
+      jdk: oraclejdk8
+    - language: python
+      python: 3.6
+    - language: rust
+      rust:
+        - stable
+      jobs:
+        allow_failures:
+          - rust: nightly
+        fast_finish: true
 
 sudo: required
 
