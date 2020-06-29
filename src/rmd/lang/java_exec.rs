@@ -107,9 +107,10 @@ impl CompiledLangExecutor for JavaExec {
 mod test {
     use crate::rmd::lang::{JavaExec, LangExecutor};
 
-    fn get_hello_world_code() -> &'static str {
-        "java
-// exemd-deps: joda-time:joda-time;version=2.2
+    fn get_joda_code() -> &'static str {
+        "// exemd-deps: joda-time:joda-time;version=2.2
+// exemd-name: joda
+// exemd-filename: HelloWorld
 package joda;
 
 import org.joda.time.LocalTime;
@@ -118,9 +119,6 @@ public class HelloWorld {
   public static void main(String[] args) {
     LocalTime currentTime = new LocalTime();
     System.out.println(\"The current local time is: \" + currentTime);
-
-    Greeter greeter = new Greeter();
-    System.out.println(greeter.sayHello());
   }
 }
 "
@@ -128,7 +126,7 @@ public class HelloWorld {
 
     #[test]
     fn should_build_normal_java_dep() {
-        let mut exec = JavaExec::new(String::from(get_hello_world_code()));
+        let mut exec = JavaExec::new(String::from(get_joda_code()));
         exec.execute();
         let dep = exec.create_dependency_file();
 
@@ -144,7 +142,7 @@ dependencies {
 compile \"joda-time:joda-time:2.2\"
 }
 
-mainClassName = 'hello.main'
+mainClassName = 'hello.HelloWorld'
 ",
             String::from(dep)
         )
@@ -184,6 +182,7 @@ mainClassName = 'joda.HelloWorld'
             String::from(dep)
         )
     }
+
     #[test]
     fn should_success_run_java_hello_world() {
         let mut exec = JavaExec::new(String::from(
@@ -202,5 +201,15 @@ public class main {
         let spawn = child.spawn().unwrap().wait();
 
         assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("Hello, World!"));
+    }
+
+    #[test]
+    fn should_success_run_java_with_deps() {
+        let mut exec = JavaExec::new(String::from(get_joda_code()));
+        let mut child = exec.execute();
+        let out = child.output().expect("failed to execute process");
+        let spawn = child.spawn().unwrap().wait();
+
+        assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("The current local time is:"));
     }
 }
