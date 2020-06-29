@@ -66,8 +66,6 @@ impl CompiledLangExecutor for GoExec {
 
 #[cfg(test)]
 mod test {
-    use std::str;
-    use std::fs::read;
     use crate::rmd::lang::{LangExecutor, GoExec};
 
     #[test]

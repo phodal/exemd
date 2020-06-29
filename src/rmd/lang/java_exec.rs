@@ -142,7 +142,7 @@ dependencies {
 compile \"joda-time:joda-time:2.2\"
 }
 
-mainClassName = 'hello.HelloWorld'
+mainClassName = 'joda.HelloWorld'
 ",
             String::from(dep)
         )
@@ -150,18 +150,7 @@ mainClassName = 'hello.HelloWorld'
 
     #[test]
     fn should_build_naming_file_java_deps() {
-        let mut exec = JavaExec::new(String::from(
-            "// exemd-name: joda
-// exemd-filename: HelloWorld
-// exemd-deps: joda-time:joda-time;version=2.2
-package joda;
-
-import org.joda.time.LocalTime;
-
-public class HelloWorld {
-}
-",
-        ));
+        let mut exec = JavaExec::new(String::from(get_joda_code()));
         exec.execute();
         let dep = exec.create_dependency_file();
 
@@ -198,7 +187,8 @@ public class main {
         ));
         let mut child = exec.execute();
         let out = child.output().expect("failed to execute process");
-        let spawn = child.spawn().unwrap().wait();
+
+        child.spawn().unwrap().wait();
 
         assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("Hello, World!"));
     }
@@ -208,7 +198,8 @@ public class main {
         let mut exec = JavaExec::new(String::from(get_joda_code()));
         let mut child = exec.execute();
         let out = child.output().expect("failed to execute process");
-        let spawn = child.spawn().unwrap().wait();
+
+        child.spawn().unwrap().wait();
 
         assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("The current local time is:"));
     }
