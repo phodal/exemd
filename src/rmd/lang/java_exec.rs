@@ -94,8 +94,11 @@ impl LangExecutor for JavaExec {
 impl CompiledLangExecutor for JavaExec {
     fn compile(&self) -> Command {
         // support: gradle -p [path] run
+        let output_path = self.dir_buf.clone().into_os_string().into_string().unwrap();
         let mut child = process::Command::new("gradle");
-        child.arg("-p").arg(self.dir_buf.clone()).arg("run");
+        child.arg("-p").arg(output_path.clone()).arg("run");
+
+        println!("gradle -p {} run", output_path);
         child
     }
 }
@@ -180,5 +183,24 @@ mainClassName = 'joda.HelloWorld'
 ",
             String::from(dep)
         )
+    }
+    #[test]
+    fn should_success_run_java_hello_world() {
+        let mut exec = JavaExec::new(String::from(
+            "// exemd-name: hello
+package hello;
+
+public class main {
+    public static void main(String[] args) {
+        System.out.println(\"Hello, World!\");
+    }
+}
+",
+        ));
+        let mut child = exec.execute();
+        let out = child.output().expect("failed to execute process");
+        let spawn = child.spawn().unwrap().wait();
+
+        assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("Hello, World!"));
     }
 }
