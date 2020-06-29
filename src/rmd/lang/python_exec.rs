@@ -32,6 +32,14 @@ impl LangExecutor for PythonExec {
     }
 
     fn install_dependency(&self) {
+        for dep in self.project.deps {
+            let dep_str = format!("{}=={}", dep.name, dep.version);
+            let mut child = process::Command::new("pip")
+                .arg("install")
+                .arg(dep_str);
+
+            child.spawn().unwrap().wait().unwrap();
+        }
     }
 
     fn try_run(&self) {
@@ -39,6 +47,7 @@ impl LangExecutor for PythonExec {
 
     fn execute(&mut self) -> Command {
         let mut child = process::Command::new("python");
+        self.install_dependency();
         child.arg("-c").arg(self.source_code.clone());
 
         child
