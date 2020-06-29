@@ -1,6 +1,6 @@
 # exemd
 
-> exemd is a markdown executor, it will make markdown executable. 
+> exemd is  a markdown executor, make markdown executable. support for Kotlin, Java, Golang, Rust, Ruby, Python, JavaScript, TypeScript, PHP, Bash....  
 
 [![Build Status](https://travis-ci.org/phodal/exemd.svg?branch=master)](https://travis-ci.org/phodal/exemd)
 [![build](https://github.com/phodal/exemd/workflows/build/badge.svg)](https://github.com/phodal/exemd/actions)
@@ -34,6 +34,18 @@
 ## Examples
 
 see in [fixtures](_fixtures)
+
+config list:
+
+ - exemd-deps
+ - exemd-name
+ - exemd-filename
+
+deps format: `[name];version=[version]`
+
+```
+colored;version=1.8.0
+```
 
 ## Usage
 
