@@ -77,3 +77,20 @@ impl CompiledLangExecutor for KotlinExec {
         result
     }
 }
+
+#[cfg(test)]
+mod test {
+    use crate::rmd::lang::{LangExecutor, KotlinExec};
+
+    #[test]
+    fn should_success_run_kotlin_hello_world() {
+        let mut exec = KotlinExec::new(String::from(
+            "fun main(args: Array<String>) {
+    println(\"Hello, World!\")
+}
+",
+        ));
+        let mut cmd = exec.execute();
+        assert_eq!(0, cmd.spawn().unwrap().wait().unwrap().code().unwrap())
+    }
+}

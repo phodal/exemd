@@ -2,6 +2,9 @@ language: rust
 
 sudo: required
 
+jdk:
+  - openjdk8
+
 rust:
   - stable
   - nightly

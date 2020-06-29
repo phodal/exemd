@@ -63,3 +63,24 @@ impl CompiledLangExecutor for GoExec {
         child
     }
 }
+
+#[cfg(test)]
+mod test {
+    use crate::rmd::lang::{LangExecutor, GoExec};
+
+    #[test]
+    fn should_success_run_go_hello_world() {
+        let mut exec = GoExec::new(String::from(
+            "package main
+
+import \"fmt\"
+
+func main() {
+    fmt.Println(\"hello world\")
+}
+",
+        ));
+        let mut cmd = exec.execute();
+        assert_eq!(0, cmd.spawn().unwrap().wait().unwrap().code().unwrap())
+    }
+}

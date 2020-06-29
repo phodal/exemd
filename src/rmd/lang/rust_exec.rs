@@ -118,7 +118,7 @@ fn main() {
     }
 
     #[test]
-    fn should_success_run_hello_world() {
+    fn should_success_rust_run_hello_world() {
         let mut exec = RustExec::new(String::from(
             "// exemd-name: hello2
 fn main() {println!(\"Hello World!\");}
