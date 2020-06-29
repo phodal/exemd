@@ -152,7 +152,7 @@ pub fn parse_deps(str: String) -> Vec<Dependency> {
 
 #[cfg(test)]
 mod test {
-    use crate::rmd::lang::{build_key_value_from_comment, parse_deps, LangExecutor, RustExec, ProjectInfo};
+    use crate::rmd::lang::{build_key_value_from_comment, parse_deps, ProjectInfo};
 
     #[test]
     fn should_parse_key_values() {

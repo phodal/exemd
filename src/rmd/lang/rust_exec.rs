@@ -90,8 +90,6 @@ impl CompiledLangExecutor for RustExec {
 
 #[cfg(test)]
 mod test {
-    use std::process;
-
     use crate::rmd::lang::{LangExecutor, RustExec};
 
     fn get_hello_world_code() -> &'static str {
