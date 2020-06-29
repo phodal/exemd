@@ -83,7 +83,7 @@ mod test {
     use crate::rmd::lang::{LangExecutor, KotlinExec};
 
     // todo: fix testing in ci
-    #[test] #[ignore]
+    #[test]
     fn should_success_run_kotlin_hello_world() {
         let mut exec = KotlinExec::new(String::from(
             "fun main(args: Array<String>) {

@@ -31,6 +31,17 @@ addons:
       - binutils-dev
       - libiberty-dev
 
+before_install:
+  # adding $HOME/.sdkman to cache would create an empty directory, which interferes with the initial installation
+  - "[[ -d /home/travis/.sdkman/ ]] && [[ -d /home/travis/.sdkman/bin/ ]] || rm -rf /home/travis/.sdkman/"
+  - curl -sL https://get.sdkman.io | bash
+  - echo sdkman_auto_answer=true > $HOME/.sdkman/etc/config
+  - echo sdkman_auto_selfupdate=true >> $HOME/.sdkman/etc/config
+  - source "/home/travis/.sdkman/bin/sdkman-init.sh"
+
+install:
+  - sdk install kotlin
+
 after_success: |
   wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
   tar xzf master.tar.gz &&
