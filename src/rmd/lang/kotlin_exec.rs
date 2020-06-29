@@ -82,7 +82,8 @@ impl CompiledLangExecutor for KotlinExec {
 mod test {
     use crate::rmd::lang::{LangExecutor, KotlinExec};
 
-    #[test]
+    // todo: fix testing in ci
+    #[test] #[ignore]
     fn should_success_run_kotlin_hello_world() {
         let mut exec = KotlinExec::new(String::from(
             "fun main(args: Array<String>) {
@@ -91,7 +92,6 @@ mod test {
 ",
         ));
         let mut cmd = exec.execute();
-        // todo: fix testing
-        // assert_eq!(0, cmd.spawn().unwrap().wait().unwrap().code().unwrap())
+        assert_eq!(0, cmd.spawn().unwrap().wait().unwrap().code().unwrap())
     }
 }
