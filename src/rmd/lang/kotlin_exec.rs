@@ -85,13 +85,27 @@ mod test {
     // todo: fix testing in ci
     #[test]
     fn should_success_run_kotlin_hello_world() {
-        let mut exec = KotlinExec::new(String::from(
-            "fun main(args: Array<String>) {
-    println(\"Hello, World!\")
-}
-",
-        ));
+        let mut exec = KotlinExec::new(get_hello_world());
         let mut cmd = exec.execute();
         assert_eq!(0, cmd.spawn().unwrap().wait().unwrap().code().unwrap())
+    }
+
+    fn get_hello_world() -> String {
+        "fun main(args: Array<String>) {
+    println(\"Hello, World!\")
+}
+".to_owned()
+    }
+
+    #[test]
+    fn should_success_run_java_with_deps() {
+        let mut exec = KotlinExec::new(get_hello_world());
+        let mut child = exec.execute();
+        let out = child.output().expect("failed to execute process");
+
+        child.spawn().unwrap().wait();
+
+        assert_eq!("Hello, World!
+", String::from_utf8_lossy(&out.stdout));
     }
 }
