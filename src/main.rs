@@ -9,6 +9,7 @@ mod rmd;
 
 #[derive(Clap)]
 struct Opts {
+    #[allow(dead_code)]
     config: String,
     #[clap(subcommand)]
     subcmd: SubCommand,

@@ -4,6 +4,7 @@ use std::process::Command;
 use crate::rmd::lang::{LangExecutor, ProjectInfo};
 use std::path::PathBuf;
 
+#[allow(dead_code)]
 pub struct PythonExec {
     lang: String,
     lang_prefix: String,
