@@ -92,7 +92,7 @@ mod test {
 
     fn get_hello_world() -> String {
         "fun main(args: Array<String>) {
-    println(\"Hello, World!\")
+    println(\"hello, world!\")
 }
 ".to_owned()
     }
@@ -103,9 +103,9 @@ mod test {
         let mut child = exec.execute();
         let out = child.output().expect("failed to execute process");
 
-        child.spawn().unwrap().wait();
+        child.spawn().unwrap().wait().unwrap();
 
-        assert_eq!("Hello, World!
+        assert_eq!("hello, world!
 ", String::from_utf8_lossy(&out.stdout));
     }
 }

@@ -180,7 +180,7 @@ package hello;
 
 public class main {
     public static void main(String[] args) {
-        System.out.println(\"Hello, World!\");
+        System.out.println(\"hello, world!\");
     }
 }
 ",
@@ -188,9 +188,9 @@ public class main {
         let mut child = exec.execute();
         let out = child.output().expect("failed to execute process");
 
-        child.spawn().unwrap().wait();
+        child.spawn().unwrap().wait().unwrap();
 
-        assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("Hello, World!"));
+        assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("hello, world!"));
     }
 
     #[test]
@@ -199,7 +199,7 @@ public class main {
         let mut child = exec.execute();
         let out = child.output().expect("failed to execute process");
 
-        child.spawn().unwrap().wait();
+        child.spawn().unwrap().wait().unwrap();
 
         assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("The current local time is:"));
     }

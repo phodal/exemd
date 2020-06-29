@@ -44,3 +44,20 @@ impl LangExecutor for PythonExec {
         child
     }
 }
+
+#[cfg(test)]
+mod test {
+    use crate::rmd::lang::{PythonExec, LangExecutor};
+
+    #[test]
+    fn should_success_run_python_hello_world() {
+        let mut exec = PythonExec::new(String::from("print(\"hello, world!\")"));
+        let mut child = exec.execute();
+        let out = child.output().expect("failed to execute process");
+
+        child.spawn().unwrap().wait().unwrap();
+
+        assert_eq!("hello, world!
+", String::from_utf8_lossy(&out.stdout));
+    }
+}

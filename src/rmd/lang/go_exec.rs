@@ -76,7 +76,7 @@ mod test {
 import \"fmt\"
 
 func main() {
-    fmt.Println(\"hello world\")
+    fmt.Println(\"hello, world!\")
 }
 ",
         ));
@@ -86,7 +86,7 @@ func main() {
         let spawn = child.spawn().unwrap().wait();
 
         assert_eq!(0, spawn.unwrap().code().unwrap());
-        assert_eq!("hello world
+        assert_eq!("hello, world!
 ", String::from_utf8_lossy(&out.stdout));
     }
 }
