@@ -37,7 +37,7 @@ before_install:
   - curl -sL https://get.sdkman.io | bash
   - echo sdkman_auto_answer=true > $HOME/.sdkman/etc/config
   - echo sdkman_auto_selfupdate=true >> $HOME/.sdkman/etc/config
-  - source "/home/travis/.sdkman/bin/sdkman-init.sh"
+  - source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 install:
   - sdk install kotlin
