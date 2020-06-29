@@ -18,7 +18,9 @@ pub fn execute_command(cmd: Command) -> Result<ExitStatus> {
     }
 
     let mut child = prepare_command(&cmd);
-    child.spawn()?.wait()
+    child.stdout(std::process::Stdio::piped()) // set up stdout so we can read it
+        .spawn()?
+        .wait()
 }
 
 fn prepare_command(cmd: &Command) -> process::Command {

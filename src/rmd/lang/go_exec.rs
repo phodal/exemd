@@ -66,6 +66,8 @@ impl CompiledLangExecutor for GoExec {
 
 #[cfg(test)]
 mod test {
+    use std::str;
+    use std::fs::read;
     use crate::rmd::lang::{LangExecutor, GoExec};
 
     #[test]
@@ -80,7 +82,13 @@ func main() {
 }
 ",
         ));
-        let mut cmd = exec.execute();
-        assert_eq!(0, cmd.spawn().unwrap().wait().unwrap().code().unwrap())
+
+        let mut child = exec.execute();
+        let out = child.output().expect("failed to execute process");
+        let spawn = child.spawn().unwrap().wait();
+
+        assert_eq!(0, spawn.unwrap().code().unwrap());
+        assert_eq!("hello world
+", String::from_utf8_lossy(&out.stdout));
     }
 }
