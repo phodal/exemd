@@ -1,25 +1,16 @@
-matrix:
-  include:
-    - language: java
-      jdk: oraclejdk8
-    - language: python
-      python: 3.6
-    - language: rust
-      rust:
-        - stable
-      jobs:
-        allow_failures:
-          - rust: nightly
-        fast_finish: true
+language: rust
 
 sudo: required
 
 jdk:
   - openjdk8
-
+python:
+  - "3.4"
 rust:
   - stable
   - nightly
+node_js:
+  - 12
 
 os:
   - linux
