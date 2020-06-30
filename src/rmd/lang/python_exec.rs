@@ -37,6 +37,8 @@ impl LangExecutor for PythonExec {
             child.arg("install")
                 .arg(dep_str);
 
+            child.output().expect("failed to execute process");
+
             child.spawn().unwrap().wait().unwrap();
         }
     }

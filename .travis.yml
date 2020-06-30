@@ -20,6 +20,9 @@ script:
   - cargo build
   - cargo test
 
+virtualenv:
+  system_site_packages: true
+
 addons:
   apt:
     packages:
