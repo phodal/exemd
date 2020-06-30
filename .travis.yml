@@ -18,7 +18,7 @@ os:
 
 script:
   - cargo build
-  - cargo test
+  - just test
 
 virtualenv:
   system_site_packages: true
@@ -44,7 +44,8 @@ before_install:
 
 install:
   - sdk install kotlin
-#
+  - cargo install just
+
 #after_success: |
 #  wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
 #  tar xzf master.tar.gz &&
