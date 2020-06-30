@@ -56,10 +56,10 @@ impl ProjectInfo {
                     project_info.deps = parse_deps(value.clone());
                 }
                 "name" => {
-                    project_info.name = String::from(value.clone());
+                    project_info.name = value.clone();
                 }
                 "filename" => {
-                    project_info.filename = String::from(value.clone());
+                    project_info.filename = value.clone();
                 }
                 _ => {}
             }
@@ -101,7 +101,7 @@ pub fn create_lang_dir(lang: String, project_name: String) -> PathBuf {
 pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
     let mut info = HashMap::new();
     let re = Regex::new(r"(?x)(//|\#)\s?exemd-(?P<key>([a-zA-z]+)):\s?(?P<value>(.*))").unwrap();
-    let split = str.split("\n");
+    let split = str.split('\n');
     let vec: Vec<&str> = split.collect();
 
     for line in vec {
@@ -120,7 +120,7 @@ pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
 }
 
 pub fn parse_deps(str: String) -> Vec<Dependency> {
-    let split = str.split(",");
+    let split = str.split(',');
     let vec: Vec<&str> = split.collect();
     let re =
         Regex::new(r"(?x)(?P<name>([a-zA-Z-:]+))(;(?P<key>(\w+))=(?P<version>([a-zA-Z0-9.]+)))?")

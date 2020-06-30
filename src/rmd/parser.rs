@@ -23,20 +23,19 @@ impl Rmd {
         for event in parser {
             match event {
                 Start(tag) => {
-                    match tag {
-                        Tag::CodeBlock(info) => match info {
+                    if let Tag::CodeBlock(info) = tag {
+                        match info {
                             CodeBlockKind::Fenced(lang_code) => {
                                 current_command.script.executor = lang_code.to_string();
                             }
                             CodeBlockKind::Indented => {}
-                        },
-                        _ => (),
+                        }
                     }
 
                     text = "".to_string();
                 }
-                End(tag) => match tag {
-                    Tag::CodeBlock(info) => match info {
+                End(tag) => if let Tag::CodeBlock(info) = tag {
+                    match info {
                         CodeBlockKind::Fenced(_lang_code) => {
                             current_command.script.source = text.to_string();
 
@@ -44,8 +43,7 @@ impl Rmd {
                             current_command = Command::new(0);
                         }
                         CodeBlockKind::Indented => {}
-                    },
-                    _ => (),
+                    }
                 },
                 Text(body) => {
                     text += &body.to_string();
@@ -62,7 +60,7 @@ impl Rmd {
     }
 }
 
-fn create_markdown_parser(content: &String) -> Parser {
+fn create_markdown_parser(content: &str) -> Parser {
     let mut options = Options::empty();
     options.insert(Options::ENABLE_STRIKETHROUGH);
     Parser::new_ext(&content, options)
