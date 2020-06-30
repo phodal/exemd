@@ -15,6 +15,8 @@
    - [x] Ruby
    - [x] Javascript
    - [x] Python
+     - [x] single file
+     - [x] dependency
    - [x] PHP
    - [x] TypeScript by [deno](https://deno.land/)
  - [ ] compiled language
