@@ -51,7 +51,7 @@ impl LangExecutor for RustExec {
         let base_dir = create_lang_dir(self.lang.clone(), self.project.name.clone());
         let mut output = base_dir.clone();
 
-        let mut dir = base_dir.clone().join("src");
+        let mut dir = base_dir.join("src");
         fs::create_dir_all(dir.clone()).unwrap();
 
         self.dir_buf = base_dir;

@@ -43,14 +43,14 @@ dependencies {
         }
 
         default_package.push_str("\n}\n\n");
-        if self.project.name != String::from("") {
+        if self.project.name != "" {
             default_package.push_str(&format!(
                 "mainClassName = '{}.{}'\n",
                 self.project.name.clone(),
                 self.project.filename.clone()
             ));
         } else {
-            default_package.push_str(&format!("mainClassName = 'main'"));
+            default_package.push_str("mainClassName = 'main'");
         }
 
         write_content_to_file(default_package.clone(), self.dir_buf.join("build.gradle"));
@@ -63,17 +63,17 @@ impl LangExecutor for JavaExec {
         let base_dir = create_lang_dir(self.lang.clone(), self.project.name.clone());
         let mut output = base_dir.clone();
 
-        let mut dir = base_dir.clone().join("src").join("main").join("java");
+        let mut dir = base_dir.join("src").join("main").join("java");
 
-        if self.project.name != String::from("") {
+        if self.project.name != "" {
             dir.push(self.project.name.clone());
         }
 
         fs::create_dir_all(dir.clone()).unwrap();
 
-        self.dir_buf = base_dir.clone();
+        self.dir_buf = base_dir;
 
-        dir.push(self.project.filename.clone() + &"." + &self.lang_prefix.clone());
+        dir.push(self.project.filename.clone() + "." + &self.lang_prefix.clone());
         output.push(self.project.filename.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);
