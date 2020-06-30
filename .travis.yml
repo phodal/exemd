@@ -18,7 +18,7 @@ os:
 
 script:
   - cargo build
-  - just test
+  - just tests
 
 virtualenv:
   system_site_packages: true
