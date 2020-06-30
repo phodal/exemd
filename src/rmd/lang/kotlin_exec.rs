@@ -34,13 +34,13 @@ impl LangExecutor for KotlinExec {
         let mut dir = base_dir.clone();
         fs::create_dir_all(dir.clone()).unwrap();
 
-        self.dir_buf = base_dir.clone();
+        self.dir_buf = base_dir;
 
-        dir.push(self.project.filename.clone() + &"." + &self.lang_prefix.clone());
+        dir.push(self.project.filename.clone() + "." + &self.lang_prefix.clone());
         output.push(self.project.filename.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir.clone());
-        println!("{}", dir.clone().into_os_string().into_string().unwrap())
+        println!("{}", dir.into_os_string().into_string().unwrap())
     }
 
     fn install_dependency(&self) {}
@@ -61,7 +61,7 @@ impl CompiledLangExecutor for KotlinExec {
         out_buf.push(string);
 
         let output = out_buf.into_os_string().into_string().unwrap();
-        println!("{}", output.clone());
+        println!("{}", output);
 
         child.arg(self.dir.clone())
             .arg("-include-runtime")
@@ -71,7 +71,7 @@ impl CompiledLangExecutor for KotlinExec {
         child.spawn().unwrap().wait().unwrap();
 
         let mut result = process::Command::new("java");
-        result.arg("-jar").arg(output.clone());
+        result.arg("-jar").arg(output);
 
         result
     }

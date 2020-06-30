@@ -54,9 +54,9 @@ impl LangExecutor for RustExec {
         let mut dir = base_dir.clone().join("src");
         fs::create_dir_all(dir.clone()).unwrap();
 
-        self.dir_buf = base_dir.clone();
+        self.dir_buf = base_dir;
 
-        dir.push(self.project.filename.clone() + &"." + &self.lang_prefix.clone());
+        dir.push(self.project.filename.clone() + "." + &self.lang_prefix.clone());
         output.push(self.project.filename.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);
@@ -82,7 +82,7 @@ impl CompiledLangExecutor for RustExec {
         let mut child = process::Command::new("cargo");
         child.arg("run").arg("--manifest-path").arg(path.clone());
 
-        println!("{}", path.clone());
+        println!("{}", path);
         child
     }
 }

@@ -34,13 +34,13 @@ impl LangExecutor for GoExec {
         let mut dir = base_dir.clone();
         fs::create_dir_all(dir.clone()).unwrap();
 
-        self.dir_buf = base_dir.clone();
+        self.dir_buf = base_dir;
 
-        dir.push(self.project.filename.clone() + &"." + &self.lang_prefix.clone());
+        dir.push(self.project.filename.clone() + "." + &self.lang_prefix.clone());
         output.push(self.project.filename.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir.clone());
-        println!("{}", dir.clone().into_os_string().into_string().unwrap())
+        println!("{}", dir.into_os_string().into_string().unwrap())
     }
 
     fn install_dependency(&self) {}

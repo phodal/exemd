@@ -44,7 +44,7 @@ impl ProjectInfo {
     }
 
     pub fn from_code(string: String) -> ProjectInfo {
-        let map = build_key_value_from_comment(string.clone());
+        let map = build_key_value_from_comment(string);
         let mut project_info = ProjectInfo::new();
 
         project_info.filename = String::from("main");
