@@ -1,6 +1,9 @@
 tests:
 	cargo test --features "local"
 
+tests-ci:
+	cargo test
+
 @bench:
 	cargo bench
 
