@@ -172,11 +172,16 @@ mainClassName = 'joda.HelloWorld'
         )
     }
 
-    // todo: fixed in ci
-    #[test] #[ignore]
-    fn should_success_run_java_hello_world() {
-        let mut exec = JavaExec::new(String::from(
-            "// exemd-name: hello
+    #[cfg(feature = "local")]
+    mod local {
+        use crate::rmd::lang::{JavaExec, LangExecutor};
+        use crate::rmd::lang::java_exec::test::get_joda_code;
+
+        // todo: fixed in ci
+        #[test]
+        fn should_success_run_java_hello_world() {
+            let mut exec = JavaExec::new(String::from(
+                "// exemd-name: hello
 package hello;
 
 public class main {
@@ -185,24 +190,25 @@ public class main {
     }
 }
 ",
-        ));
-        let mut child = exec.execute();
-        let out = child.output().expect("failed to execute process");
+            ));
+            let mut child = exec.execute();
+            let out = child.output().expect("failed to execute process");
 
-        child.spawn().unwrap().wait().unwrap();
+            child.spawn().unwrap().wait().unwrap();
 
-        assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("hello, world!"));
-    }
+            assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("hello, world!"));
+        }
 
-    // todo: fixed in ci
-    #[test] #[ignore]
-    fn should_success_run_java_with_deps() {
-        let mut exec = JavaExec::new(String::from(get_joda_code()));
-        let mut child = exec.execute();
-        let out = child.output().expect("failed to execute process");
 
-        child.spawn().unwrap().wait().unwrap();
+        #[test]
+        fn should_success_run_java_with_deps() {
+            let mut exec = JavaExec::new(String::from(get_joda_code()));
+            let mut child = exec.execute();
+            let out = child.output().expect("failed to execute process");
 
-        assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("The current local time is:"));
+            child.spawn().unwrap().wait().unwrap();
+
+            assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("The current local time is:"));
+        }
     }
 }

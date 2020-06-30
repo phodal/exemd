@@ -31,3 +31,6 @@ regex = "1"
 path = "src/main.rs"
 name = "exemd"
 doc = false
+
+[features]
+local = []

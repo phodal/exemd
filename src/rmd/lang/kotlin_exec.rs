@@ -97,16 +97,22 @@ mod test {
 ".to_owned()
     }
 
-    // todo: fixed in ci
-    #[test] #[ignore]
-    fn should_success_run_kotlin() {
-        let mut exec = KotlinExec::new(get_hello_world());
-        let mut child = exec.execute();
-        let out = child.output().expect("failed to execute process");
+    #[cfg(feature = "local")]
+    mod local {
+        use crate::rmd::lang::{KotlinExec, LangExecutor};
+        use crate::rmd::lang::kotlin_exec::test::get_hello_world;
 
-        child.spawn().unwrap().wait().unwrap();
+        // todo: fixed in ci
+        #[test]
+        fn should_success_run_kotlin() {
+            let mut exec = KotlinExec::new(get_hello_world());
+            let mut child = exec.execute();
+            let out = child.output().expect("failed to execute process");
 
-        assert_eq!("hello, world!
+            child.spawn().unwrap().wait().unwrap();
+
+            assert_eq!("hello, world!
 ", String::from_utf8_lossy(&out.stdout));
+        }
     }
 }
