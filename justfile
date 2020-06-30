@@ -4,6 +4,9 @@ tests:
 tests-ci:
 	cargo test
 
+build:
+    cargo build
+
 @bench:
 	cargo bench
 
