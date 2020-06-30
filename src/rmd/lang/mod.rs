@@ -102,7 +102,7 @@ pub fn create_lang_dir(lang: String, project_name: String) -> PathBuf {
 
 pub fn build_key_value_from_comment(str: String) -> HashMap<String, String> {
     let mut info = HashMap::new();
-    let re = Regex::new(r"(?x)//\s?exemd-(?P<key>([a-zA-z]+)):\s?(?P<value>(.*))").unwrap();
+    let re = Regex::new(r"(?x)(//|\#)\s?exemd-(?P<key>([a-zA-z]+)):\s?(?P<value>(.*))").unwrap();
     let split = str.split("\n");
     let vec: Vec<&str> = split.collect();
 
@@ -157,6 +157,16 @@ mod test {
     #[test]
     fn should_parse_key_values() {
         let string = String::from("// exemd-deps: colored;version=1.8.0");
+        let map = build_key_value_from_comment(string);
+
+        assert_eq!(1, map.len());
+        let value = map.get("deps").unwrap();
+        assert_eq!(&"colored;version=1.8.0", value);
+    }
+
+    #[test]
+    fn should_parse_sharp_comment_key_values() {
+        let string = String::from("# exemd-deps: colored;version=1.8.0");
         let map = build_key_value_from_comment(string);
 
         assert_eq!(1, map.len());
