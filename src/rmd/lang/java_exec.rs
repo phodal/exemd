@@ -86,8 +86,7 @@ impl LangExecutor for JavaExec {
 
     fn execute(&mut self) -> Command {
         self.build_project();
-        let child = self.compile();
-        child
+        self.compile()
     }
 }
 

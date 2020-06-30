@@ -84,9 +84,7 @@ pub trait CompiledLangExecutor: LangExecutor {
 pub fn write_content_to_file(source: String, dir: PathBuf) -> String {
     let mut f = File::create(dir.clone()).unwrap();
     f.write_all(source.as_ref()).unwrap();
-    let code_path = dir.into_os_string().into_string().unwrap();
-
-    code_path
+    dir.into_os_string().into_string().unwrap()
 }
 
 pub fn create_lang_dir(lang: String, project_name: String) -> PathBuf {

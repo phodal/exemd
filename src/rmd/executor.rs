@@ -43,8 +43,7 @@ fn prepare_command(cmd: &Command) -> process::Command {
         }
         "py" | "python" => {
             let mut py_exec = PythonExec::new(source.clone());
-            let child = py_exec.execute();
-            child
+            py_exec.execute()
         }
         "rb" | "ruby" => {
             let mut child = process::Command::new("ruby");
@@ -58,23 +57,19 @@ fn prepare_command(cmd: &Command) -> process::Command {
         }
         "rust" => {
             let mut rustexec = RustExec::new(source.clone());
-            let child = rustexec.execute();
-            child
+            rustexec.execute()
         }
         "java" => {
             let mut javaexec = JavaExec::new(source.clone());
-            let child = javaexec.execute();
-            child
+            javaexec.execute()
         }
         "go" => {
             let mut exec = GoExec::new(source.clone());
-            let child = exec.execute();
-            child
+            exec.execute()
         }
         "kotlin" | "k" => {
             let mut exec = KotlinExec::new(source.clone());
-            let child = exec.execute();
-            child
+            exec.execute()
         }
         "cli" => {
             let split = source.split(" ");

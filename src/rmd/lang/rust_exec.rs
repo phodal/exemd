@@ -66,8 +66,7 @@ impl LangExecutor for RustExec {
     fn try_run(&self) {}
     fn execute(&mut self) -> Command {
         self.build_project();
-        let child = self.compile();
-        child
+        self.compile()
     }
 }
 

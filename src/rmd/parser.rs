@@ -65,8 +65,7 @@ impl Rmd {
 fn create_markdown_parser(content: &String) -> Parser {
     let mut options = Options::empty();
     options.insert(Options::ENABLE_STRIKETHROUGH);
-    let parser = Parser::new_ext(&content, options);
-    parser
+    Parser::new_ext(&content, options)
 }
 
 
