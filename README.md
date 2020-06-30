@@ -27,7 +27,6 @@
      - [x] single file
      - [x] dependency
        - [x] Gradle
-   - [ ] C
    - [x] Go
      - [x] single file
    - [X] Kotlin
