@@ -69,6 +69,12 @@ exemd run _fixtures/sample.md
 
 ## Development
 
+Install Rust and Cargo
+ 
+```bash
+curl https://sh.rustup.rs -sSf | sh
+``` 
+
 1. clone
 
 ```
