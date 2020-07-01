@@ -19,8 +19,8 @@ pub struct CliExec {
 impl CliExec {
     pub fn new(source: String) -> CliExec {
         CliExec {
-            lang: "go".to_string(),
-            lang_prefix: "go".to_string(),
+            lang: "".to_string(),
+            lang_prefix: "".to_string(),
             source_code: source.to_string(),
             dir: "".to_string(),
             dir_buf: Default::default(),
