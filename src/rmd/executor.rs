@@ -4,7 +4,7 @@ use std::process;
 use std::process::ExitStatus;
 
 use crate::rmd::command::Command;
-use crate::rmd::lang::{CliExec, GoExec, JavaExec, KotlinExec, LangExecutor, PythonExec, RustExec, JavaScriptExec};
+use crate::rmd::lang::{CliExec, GoExec, JavaExec, KotlinExec, LangExecutor, PythonExec, RustExec, JavaScriptExec, TypeScriptExec};
 
 pub fn execute_command(cmd: Command) -> Result<ExitStatus> {
     if cmd.script.source == "" {
@@ -34,9 +34,8 @@ fn prepare_command(cmd: &Command) -> process::Command {
             exec.execute()
         }
         "ts" | "typescript" => {
-            let mut child = process::Command::new("deno");
-            child.arg("eval").arg(source);
-            child
+            let mut exec = TypeScriptExec::new(source);
+            exec.execute()
         }
         "py" | "python" => {
             let mut py_exec = PythonExec::new(source);

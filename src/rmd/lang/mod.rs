@@ -14,6 +14,7 @@ pub use self::kotlin_exec::KotlinExec;
 pub use self::python_exec::PythonExec;
 pub use self::rust_exec::RustExec;
 pub use self::javascript_exec::JavaScriptExec;
+pub use self::typescript_exec::TypeScriptExec;
 
 mod cli_exec;
 mod go_exec;
@@ -22,6 +23,7 @@ mod kotlin_exec;
 mod python_exec;
 mod rust_exec;
 mod javascript_exec;
+mod typescript_exec;
 
 #[derive(Clone, Debug)]
 pub struct Dependency {
