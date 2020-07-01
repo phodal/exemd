@@ -17,6 +17,9 @@ build:
 	cargo clippy --tests --features "local"
 	cargo fmt -- --check
 
+@fix:
+    cargo fmt --all
+
 clean:
 	cargo clean
 	find . -type f -name "*.orig" -exec rm {} \;
