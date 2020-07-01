@@ -59,7 +59,7 @@ impl Script {
     }
 
     pub fn has_script(&self) -> bool {
-        self.source != String::from("") && self.executor != String::from("")
+        self.source != "" && self.executor != ""
     }
 }
 
