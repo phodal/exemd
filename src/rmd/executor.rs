@@ -4,7 +4,7 @@ use std::process;
 use std::process::ExitStatus;
 
 use crate::rmd::command::Command;
-use crate::rmd::lang::{GoExec, JavaExec, KotlinExec, LangExecutor, PythonExec, RustExec};
+use crate::rmd::lang::{CliExec, GoExec, JavaExec, KotlinExec, LangExecutor, PythonExec, RustExec};
 
 pub fn execute_command(cmd: Command) -> Result<ExitStatus> {
     if cmd.script.source == "" {
@@ -72,21 +72,8 @@ fn prepare_command(cmd: &Command) -> process::Command {
             exec.execute()
         }
         "cli" => {
-            let split = source.split(' ');
-            let vec: Vec<&str> = split.collect();
-            let first = vec[0];
-            let mut copy = vec.clone();
-            copy.remove(0);
-
-            let mut args: Vec<String> = Vec::new();
-            for arg in copy {
-                args.push(arg.replace("\n", ""));
-            }
-
-            let mut child = process::Command::new(String::from(first));
-            child.args(args);
-
-            child
+            let mut exec = CliExec::new(source);
+            exec.execute()
         }
         _ => {
             let mut child = process::Command::new(executor);

@@ -7,12 +7,14 @@ use std::{env, fs};
 
 use regex::Regex;
 
+pub use self::cli_exec::CliExec;
 pub use self::go_exec::GoExec;
 pub use self::java_exec::JavaExec;
 pub use self::kotlin_exec::KotlinExec;
 pub use self::python_exec::PythonExec;
 pub use self::rust_exec::RustExec;
 
+mod cli_exec;
 mod go_exec;
 mod java_exec;
 mod kotlin_exec;
