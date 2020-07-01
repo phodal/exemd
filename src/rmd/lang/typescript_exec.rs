@@ -38,7 +38,7 @@ impl LangExecutor for TypeScriptExec {
 
     fn execute(&mut self) -> Command {
         let mut child = process::Command::new("deno");
-        child.arg("eval").arg(source);
+        child.arg("eval").arg(self.source_code.clone());
         child
     }
 }

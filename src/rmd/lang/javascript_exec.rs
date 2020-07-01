@@ -19,8 +19,8 @@ pub struct JavaScriptExec {
 impl JavaScriptExec {
     pub fn new(source: String) -> JavaScriptExec {
         JavaScriptExec {
-            lang: "".to_string(),
-            lang_prefix: "".to_string(),
+            lang: "js".to_string(),
+            lang_prefix: "js".to_string(),
             source_code: source.to_string(),
             dir: "".to_string(),
             dir_buf: Default::default(),
@@ -38,7 +38,7 @@ impl LangExecutor for JavaScriptExec {
 
     fn execute(&mut self) -> Command {
         let mut child = process::Command::new("node");
-        child.arg("-e").arg(source);
+        child.arg("-e").arg(self.source_code.clone());
         child
     }
 }
