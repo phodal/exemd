@@ -84,7 +84,6 @@ impl CompiledLangExecutor for KotlinExec {
 mod test {
     use crate::rmd::lang::{KotlinExec, LangExecutor};
 
-    // todo: fix testing in ci
     #[test]
     fn should_success_run_kotlin_hello_world() {
         let mut exec = KotlinExec::new(get_hello_world());
@@ -105,7 +104,6 @@ mod test {
         use crate::rmd::lang::kotlin_exec::test::get_hello_world;
         use crate::rmd::lang::{KotlinExec, LangExecutor};
 
-        // todo: fixed in ci
         #[test]
         fn should_success_run_kotlin() {
             let mut exec = KotlinExec::new(get_hello_world());

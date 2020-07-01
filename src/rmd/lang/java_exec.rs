@@ -178,7 +178,6 @@ mainClassName = 'joda.HelloWorld'
         use crate::rmd::lang::java_exec::test::get_joda_code;
         use crate::rmd::lang::{JavaExec, LangExecutor};
 
-        // todo: fixed in ci
         #[test]
         fn should_success_run_java_hello_world() {
             let mut exec = JavaExec::new(String::from(
