@@ -141,7 +141,7 @@ version = \"0.1.0\"
 [dependencies]
 colored = \"1.8.0\"
 ",
-            String::from(dep)
+            dep
         )
     }
 }

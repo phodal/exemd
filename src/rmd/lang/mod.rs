@@ -219,8 +219,8 @@ fn main() {
     #[test]
     fn should_success_build_project_info() {
         let project = ProjectInfo::from_code(String::from(get_hello_world_code()));
-        assert_eq!("main", project.filename.clone());
-        assert_eq!("hello2", project.name.clone());
+        assert_eq!("main", project.filename);
+        assert_eq!("hello2", project.name);
         assert_eq!(1, project.deps.len());
         assert_eq!("colored", project.deps[0].name);
         assert_eq!("1.8.0", project.deps[0].version);

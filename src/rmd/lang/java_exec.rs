@@ -143,7 +143,7 @@ compile \"joda-time:joda-time:2.2\"
 
 mainClassName = 'joda.HelloWorld'
 ",
-            String::from(dep)
+            dep
         )
     }
 
@@ -167,7 +167,7 @@ compile \"joda-time:joda-time:2.2\"
 
 mainClassName = 'joda.HelloWorld'
 ",
-            String::from(dep)
+            dep
         )
     }
 
