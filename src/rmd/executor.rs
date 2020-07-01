@@ -30,14 +30,12 @@ fn prepare_command(cmd: &Command) -> process::Command {
 
     match executor.as_ref() {
         "js" | "javascript" => {
-            let mut child;
-            child = process::Command::new("node");
+            let mut child = process::Command::new("node");
             child.arg("-e").arg(source);
             child
         }
         "ts" | "typescript" => {
-            let mut child;
-            child = process::Command::new("deno");
+            let mut child = process::Command::new("deno");
             child.arg("eval").arg(source);
             child
         }
