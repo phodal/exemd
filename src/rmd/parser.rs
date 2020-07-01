@@ -34,17 +34,19 @@ impl Rmd {
 
                     text = "".to_string();
                 }
-                End(tag) => if let Tag::CodeBlock(info) = tag {
-                    match info {
-                        CodeBlockKind::Fenced(_lang_code) => {
-                            current_command.script.source = text.to_string();
+                End(tag) => {
+                    if let Tag::CodeBlock(info) = tag {
+                        match info {
+                            CodeBlockKind::Fenced(_lang_code) => {
+                                current_command.script.source = text.to_string();
 
-                            commands.push(current_command.build());
-                            current_command = Command::new(0);
+                                commands.push(current_command.build());
+                                current_command = Command::new(0);
+                            }
+                            CodeBlockKind::Indented => {}
                         }
-                        CodeBlockKind::Indented => {}
                     }
-                },
+                }
                 Text(body) => {
                     text += &body.to_string();
                 }
@@ -65,7 +67,6 @@ fn create_markdown_parser(content: &str) -> Parser {
     options.insert(Options::ENABLE_STRIKETHROUGH);
     Parser::new_ext(&content, options)
 }
-
 
 #[cfg(test)]
 const TEST_MASKFILE: &str = r#"
@@ -115,11 +116,17 @@ mod build_command_structure {
         let mut rmd = Rmd::new(TEST_MASKFILE.to_string());
         let tree = rmd.parse();
         assert_eq!("bash", tree[0].script.executor);
-        assert_eq!("echo \"Serving on port $port\"
-", tree[0].script.source);
+        assert_eq!(
+            "echo \"Serving on port $port\"
+",
+            tree[0].script.source
+        );
         assert_eq!("js", tree[1].script.executor);
-        assert_eq!("const { name } = process.env;
+        assert_eq!(
+            "const { name } = process.env;
 console.log(`Hello, ${name}!`);
-", tree[1].script.source);
+",
+            tree[1].script.source
+        );
     }
 }

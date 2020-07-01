@@ -1,8 +1,10 @@
 use std::path::PathBuf;
-use std::{process, fs};
 use std::process::Command;
+use std::{fs, process};
 
-use crate::rmd::lang::{LangExecutor, ProjectInfo, create_lang_dir, write_content_to_file, CompiledLangExecutor};
+use crate::rmd::lang::{
+    create_lang_dir, write_content_to_file, CompiledLangExecutor, LangExecutor, ProjectInfo,
+};
 
 pub struct KotlinExec {
     lang: String,
@@ -63,7 +65,8 @@ impl CompiledLangExecutor for KotlinExec {
         let output = out_buf.into_os_string().into_string().unwrap();
         println!("{}", output);
 
-        child.arg(self.dir.clone())
+        child
+            .arg(self.dir.clone())
             .arg("-include-runtime")
             .arg("-d")
             .arg(output.clone());
@@ -79,7 +82,7 @@ impl CompiledLangExecutor for KotlinExec {
 
 #[cfg(test)]
 mod test {
-    use crate::rmd::lang::{LangExecutor, KotlinExec};
+    use crate::rmd::lang::{KotlinExec, LangExecutor};
 
     // todo: fix testing in ci
     #[test]
@@ -93,13 +96,14 @@ mod test {
         "fun main(args: Array<String>) {
     println(\"hello, world!\")
 }
-".to_owned()
+"
+        .to_owned()
     }
 
     #[cfg(feature = "local")]
     mod local {
-        use crate::rmd::lang::{KotlinExec, LangExecutor};
         use crate::rmd::lang::kotlin_exec::test::get_hello_world;
+        use crate::rmd::lang::{KotlinExec, LangExecutor};
 
         // todo: fixed in ci
         #[test]
@@ -110,8 +114,11 @@ mod test {
 
             child.spawn().unwrap().wait().unwrap();
 
-            assert_eq!("hello, world!
-", String::from_utf8_lossy(&out.stdout));
+            assert_eq!(
+                "hello, world!
+",
+                String::from_utf8_lossy(&out.stdout)
+            );
         }
     }
 }

@@ -47,7 +47,7 @@ fn run_markdown(args: EditorCmd) {
                 Some(code) => {
                     // todo: try catch error for not broken
                     std::process::exit(code)
-                },
+                }
                 None => return,
             },
             Err(err) => {

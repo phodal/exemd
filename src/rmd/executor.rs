@@ -1,10 +1,10 @@
-use std::{process};
-use std::io::{Error, ErrorKind};
 use std::io::Result;
-use std::process::{ExitStatus};
+use std::io::{Error, ErrorKind};
+use std::process;
+use std::process::ExitStatus;
 
 use crate::rmd::command::Command;
-use crate::rmd::lang::{JavaExec, LangExecutor, PythonExec, RustExec, GoExec, KotlinExec};
+use crate::rmd::lang::{GoExec, JavaExec, KotlinExec, LangExecutor, PythonExec, RustExec};
 
 pub fn execute_command(cmd: Command) -> Result<ExitStatus> {
     if cmd.script.source == "" {

@@ -2,7 +2,9 @@ use std::path::PathBuf;
 use std::process::Command;
 use std::{fs, process};
 
-use crate::rmd::lang::{create_lang_dir, write_content_to_file, CompiledLangExecutor, LangExecutor, ProjectInfo};
+use crate::rmd::lang::{
+    create_lang_dir, write_content_to_file, CompiledLangExecutor, LangExecutor, ProjectInfo,
+};
 
 pub struct JavaExec {
     lang: String,
@@ -173,8 +175,8 @@ mainClassName = 'joda.HelloWorld'
 
     #[cfg(feature = "local")]
     mod local {
-        use crate::rmd::lang::{JavaExec, LangExecutor};
         use crate::rmd::lang::java_exec::test::get_joda_code;
+        use crate::rmd::lang::{JavaExec, LangExecutor};
 
         // todo: fixed in ci
         #[test]
@@ -195,9 +197,11 @@ public class main {
 
             child.spawn().unwrap().wait().unwrap();
 
-            assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("hello, world!"));
+            assert_eq!(
+                true,
+                String::from_utf8_lossy(&out.stdout).contains("hello, world!")
+            );
         }
-
 
         #[test]
         fn should_success_run_java_with_deps() {
@@ -207,7 +211,10 @@ public class main {
 
             child.spawn().unwrap().wait().unwrap();
 
-            assert_eq!(true, String::from_utf8_lossy(&out.stdout).contains("The current local time is:"));
+            assert_eq!(
+                true,
+                String::from_utf8_lossy(&out.stdout).contains("The current local time is:")
+            );
         }
     }
 }

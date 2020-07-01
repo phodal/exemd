@@ -34,8 +34,7 @@ impl LangExecutor for PythonExec {
         for dep in &self.project.deps.clone() {
             let dep_str = format!("{}=={}", dep.name, dep.version);
             let mut child = process::Command::new("pip");
-            child.arg("install")
-                .arg(dep_str);
+            child.arg("install").arg(dep_str);
 
             child.output().expect("failed to execute process");
 
@@ -56,7 +55,7 @@ impl LangExecutor for PythonExec {
 
 #[cfg(test)]
 mod test {
-    use crate::rmd::lang::{PythonExec, LangExecutor};
+    use crate::rmd::lang::{LangExecutor, PythonExec};
 
     #[test]
     fn should_success_run_python_hello_world() {
@@ -66,30 +65,38 @@ mod test {
 
         child.spawn().unwrap().wait().unwrap();
 
-        assert_eq!("hello, world!
-", String::from_utf8_lossy(&out.stdout));
+        assert_eq!(
+            "hello, world!
+",
+            String::from_utf8_lossy(&out.stdout)
+        );
     }
 
     #[cfg(feature = "local")]
     mod local {
-        use crate::rmd::lang::{PythonExec, LangExecutor};
+        use crate::rmd::lang::{LangExecutor, PythonExec};
 
         #[test]
         fn should_success_run_python_with_dep_color() {
-            let mut exec = PythonExec::new(String::from("# rmd-deps: termcolor
+            let mut exec = PythonExec::new(String::from(
+                "# rmd-deps: termcolor
 import sys
 from termcolor import colored, cprint
 
 text = colored('Hello, World!', 'red', attrs=['reverse', 'blink'])
 print(text)
-"));
+",
+            ));
             let mut child = exec.execute();
             let out = child.output().expect("failed to execute process");
 
             child.spawn().unwrap().wait().unwrap();
 
-            assert_eq!("\u{1b}[5m\u{1b}[7m\u{1b}[31mHello, World!\u{1b}[0m
-", String::from_utf8_lossy(&out.stdout));
+            assert_eq!(
+                "\u{1b}[5m\u{1b}[7m\u{1b}[31mHello, World!\u{1b}[0m
+",
+                String::from_utf8_lossy(&out.stdout)
+            );
         }
     }
 }

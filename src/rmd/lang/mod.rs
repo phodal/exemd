@@ -5,19 +5,19 @@ use std::path::PathBuf;
 use std::process::Command;
 use std::{env, fs};
 
-use regex::{Regex};
+use regex::Regex;
 
+pub use self::go_exec::GoExec;
 pub use self::java_exec::JavaExec;
+pub use self::kotlin_exec::KotlinExec;
 pub use self::python_exec::PythonExec;
 pub use self::rust_exec::RustExec;
-pub use self::go_exec::GoExec;
-pub use self::kotlin_exec::KotlinExec;
 
+mod go_exec;
 mod java_exec;
+mod kotlin_exec;
 mod python_exec;
 mod rust_exec;
-mod go_exec;
-mod kotlin_exec;
 
 #[derive(Clone, Debug)]
 pub struct Dependency {
@@ -79,7 +79,6 @@ pub trait LangExecutor {
 pub trait CompiledLangExecutor: LangExecutor {
     fn compile(&self) -> Command;
 }
-
 
 pub fn write_content_to_file(source: String, dir: PathBuf) -> String {
     let mut f = File::create(dir.clone()).unwrap();
@@ -204,7 +203,6 @@ mod test {
         assert_eq!("joda-time:joda-time", first_dep.name);
         assert_eq!("2.2", first_dep.version);
     }
-
 
     fn get_hello_world_code() -> &'static str {
         "// exemd-deps: colored;version=1.8.0

@@ -1,8 +1,10 @@
-use std::{fs, process};
 use std::path::PathBuf;
 use std::process::Command;
+use std::{fs, process};
 
-use crate::rmd::lang::{CompiledLangExecutor, create_lang_dir, LangExecutor, ProjectInfo, write_content_to_file};
+use crate::rmd::lang::{
+    create_lang_dir, write_content_to_file, CompiledLangExecutor, LangExecutor, ProjectInfo,
+};
 
 pub struct GoExec {
     lang: String,
@@ -65,7 +67,7 @@ impl CompiledLangExecutor for GoExec {
 
 #[cfg(test)]
 mod test {
-    use crate::rmd::lang::{LangExecutor, GoExec};
+    use crate::rmd::lang::{GoExec, LangExecutor};
 
     #[test]
     fn should_success_run_go_hello_world() {
@@ -85,7 +87,10 @@ func main() {
         let spawn = child.spawn().unwrap().wait();
 
         assert_eq!(0, spawn.unwrap().code().unwrap());
-        assert_eq!("hello, world!
-", String::from_utf8_lossy(&out.stdout));
+        assert_eq!(
+            "hello, world!
+",
+            String::from_utf8_lossy(&out.stdout)
+        );
     }
 }
