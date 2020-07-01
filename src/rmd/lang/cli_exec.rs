@@ -1,11 +1,12 @@
 use std::path::PathBuf;
 use std::process::Command;
-use std::{fs, process};
+use std::{process};
 
 use crate::rmd::lang::{
-    create_lang_dir, write_content_to_file, CompiledLangExecutor, LangExecutor, ProjectInfo,
+    LangExecutor, ProjectInfo,
 };
 
+#[allow(dead_code)]
 pub struct CliExec {
     lang: String,
     lang_prefix: String,
