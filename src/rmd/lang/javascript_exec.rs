@@ -1,10 +1,8 @@
 use std::path::PathBuf;
+use std::process;
 use std::process::Command;
-use std::{process};
 
-use crate::rmd::lang::{
-    LangExecutor, ProjectInfo,
-};
+use crate::rmd::lang::{LangExecutor, ProjectInfo};
 
 #[allow(dead_code)]
 pub struct JavaScriptExec {

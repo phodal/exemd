@@ -4,7 +4,10 @@ use std::process;
 use std::process::ExitStatus;
 
 use crate::rmd::command::Command;
-use crate::rmd::lang::{CliExec, GoExec, JavaExec, KotlinExec, LangExecutor, PythonExec, RustExec, JavaScriptExec, TypeScriptExec};
+use crate::rmd::lang::{
+    CliExec, GoExec, JavaExec, JavaScriptExec, KotlinExec, LangExecutor, PythonExec, RustExec,
+    TypeScriptExec,
+};
 
 pub fn execute_command(cmd: Command) -> Result<ExitStatus> {
     if cmd.script.source == "" {
