@@ -15,20 +15,8 @@ pub struct JavaExec {
     project: ProjectInfo,
 }
 
-impl JavaExec {
-    pub fn new(source: String) -> JavaExec {
-        JavaExec {
-            lang: "java".to_string(),
-            lang_prefix: "java".to_string(),
-            source_code: source.to_string(),
-            dir: "".to_string(),
-            dir_buf: Default::default(),
-            project: ProjectInfo::from_code(source),
-        }
-    }
-
-    fn create_dependency_file(&self) -> String {
-        let mut default_package = "apply plugin: 'java'
+pub fn create_dependency_file(info: ProjectInfo, dir: PathBuf) -> String {
+    let mut default_package = "apply plugin: 'java'
 apply plugin: 'application'
 
 repositories {
@@ -39,24 +27,37 @@ dependencies {
 "
         .to_owned();
 
-        for dep in self.project.deps.clone() {
-            let result = format!("compile \"{}:{}\"", dep.name, dep.version);
-            default_package.push_str(&result);
-        }
+    for dep in info.deps.clone() {
+        let result = format!("compile \"{}:{}\"", dep.name, dep.version);
+        default_package.push_str(&result);
+    }
 
-        default_package.push_str("\n}\n\n");
-        if self.project.name != "" {
-            default_package.push_str(&format!(
-                "mainClassName = '{}.{}'\n",
-                self.project.name.clone(),
-                self.project.filename.clone()
-            ));
-        } else {
-            default_package.push_str("mainClassName = 'main'");
-        }
+    default_package.push_str("\n}\n\n");
+    if info.name != "" {
+        default_package.push_str(&format!(
+            "mainClassName = '{}.{}'\n",
+            info.name.clone(),
+            info.filename.clone()
+        ));
+    } else {
+        default_package.push_str("mainClassName = 'main'");
+    }
 
-        write_content_to_file(default_package.clone(), self.dir_buf.join("build.gradle"));
-        default_package
+    write_content_to_file(default_package.clone(), dir.join("build.gradle"));
+    default_package
+}
+
+
+impl JavaExec {
+    pub fn new(source: String) -> JavaExec {
+        JavaExec {
+            lang: "java".to_string(),
+            lang_prefix: "java".to_string(),
+            source_code: source.to_string(),
+            dir: "".to_string(),
+            dir_buf: Default::default(),
+            project: ProjectInfo::from_code(source),
+        }
     }
 }
 
@@ -79,7 +80,7 @@ impl LangExecutor for JavaExec {
         output.push(self.project.filename.clone());
 
         self.dir = write_content_to_file(self.source_code.clone(), dir);
-        self.create_dependency_file();
+        create_dependency_file(self.project.clone(), self.dir_buf.clone());
     }
 
     fn install_dependency(&self) {}
@@ -107,6 +108,7 @@ impl CompiledLangExecutor for JavaExec {
 #[cfg(test)]
 mod test {
     use crate::rmd::lang::{JavaExec, LangExecutor};
+    use crate::rmd::lang::java_exec::create_dependency_file;
 
     fn get_joda_code() -> &'static str {
         "// exemd-deps: joda-time:joda-time;version=2.2
@@ -129,7 +131,7 @@ public class HelloWorld {
     fn should_build_normal_java_dep() {
         let mut exec = JavaExec::new(String::from(get_joda_code()));
         exec.execute();
-        let dep = exec.create_dependency_file();
+        let dep = create_dependency_file(exec.project.clone(), exec.dir_buf);
 
         assert_eq!(
             "apply plugin: 'java'
@@ -153,7 +155,7 @@ mainClassName = 'joda.HelloWorld'
     fn should_build_naming_file_java_deps() {
         let mut exec = JavaExec::new(String::from(get_joda_code()));
         exec.execute();
-        let dep = exec.create_dependency_file();
+        let dep = create_dependency_file(exec.project, exec.dir_buf);
 
         assert_eq!(
             "apply plugin: 'java'
