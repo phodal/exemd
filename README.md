@@ -7,31 +7,6 @@
 [![crates.io badge](https://img.shields.io/crates/v/exemd.svg)](https://crates.io/crates/exemd)<br/>
 [![codecov](https://codecov.io/gh/phodal/exemd/branch/master/graph/badge.svg)](https://codecov.io/gh/phodal/exemd)
 
-## Todo
-
- - [ ] shell
-   - [x] bash
- - [ ] script language
-   - [x] Ruby
-   - [x] Javascript
-   - [x] Python
-     - [x] single file
-     - [x] dependency
-   - [x] PHP
-   - [x] TypeScript by [deno](https://deno.land/)
- - [ ] compiled language
-   - [x] Rust
-     - [x] single file
-     - [x] dependency
-   - [x] Java
-     - [x] single file
-     - [x] dependency
-       - [x] Gradle
-   - [x] Go
-     - [x] single file
-   - [X] Kotlin
-     - [x] single file
- 
 ## Examples
 
 see in [fixtures](_fixtures)

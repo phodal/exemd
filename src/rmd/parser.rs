@@ -1,9 +1,5 @@
 use crate::rmd::command::Command;
-use pulldown_cmark::{
-    CodeBlockKind,
-    Event::{Code, End, Html, Start, Text},
-    Options, Parser, Tag,
-};
+use pulldown_cmark::{CodeBlockKind, Event, Options, Parser, Tag};
 
 pub struct Rmd {
     text: String,
@@ -15,43 +11,38 @@ impl Rmd {
     }
 
     pub fn parse(&mut self) -> Vec<Command> {
-        let parser = create_markdown_parser(&self.text);
+        let mut parser = create_markdown_parser(&self.text).into_offset_iter();
         let mut commands = vec![];
         let mut current_command = Command::new(1);
         let mut text = "".to_string();
 
-        for event in parser {
+        while let Some((event, _offset)) = parser.next() {
             match event {
-                Start(tag) => {
-                    if let Tag::CodeBlock(info) = tag {
-                        match info {
-                            CodeBlockKind::Fenced(lang_code) => {
-                                current_command.script.executor = lang_code.to_string();
-                            }
-                            CodeBlockKind::Indented => {}
+                Event::Start(Tag::CodeBlock(info)) => {
+                    match info {
+                        CodeBlockKind::Fenced(lang_code) => {
+                            current_command.script.executor = lang_code.to_string();
                         }
+                        CodeBlockKind::Indented => {}
                     }
 
                     text = "".to_string();
                 }
-                End(tag) => {
-                    if let Tag::CodeBlock(info) = tag {
-                        match info {
-                            CodeBlockKind::Fenced(_lang_code) => {
-                                current_command.script.source = text.to_string();
+                Event::End(Tag::CodeBlock(info)) => {
+                    match info {
+                        CodeBlockKind::Fenced(_lang_code) => {
+                            current_command.script.source = text.to_string();
 
-                                commands.push(current_command.build());
-                                current_command = Command::new(0);
-                            }
-                            CodeBlockKind::Indented => {}
+                            commands.push(current_command.build());
+                            current_command = Command::new(0);
                         }
+                        CodeBlockKind::Indented => {}
                     }
                 }
-                Text(body) => {
+                Event::Text(body) => {
                     text += &body.to_string();
                 }
-                Html(_html) => {}
-                Code(inline_code) => {
+                Event::Code(inline_code) => {
                     text += &format!("`{}`", inline_code);
                 }
                 _ => (),
@@ -101,7 +92,7 @@ This command has no source/script.
 "#;
 
 #[cfg(test)]
-mod build_command_structure {
+mod tests {
     use super::*;
 
     #[test]
