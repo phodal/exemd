@@ -58,6 +58,13 @@ git clone https://github.com/phodal/exemd
 
 2. run
 
+
+### install by languages
+
+```
+brew install kotlin
+```
+
 ## LICENSE
 
 origin code inspired by [mask](https://github.com/jakedeichert/mask) with MIT LICENSE;
