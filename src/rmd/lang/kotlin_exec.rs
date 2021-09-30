@@ -92,7 +92,7 @@ mod test {
     }
 
     fn get_hello_world() -> String {
-        "fun main(args: Array<String>) {
+        "fun main() {
     println(\"hello, world!\")
 }
 "
